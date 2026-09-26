@@ -86,13 +86,21 @@ section{margin-top:12px}
 
   <section class="card"><h2>Floors<small>where it gets too hard or too easy</small></h2>
     <div class="tbl"><table id="levels"></table></div>
-    <p class="note">Fail % is falls per attempt. Aim for about 20 to 45%. Above 55% people start quitting, below 10% it's too easy. "Help" is the average time boost the game gave struggling players on that floor (1.00 = none).</p>
+    <p class="note">All builds, first plays only (replays are left out). Fail % is falls per attempt. Aim for about 20 to 45%. Above 55% people start quitting, below 10% it's too easy. "Help" is the average time boost the game gave struggling players on that floor (1.00 = none).</p>
   </section>
 
   <section class="grid two">
     <div class="card"><h2>Where time goes<small>minutes on each screen</small></h2><div class="bars" id="screens"></div>
-      <p class="note">Glow = watching the path. Play = hopping. Store time is split by tab: friends, outfits and free spin.</p></div>
+      <p class="note">Glow = watching the path. Play = hopping. Store time is split by tab: friends, skins, outfits and free spin.</p></div>
     <div class="card"><h2>Where they leave<small>screen showing when they closed or switched apps</small></h2><div class="bars" id="exits"></div></div>
+  </section>
+
+  <section class="grid two">
+    <div class="card"><h2>This build<small id="bnote">fail % on first plays, per floor</small></h2><div class="bars" id="lvlBuild"></div>
+      <p class="note">Target 20 to 45%. Red is above 55%, where players start quitting. Replays from the map are left out.</p></div>
+    <div class="card"><h2>Journey map<small>replays for stars and star rewards</small></h2><div class="grid kpis" id="mapK" style="grid-template-columns:repeat(2,1fr)"></div>
+      <h2 style="margin-top:14px">Star rewards<small>players who got each one</small></h2><div class="bars" id="mapR"></div>
+      <p class="note" id="cbNote"></p></div>
   </section>
 
   <section class="card"><h2>Store<small>what players want to buy first</small></h2><div class="sub" id="storeSum"></div><div class="bars" id="storeItems" style="margin-top:8px"></div></section>
@@ -213,12 +221,13 @@ function render(d){
     {h:'Cleared by',f:function(r){return r.players_cleared}}
   ],d.levels||[],'No floors played yet.');
 
-  var SCN={store_chars:'store: friends',store_outfits:'store: outfits',store_spin:'store: free spin',store_buy:'store: buy card',intro:'new world card',gus_intro:'Gus card'};
+  var SCN={store_chars:'store: friends',store_skins:'store: skins',store_outfits:'store: outfits',store_spin:'store: free spin',store_buy:'store: buy card',intro:'new world card',gus_intro:'Gus card',map:'journey map',reward:'star reward card'};
   function scn(k){return SCN[k]||k}
   bars('screens',(d.screens||[]).map(function(s){return{k:scn(s.screen),v:s.minutes,label:mins(s.minutes)}}));
   bars('exits',(d.exits||[]).map(function(s){return{k:scn(s.screen),v:s.times,label:num(s.times)+' · '+num(s.players)+'p',c:(s.screen==='play'||s.screen==='glow'||s.screen==='fail')?'red':''}}));
 
   var ST=d.store||{},NAMES={scarf_candy:'Candy scarf',beanie:'Bobble beanie',boots:'Snow boots',earmuffs:'Earmuffs',mittens:'Mittens',ice_crown:'Ice crown',
+    frost_crumb:'Frost Crumb',midnight_crumb:'Midnight Crumb',golden_crumb:'Golden Crumb',sunset_pip:'Sunset Pip',neon_watts:'Neon Watts',aurora_lumi:'Aurora Lumi',
     crumb:'Crumb',pip:'Pip',watts:'Watts',petal:'Petal',blip:'Blip',lumi:'Lumi',snowdrop:'Snowdrop',cocoa:'Cocoa',pebble:'Pebble',mochi:'Mochi',
     aurie:'Aurie',comet:'Comet',drizzle:'Drizzle',twinkle:'Twinkle',marsh:'Marsh',piney:'Piney'};
   var WN={lake:'Frozen Lake (1 to 10)',springs:'Hot Springs (11 to 20)',grid:'Spark Grid (21 to 30)',dunes:'Dry Dunes (31 to 40)',lava:'Lava Rocks (41 to 50)',haunted:'Haunted Hall (51 to 60)'};
@@ -229,6 +238,15 @@ function render(d){
   bars('buys',(E.buys||[]).map(function(b){return{k:NAMES[b.id]||b.id,v:b.players,label:pl(b.players,'player')}}),{empty:'Nothing bought yet.'});
   bars('worlds',(d.worlds||[]).map(function(w){var fp=w.starts?Math.round(100*w.fails/w.starts):0;return{k:WN[w.world]||w.world,v:w.players,label:pl(w.players,'player')+' · '+fp+'% fail',c:fp>55?'red':''}}),{empty:'No floors played yet.'});
   bars('chars',(d.characters||[]).map(function(c){return{k:NAMES[c.id]||c.id,v:c.floors,label:num(c.floors)+' · '+pl(c.players,'player')}}));
+  $('bnote').textContent='fail % on first plays in '+(d.build_now||'the newest build');
+  bars('lvlBuild',(d.levels_build||[]).map(function(l){var fp=l.starts?Math.round(100*l.fails/l.starts):0;return{k:'Floor '+l.floor,v:fp,label:fp+'% · '+pl(l.players,'player')+(l.fails?' · '+l.wrong+' wrong, '+l.slow+' slow':''),c:fp>55?'red':''}}),{max:100,empty:'No floors played on this build yet.'});
+  var MP=d.map||{},mk=$('mapK');mk.textContent='';
+  [['Map opens',num(MP.opens),pl(MP.players||0,'player')],['Replays',num(MP.replays),pl(MP.replay_players||0,'player')],
+   ['New stars from replays',num(MP.new_stars),pl(MP.replay_clears||0,'replay')+' cleared'],['Tokens from stars',num((E.earned_replays||0)+(E.earned_stars||0)),num(E.earned_replays||0)+' replays, '+num(E.earned_stars||0)+' rewards']
+  ].forEach(function(x){var c=el('div','card kpi');c.appendChild(el('div','k',x[0]));c.appendChild(el('div','v',x[1]));c.appendChild(el('div','d',x[2]));mk.appendChild(c)});
+  bars('mapR',(MP.rewards||[]).map(function(r){return{k:r.at+' stars: '+(r.kind==='tokens'?'tokens':(NAMES[r.id]||r.id)),v:r.players,label:pl(r.players,'player')}}),{empty:'No star rewards yet.'});
+  var skins=(MP.skins||[]).map(function(k){return (NAMES[k.id]||k.id)+' '+pl(k.floors,'floor')}).join(', ');
+  $('cbNote').textContent='Colorblind help is on for '+pl(MP.colorblind||0,'player')+'.'+(skins?' Skins in play: '+skins+'.':'');
   var GS=d.gus||{};$('gusNote').textContent=GS.throws?'Gus threw '+pl(GS.throws,'snowball')+' and hit '+Math.round(100*GS.hits/GS.throws)+'% of the time.':'Gus has not thrown any snowballs yet (he starts on floor 11).';
   $('storeSum').textContent=pl(ST.players||0,'player')+' opened the store '+pl(ST.opens||0,'time')+'.';
   bars('storeItems',(ST.items||[]).map(function(i){return{k:NAMES[i.item]||i.item,v:i.players,label:pl(i.players,'player')+' · '+pl(i.taps,'tap')}}),{empty:'No item taps yet.'});
