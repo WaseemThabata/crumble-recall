@@ -91,7 +91,7 @@ section{margin-top:12px}
 
   <section class="grid two">
     <div class="card"><h2>Where time goes<small>minutes on each screen</small></h2><div class="bars" id="screens"></div>
-      <p class="note">Glow = watching the path. Play = hopping. The daily wheel shows up here when it launches.</p></div>
+      <p class="note">Glow = watching the path. Play = hopping. Store time is split by tab: friends, outfits and free spin.</p></div>
     <div class="card"><h2>Where they leave<small>screen showing when they closed or switched apps</small></h2><div class="bars" id="exits"></div></div>
   </section>
 
@@ -213,8 +213,10 @@ function render(d){
     {h:'Cleared by',f:function(r){return r.players_cleared}}
   ],d.levels||[],'No floors played yet.');
 
-  bars('screens',(d.screens||[]).map(function(s){return{k:s.screen,v:s.minutes,label:mins(s.minutes)}}));
-  bars('exits',(d.exits||[]).map(function(s){return{k:s.screen,v:s.times,label:num(s.times)+' · '+num(s.players)+'p',c:(s.screen==='play'||s.screen==='glow'||s.screen==='fail')?'red':''}}));
+  var SCN={store_chars:'store: friends',store_outfits:'store: outfits',store_spin:'store: free spin',store_buy:'store: buy card',intro:'new world card',gus_intro:'Gus card'};
+  function scn(k){return SCN[k]||k}
+  bars('screens',(d.screens||[]).map(function(s){return{k:scn(s.screen),v:s.minutes,label:mins(s.minutes)}}));
+  bars('exits',(d.exits||[]).map(function(s){return{k:scn(s.screen),v:s.times,label:num(s.times)+' · '+num(s.players)+'p',c:(s.screen==='play'||s.screen==='glow'||s.screen==='fail')?'red':''}}));
 
   var ST=d.store||{},NAMES={scarf_candy:'Candy scarf',beanie:'Bobble beanie',boots:'Snow boots',earmuffs:'Earmuffs',mittens:'Mittens',ice_crown:'Ice crown',
     crumb:'Crumb',pip:'Pip',watts:'Watts',petal:'Petal',blip:'Blip',lumi:'Lumi',snowdrop:'Snowdrop',cocoa:'Cocoa',pebble:'Pebble',mochi:'Mochi',
