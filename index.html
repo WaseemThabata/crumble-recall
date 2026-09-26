@@ -810,7 +810,7 @@ function renderBoard(state,rows){
   if(!rows||!rows.length){boardNote(['No scores yet. Clear a floor and be first.']);return}
   var me=null;
   rows.forEach(function(r){r.rank=+r.rank;if(r.is_me)me=r;if(r.rank<=50)list.appendChild(boardRow(r))});
-  if(me){pin.appendChild(boardRow(me));pin.hidden=false}   // your own row stays pinned under the list
+  if(me&&me.rank>5){pin.appendChild(boardRow(me));pin.hidden=false}   // pin your own row when it is below the first few
   sub.textContent=me?('You are #'+me.rank+' in the world.'):(S.name?'Clear a floor to get on the board.':'Join to see where you rank.');
 }
 function loadBoard(){
