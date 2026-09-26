@@ -97,6 +97,14 @@ section{margin-top:12px}
 
   <section class="card"><h2>Store<small>what players want to buy first</small></h2><div class="sub" id="storeSum"></div><div class="bars" id="storeItems" style="margin-top:8px"></div></section>
 
+  <section class="grid two">
+    <div class="card"><h2>Crumble Tokens</h2><div class="grid kpis" id="econ" style="grid-template-columns:repeat(2,1fr)"></div>
+      <h2 style="margin-top:14px">Bought</h2><div class="bars" id="buys"></div></div>
+    <div class="card"><h2>Worlds<small>players who reached each world, and how often they fall there</small></h2><div class="bars" id="worlds"></div>
+      <h2 style="margin-top:14px">Played as<small>floors started with each character</small></h2><div class="bars" id="chars"></div>
+      <p class="note" id="gusNote"></p></div>
+  </section>
+
   <section class="card"><h2>Players<small>newest activity first</small></h2><div class="tbl"><table id="players"></table></div></section>
 
   <section class="grid two">
@@ -208,7 +216,18 @@ function render(d){
   bars('screens',(d.screens||[]).map(function(s){return{k:s.screen,v:s.minutes,label:mins(s.minutes)}}));
   bars('exits',(d.exits||[]).map(function(s){return{k:s.screen,v:s.times,label:num(s.times)+' · '+num(s.players)+'p',c:(s.screen==='play'||s.screen==='glow'||s.screen==='fail')?'red':''}}));
 
-  var ST=d.store||{},NAMES={scarf_candy:'Candy scarf',beanie:'Bobble beanie',boots:'Snow boots',earmuffs:'Earmuffs',mittens:'Mittens',ice_crown:'Ice crown'};
+  var ST=d.store||{},NAMES={scarf_candy:'Candy scarf',beanie:'Bobble beanie',boots:'Snow boots',earmuffs:'Earmuffs',mittens:'Mittens',ice_crown:'Ice crown',
+    crumb:'Crumb',pip:'Pip',watts:'Watts',petal:'Petal',blip:'Blip',lumi:'Lumi',snowdrop:'Snowdrop',cocoa:'Cocoa',pebble:'Pebble',mochi:'Mochi',
+    aurie:'Aurie',comet:'Comet',drizzle:'Drizzle',twinkle:'Twinkle',marsh:'Marsh',piney:'Piney'};
+  var WN={lake:'Frozen Lake (1 to 10)',springs:'Hot Springs (11 to 20)',grid:'Spark Grid (21 to 30)',dunes:'Dry Dunes (31 to 40)',lava:'Lava Rocks (41 to 50)',haunted:'Haunted Hall (51 to 60)'};
+  var E=d.economy||{},ec=$('econ');ec.textContent='';
+  [['Earned',num(E.earned),num(E.earned_floors)+' from floors, '+num(E.earned_spins)+' from spins'],['Spent',num(E.spent),pl(E.buyers||0,'buyer')],
+   ['Free spins',num(E.spins),pl(E.spinners||0,'player')],['Looked at buying',num(E.buy_views),'times the buy card opened']
+  ].forEach(function(x){var c=el('div','card kpi');c.appendChild(el('div','k',x[0]));c.appendChild(el('div','v',x[1]));c.appendChild(el('div','d',x[2]));ec.appendChild(c)});
+  bars('buys',(E.buys||[]).map(function(b){return{k:NAMES[b.id]||b.id,v:b.players,label:pl(b.players,'player')}}),{empty:'Nothing bought yet.'});
+  bars('worlds',(d.worlds||[]).map(function(w){var fp=w.starts?Math.round(100*w.fails/w.starts):0;return{k:WN[w.world]||w.world,v:w.players,label:pl(w.players,'player')+' · '+fp+'% fail',c:fp>55?'red':''}}),{empty:'No floors played yet.'});
+  bars('chars',(d.characters||[]).map(function(c){return{k:NAMES[c.id]||c.id,v:c.floors,label:num(c.floors)+' · '+pl(c.players,'player')}}));
+  var GS=d.gus||{};$('gusNote').textContent=GS.throws?'Gus threw '+pl(GS.throws,'snowball')+' and hit '+Math.round(100*GS.hits/GS.throws)+'% of the time.':'Gus has not thrown any snowballs yet (he starts on floor 11).';
   $('storeSum').textContent=pl(ST.players||0,'player')+' opened the store '+pl(ST.opens||0,'time')+'.';
   bars('storeItems',(ST.items||[]).map(function(i){return{k:NAMES[i.item]||i.item,v:i.players,label:pl(i.players,'player')+' · '+pl(i.taps,'tap')}}),{empty:'No item taps yet.'});
 
