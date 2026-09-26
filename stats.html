@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0a1a33">
+<title>Crumble Recall stats</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#07142a; --panel:#0e2244; --panel2:#132b54; --line:#23427a; --text:#e9f1fb; --muted:#8fa8c9;
+  --blue:#3d8fe0; --blue2:#79b8f5; --red:#ff4d5c; --amber:#ffb23e; --green:#3fcf8e;
+  --ui:ui-rounded,"SF Pro Rounded","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 var(--ui);-webkit-text-size-adjust:100%}
+.wrap{max-width:1100px;margin:0 auto;padding:max(14px,env(safe-area-inset-top)) 16px 40px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+h1{margin:0;font-size:22px;letter-spacing:.01em}
+h1 span{color:var(--red)}
+.sub{color:var(--muted);font-size:13px}
+.btn{border:1.5px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;min-height:40px;padding:0 14px;font:700 14px var(--ui);cursor:pointer}
+.btn:active{transform:translateY(1px)}
+.grid{display:grid;gap:12px}
+.kpis{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.two{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1.5px solid var(--line);border-radius:16px;padding:14px;min-width:0}
+.card h2{margin:0 0 10px;font-size:15px;letter-spacing:.02em}
+.card h2 small{font-weight:500;color:var(--muted);margin-left:6px}
+.kpi .v{font-size:28px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kpi .d{font-size:12.5px;color:var(--muted);margin-top:2px}
+.bars{display:grid;gap:7px}
+.bar{display:grid;grid-template-columns:minmax(90px,38%) 1fr auto;align-items:center;gap:8px;font-size:13.5px}
+.bar .lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .track{height:12px;background:rgba(143,168,201,.13);border-radius:99px;overflow:hidden}
+.bar .track,.bar .fill{display:block}
+.bar .fill{height:100%;background:var(--blue);border-radius:99px}
+.bar .fill.red{background:var(--red)}.bar .fill.amber{background:var(--amber)}.bar .fill.green{background:var(--green)}
+.bar .num{font-variant-numeric:tabular-nums;font-weight:700;min-width:44px;text-align:right}
+.tbl{overflow:auto;-webkit-overflow-scrolling:touch;margin:0 -14px;padding:0 14px}
+table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:7px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid rgba(35,66,122,.6)}
+th{color:var(--muted);font-weight:700;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;position:sticky;top:0;background:var(--panel)}
+td:first-child,th:first-child{text-align:left}
+td.l,th.l{text-align:left}
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;font-weight:700}
+.pill.red{background:rgba(255,77,92,.18);color:#ff9aa3}.pill.amber{background:rgba(255,178,62,.18);color:#ffd08a}.pill.green{background:rgba(63,207,142,.16);color:#8de7bd}
+.fb{display:grid;gap:10px}
+.fb .it{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:rgba(7,20,42,.5)}
+.fb .top{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--muted)}
+.fb .stars{color:var(--amber);letter-spacing:1px}
+.fb p{margin:6px 0 0;white-space:pre-wrap;word-break:break-word}
+.note{color:var(--muted);font-size:13px;margin:8px 0 0}
+.chart svg{display:block;width:100%;height:auto}
+.empty{color:var(--muted);font-size:13.5px;padding:6px 0}
+.msg{max-width:520px;margin:18vh auto;text-align:center;padding:0 20px}
+.msg h1{margin-bottom:10px}
+.legend{display:flex;gap:14px;font-size:12.5px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+section{margin-top:12px}
+</style>
+</head>
+<body>
+<div class="msg" id="gate" hidden>
+  <h1>Crumble Recall <span>stats</span></h1>
+  <p class="sub" id="gateText">This page needs Seem's private link.</p>
+</div>
+
+<div class="wrap" id="app" hidden>
+  <header>
+    <div><h1>Crumble Recall <span>stats</span></h1><div class="sub" id="updated">Loading...</div></div>
+    <div style="display:flex;gap:8px"><button class="btn" id="refresh" type="button">Refresh</button><button class="btn" id="forget" type="button">Forget this phone</button></div>
+  </header>
+
+  <div class="grid kpis" id="kpis"></div>
+
+  <section class="grid two">
+    <div class="card"><h2>How far players get<small>share of everyone who opened the game</small></h2><div class="bars" id="funnel"></div></div>
+    <div class="card chart"><h2>Players per day<small>last 30 days, New York time</small></h2><div id="daily"></div>
+      <div class="legend"><span><i style="background:var(--blue)"></i>Returning</span><span><i style="background:var(--red)"></i>New</span></div></div>
+  </section>
+
+  <section class="card"><h2>Floors<small>where it gets too hard or too easy</small></h2>
+    <div class="tbl"><table id="levels"></table></div>
+    <p class="note">Fail % is falls per attempt. Aim for about 20 to 45%. Above 55% people start quitting, below 10% it's too easy. "Help" is the average time boost the game gave struggling players on that floor (1.00 = none).</p>
+  </section>
+
+  <section class="grid two">
+    <div class="card"><h2>Where time goes<small>minutes on each screen</small></h2><div class="bars" id="screens"></div>
+      <p class="note">Glow = watching the path. Play = hopping. The daily wheel shows up here when it launches.</p></div>
+    <div class="card"><h2>Where they leave<small>screen showing when they closed or switched apps</small></h2><div class="bars" id="exits"></div></div>
+  </section>
+
+  <section class="card"><h2>Store<small>what players want to buy first</small></h2><div class="sub" id="storeSum"></div><div class="bars" id="storeItems" style="margin-top:8px"></div></section>
+
+  <section class="card"><h2>Players<small>newest activity first</small></h2><div class="tbl"><table id="players"></table></div></section>
+
+  <section class="grid two">
+    <div class="card"><h2>Feedback</h2><div class="fb" id="feedback"></div></div>
+    <div class="card"><h2>Who brought new players<small>from shared links</small></h2><div class="bars" id="referrals"></div>
+      <h2 style="margin-top:16px">How they found it</h2><div class="bars" id="sources"></div>
+      <h2 style="margin-top:16px">Phones</h2><div class="bars" id="devices"></div></div>
+  </section>
+
+  <section class="grid two">
+    <div class="card"><h2>Sharing</h2><div class="bars" id="shares"></div></div>
+    <div class="card chart"><h2>When people play<small>their local hour, by session</small></h2><div id="hours"></div></div>
+  </section>
+
+  <section class="card"><h2>Recent sessions</h2><div class="tbl"><table id="sessions"></table></div></section>
+
+  <section class="grid two">
+    <div class="card"><h2>Buttons tapped</h2><div class="bars" id="clicks"></div></div>
+    <div class="card"><h2>Errors<small>bugs players hit</small></h2><div id="errors"></div></div>
+  </section>
+</div>
+
+<script>
+(function(){
+'use strict';
+var API={url:'https://oegckfehfkmvxjwbxjcw.supabase.co',key:'sb_publishable_UNyXDy_pBLq0d8HJm_mZ3w_4PuhQsMB',game:'crumble-recall'};
+var SKEY='crumble-recall-owner';
+function $(id){return document.getElementById(id)}
+function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=String(text);return e}
+function num(n,d){n=+n||0;return n.toLocaleString('en-US',{maximumFractionDigits:d==null?0:d})}
+function pct(a,b){return b?Math.round(100*a/b)+'%':'0%'}
+function ago(t){if(!t)return '';var s=(Date.now()-new Date(t).getTime())/1000;if(s<90)return 'just now';if(s<3600)return Math.round(s/60)+'m ago';if(s<86400)return Math.round(s/3600)+'h ago';var d=Math.round(s/86400);return d===1?'yesterday':d+'d ago'}
+function pl(n,w){return num(n)+' '+w+(+n===1?'':'s')}
+function mins(m){m=+m||0;if(m<60)return num(m,1)+' min';return Math.floor(m/60)+'h '+Math.round(m%60)+'m'}
+
+/* the key comes from the private link (#k=...), then stays on this phone only */
+var key='';
+var m=/[#&]k=([A-Za-z0-9_-]{16,128})/.exec(location.hash);
+if(m){key=m[1];try{localStorage.setItem(SKEY,key)}catch(e){}history.replaceState(null,'',location.pathname)}
+else{try{key=localStorage.getItem(SKEY)||''}catch(e){}}
+window.addEventListener('hashchange',function(){if(/[#&]k=/.test(location.hash))location.reload()});
+if(!key){$('gate').hidden=false;return}
+$('app').hidden=false;
+
+function bars(id,rows,opts){
+  var box=$(id);box.textContent='';opts=opts||{};
+  if(!rows.length){box.appendChild(el('div','empty',opts.empty||'Nothing yet.'));return}
+  var max=opts.max||Math.max.apply(null,rows.map(function(r){return +r.v||0}))||1;
+  rows.forEach(function(r){
+    var b=el('div','bar');b.appendChild(el('span','lab',r.k));
+    var t=el('span','track'),f=el('span','fill '+(r.c||''));f.style.width=Math.max(1.5,100*(+r.v||0)/max)+'%';t.appendChild(f);b.appendChild(t);
+    b.appendChild(el('span','num',r.label!=null?r.label:num(r.v,1)));box.appendChild(b);
+  });
+}
+function table(id,cols,rows,empty){
+  var t=$(id);t.textContent='';
+  if(!rows.length){var tr0=el('tr');var td0=el('td','empty',empty||'Nothing yet.');tr0.appendChild(td0);t.appendChild(tr0);return}
+  var th=el('tr');cols.forEach(function(c){th.appendChild(el('th',c.l?'l':'',c.h))});var thead=el('thead');thead.appendChild(th);t.appendChild(thead);
+  var tb=el('tbody');rows.forEach(function(r){var tr=el('tr');cols.forEach(function(c){var v=c.f(r),td=el('td',c.l?'l':'');if(v instanceof Node)td.appendChild(v);else td.textContent=v==null?'':String(v);tr.appendChild(td)});tb.appendChild(tr)});t.appendChild(tb);
+}
+function pill(text,cls){return el('span','pill '+cls,text)}
+function svgBars(id,items,stack){
+  /* items: [{label, a, b}] stacked a (blue) + b (red) */
+  var box=$(id);box.textContent='';
+  if(!items.length){box.appendChild(el('div','empty','Nothing yet.'));return}
+  var W=600,H=180,pad=22,n=items.length,bw=(W-pad*2)/n,max=Math.max.apply(null,items.map(function(i){return(i.a||0)+(i.b||0)}))||1;
+  var NS='http://www.w3.org/2000/svg',s=document.createElementNS(NS,'svg');s.setAttribute('viewBox','0 0 '+W+' '+(H+24));s.setAttribute('role','img');
+  function r(x,y,w,h,c){var e=document.createElementNS(NS,'rect');e.setAttribute('x',x);e.setAttribute('y',y);e.setAttribute('width',w);e.setAttribute('height',Math.max(0,h));e.setAttribute('rx',Math.min(4,w/3));e.setAttribute('fill',c);s.appendChild(e)}
+  function tx(x,y,t,c,a){var e=document.createElementNS(NS,'text');e.setAttribute('x',x);e.setAttribute('y',y);e.setAttribute('fill',c||'#8fa8c9');e.setAttribute('font-size','11');e.setAttribute('text-anchor',a||'middle');e.textContent=t;s.appendChild(e)}
+  items.forEach(function(it,i){
+    var x=pad+i*bw+bw*0.15,w=bw*0.7,ha=(H-10)*(it.a||0)/max,hb=(H-10)*(it.b||0)/max;
+    r(x,H-ha,w,ha,'#3d8fe0');if(stack)r(x,H-ha-hb,w,hb,'#ff4d5c');
+    var tot=(it.a||0)+(it.b||0);if(tot&&n<=31)tx(x+w/2,H-ha-hb-4,String(tot),'#e9f1fb');
+    if(n<=12||i%Math.ceil(n/12)===0)tx(x+w/2,H+16,it.label);
+  });
+  box.appendChild(s);
+}
+
+function render(d){
+  var T=d.totals||{},R=d.retention||{};
+  $('updated').textContent='Updated '+new Date(d.generated_at).toLocaleString()+' · refreshes every minute';
+  var k=$('kpis');k.textContent='';
+  [['Players',num(T.players),num(T.new_today)+' new today'],
+   ['Playing today',num(T.today),'last seen today'],
+   ['Time played',mins(T.minutes),num(T.avg_minutes,1)+' min per player'],
+   ['Avg session',num(T.avg_session_minutes,1)+' min',pl(T.sessions,'session')],
+   ['Came back next day',R.d1_base?pct(R.d1,R.d1_base):'n/a',num(R.d1)+' of '+num(R.d1_base)+' who started before today'],
+   ['Came back after a week',R.d7_base?pct(R.d7,R.d7_base):'n/a',num(R.d7)+' of '+num(R.d7_base)],
+   ['Shares',num(T.shares),pl(d.share_opens,'share tap')],
+   ['Rating',T.avg_rating?num(T.avg_rating,1)+' / 5':'n/a',pl(T.ratings,'rating')]
+  ].forEach(function(x){var c=el('div','card kpi');c.appendChild(el('div','k',x[0]));c.appendChild(el('div','v',x[1]));c.appendChild(el('div','d',x[2]));k.appendChild(c)});
+
+  var F=d.funnel||[],top=F.length?(+F[0].players||0):0;
+  bars('funnel',F.map(function(f,i){return{k:f.step,v:f.players,label:num(f.players)+' · '+pct(f.players,top),c:i>=7?'green':''}}),{max:top||1});
+
+  var days=(d.daily||[]).slice().reverse();
+  svgBars('daily',days.map(function(x){var dd=String(x.day).slice(5);return{label:dd.replace('-','/'),a:(x.players||0)-(x.new_players||0),b:x.new_players||0}}),true);
+
+  table('levels',[
+    {h:'Floor',f:function(r){return r.floor}},{h:'Players',f:function(r){return r.players}},{h:'Tries',f:function(r){return r.starts}},
+    {h:'Fail %',f:function(r){var p=+r.fail_pct||0;return pill(p+'%',p>55?'red':(p>=20?'amber':(p<10&&r.floor>3?'green':'amber')))}},
+    {h:'Tries to clear',f:function(r){return r.avg_tries==null?'':r.avg_tries}},{h:'Secs',f:function(r){return r.avg_secs==null?'':r.avg_secs}},
+    {h:'Wrong',f:function(r){return r.wrong_tile}},{h:'Slow',f:function(r){return r.too_slow}},{h:'Quit',f:function(r){return r.quits}},
+    {h:'1st tap',f:function(r){return r.first_tap_ms==null?'':(r.first_tap_ms/1000).toFixed(1)+'s'}},{h:'Hop',f:function(r){return r.hop_ms==null?'':(r.hop_ms/1000).toFixed(2)+'s'}},
+    {h:'Rewinds',f:function(r){return r.rewinds}},{h:'Replays',f:function(r){return r.replays}},{h:'Help',f:function(r){return r.avg_ease==null?'':(+r.avg_ease).toFixed(2)}},
+    {h:'Cleared by',f:function(r){return r.players_cleared}}
+  ],d.levels||[],'No floors played yet.');
+
+  bars('screens',(d.screens||[]).map(function(s){return{k:s.screen,v:s.minutes,label:mins(s.minutes)}}));
+  bars('exits',(d.exits||[]).map(function(s){return{k:s.screen,v:s.times,label:num(s.times)+' · '+num(s.players)+'p',c:(s.screen==='play'||s.screen==='glow'||s.screen==='fail')?'red':''}}));
+
+  var ST=d.store||{},NAMES={scarf_candy:'Candy scarf',beanie:'Bobble beanie',boots:'Snow boots',earmuffs:'Earmuffs',mittens:'Mittens',ice_crown:'Ice crown'};
+  $('storeSum').textContent=pl(ST.players||0,'player')+' opened the store '+pl(ST.opens||0,'time')+'.';
+  bars('storeItems',(ST.items||[]).map(function(i){return{k:NAMES[i.item]||i.item,v:i.players,label:pl(i.players,'player')+' · '+pl(i.taps,'tap')}}),{empty:'No item taps yet.'});
+
+  table('players',[
+    {h:'Player',l:1,f:function(r){return r.name}},{h:'Best',f:function(r){return r.best_floor}},{h:'Minutes',f:function(r){return num(r.minutes,1)}},
+    {h:'Days',f:function(r){return r.days}},{h:'Sessions',f:function(r){return r.sessions}},{h:'Fails',f:function(r){return r.fails}},{h:'Quit',f:function(r){return r.quits}},
+    {h:'Shares',f:function(r){return r.shares}},{h:'Help',f:function(r){return r.ease==null?'':(+r.ease).toFixed(2)}},
+    {h:'Came from',l:1,f:function(r){return r.app||r.site||(r.ref?'friend link':'')}},{h:'Phone',l:1,f:function(r){return r.os||''}},
+    {h:'First seen',f:function(r){return ago(r.first_seen)}},{h:'Last seen',f:function(r){return ago(r.last_seen)}}
+  ],d.players||[],'No players yet. Share the game link.');
+
+  var fb=$('feedback');fb.textContent='';
+  if(!(d.feedback||[]).length)fb.appendChild(el('div','empty','No feedback yet. Players get asked once, after floor 4, and anytime from the pause menu.'));
+  (d.feedback||[]).forEach(function(f){
+    var it=el('div','it'),top=el('div','top');
+    var left=el('span');left.appendChild(el('b',null,f.name||'Anonymous'));left.appendChild(document.createTextNode(' · floor '+(f.floor||0)+' · '+ago(f.at)));
+    top.appendChild(left);top.appendChild(el('span','stars',f.rating?'★★★★★'.slice(0,f.rating)+'☆☆☆☆☆'.slice(0,5-f.rating):''));
+    it.appendChild(top);if(f.message)it.appendChild(el('p',null,f.message));fb.appendChild(it);
+  });
+
+  bars('referrals',(d.referrals||[]).map(function(r){return{k:r.by,v:r.players,label:pl(r.players,'player')}}),{empty:'No one has joined from a shared link yet.'});
+  bars('sources',(d.sources||[]).map(function(r){return{k:r.source,v:r.players,label:num(r.players)}}));
+  bars('devices',(d.devices||[]).map(function(r){return{k:r.os,v:r.players,label:num(r.players)}}));
+  var sh=(d.shares||[]).map(function(s){var how={card:'Picture card',link:'Link',copy:'Copied link',save:'Saved picture'}[s.how]||s.how,from={clear:'after a floor',menu:'from the menu'}[s.from]||s.from;return{k:how+' '+from,v:s.times,label:num(s.times)}});
+  bars('shares',sh,{empty:'No shares yet.'});
+  var hrs=[];for(var h=0;h<24;h++)hrs.push({label:String(h),a:0});(d.hours||[]).forEach(function(x){if(hrs[x.hour])hrs[x.hour].a=x.sessions});
+  svgBars('hours',hrs,false);
+
+  table('sessions',[
+    {h:'Player',l:1,f:function(r){return r.player}},{h:'Started',f:function(r){return ago(r.started)}},{h:'Minutes',f:function(r){return num(r.minutes,1)}},
+    {h:'Floors tried',f:function(r){return r.starts}},{h:'Cleared',f:function(r){return r.clears}},{h:'Fails',f:function(r){return r.fails}},
+    {h:'Last floor',f:function(r){return r.last_floor==null?'':r.last_floor}},{h:'Last action',l:1,f:function(r){return (r.last_action||'').replace(/_/g,' ')}},
+    {h:'Left from',l:1,f:function(r){return r.left_from||''}}
+  ],d.sessions||[]);
+
+  bars('clicks',(d.clicks||[]).slice(0,18).map(function(c){return{k:c.button,v:c.taps,label:num(c.taps)+' · '+num(c.players)+'p'}}));
+  var er=$('errors');er.textContent='';
+  if(!(d.errors||[]).length)er.appendChild(el('div','empty','No errors reported.'));
+  (d.errors||[]).forEach(function(e){var it=el('div','it');it.style.cssText='border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;margin-bottom:8px;font-size:13px';
+    it.appendChild(el('div',null,e.message));it.appendChild(el('div','sub',pl(e.times,'time')+' · '+pl(e.players,'player')+' · '+ago(e.last_seen)+' · '+(e.build||'')));er.appendChild(it)});
+}
+
+var busy=false;
+function load(){
+  if(busy)return;busy=true;$('refresh').disabled=true;
+  fetch(API.url+'/rest/v1/rpc/owner_stats',{method:'POST',headers:{'Content-Type':'application/json',apikey:API.key},body:JSON.stringify({p_game:API.game,p_key:key})})
+    .then(function(r){if(r.status===401||r.status===403)throw new Error('key');if(!r.ok)throw new Error('http '+r.status);return r.json()})
+    .then(function(d){render(d)},function(e){
+      if(e.message==='key'){try{localStorage.removeItem(SKEY)}catch(x){}$('app').hidden=true;$('gate').hidden=false;$('gateText').textContent="That link's key didn't work. Open the private link again.";return}
+      $('updated').textContent="Couldn't load the stats. Check your connection and tap Refresh.";
+    }).then(function(){busy=false;$('refresh').disabled=false});
+}
+$('refresh').addEventListener('click',load);
+$('forget').addEventListener('click',function(){try{localStorage.removeItem(SKEY)}catch(e){}location.reload()});
+load();
+setInterval(function(){if(!document.hidden)load()},60000);
+document.addEventListener('visibilitychange',function(){if(!document.hidden)load()});
+})();
+</script>
+</body>
+</html>
