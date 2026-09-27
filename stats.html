@@ -226,10 +226,10 @@ function render(d){
   bars('screens',(d.screens||[]).map(function(s){return{k:scn(s.screen),v:s.minutes,label:mins(s.minutes)}}));
   bars('exits',(d.exits||[]).map(function(s){return{k:scn(s.screen),v:s.times,label:num(s.times)+' · '+num(s.players)+'p',c:(s.screen==='play'||s.screen==='glow'||s.screen==='fail')?'red':''}}));
 
-  var ST=d.store||{},NAMES={scarf_candy:'Candy scarf',beanie:'Bobble beanie',boots:'Snow boots',earmuffs:'Earmuffs',mittens:'Mittens',ice_crown:'Ice crown',
+  var ST=d.store||{},NAMES={scarf_candy:'Candy scarf',beanie:'Bobble beanie',boots:'Snow boots',earmuffs:'Earmuffs',mittens:'Mittens',ice_crown:'Ice crown',eyepatch:'Frostglass eyepatch',
     frost_crumb:'Frost Crumb',midnight_crumb:'Midnight Crumb',golden_crumb:'Golden Crumb',sunset_pip:'Sunset Pip',neon_watts:'Neon Watts',aurora_lumi:'Aurora Lumi',
     crumb:'Crumb',pip:'Pip',watts:'Watts',petal:'Petal',blip:'Blip',lumi:'Lumi',snowdrop:'Snowdrop',cocoa:'Cocoa',pebble:'Pebble',mochi:'Mochi',
-    aurie:'Aurie',comet:'Comet',drizzle:'Drizzle',twinkle:'Twinkle',marsh:'Marsh',piney:'Piney'};
+    aurie:'Aurie',comet:'Comet',drizzle:'Drizzle',twinkle:'Twinkle',marsh:'Marsh',piney:'Piney',moootrika:'Moootrika'};
   var WN={lake:'Frozen Lake (1 to 10)',springs:'Hot Springs (11 to 20)',grid:'Spark Grid (21 to 30)',dunes:'Dry Dunes (31 to 40)',lava:'Lava Rocks (41 to 50)',haunted:'Haunted Hall (51 to 60)'};
   var E=d.economy||{},ec=$('econ');ec.textContent='';
   [['Earned',num(E.earned),num(E.earned_floors)+' from floors, '+num(E.earned_spins)+' from spins'],['Spent',num(E.spent),pl(E.buyers||0,'buyer')],

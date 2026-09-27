@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 932" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="lv-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d101d"/>
+      <stop offset=".55" stop-color="#232333"/>
+      <stop offset="1" stop-color="#481912"/>
+    </linearGradient>
+    <linearGradient id="lv-rock" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#39414d"/>
+      <stop offset=".52" stop-color="#202632"/>
+      <stop offset="1" stop-color="#0c1019"/>
+    </linearGradient>
+    <linearGradient id="lv-floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#303948"/>
+      <stop offset=".48" stop-color="#1b2431"/>
+      <stop offset="1" stop-color="#0b1420"/>
+    </linearGradient>
+    <linearGradient id="lv-magma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffcb4a"/>
+      <stop offset=".32" stop-color="#ff6a24"/>
+      <stop offset="1" stop-color="#8c190f"/>
+    </linearGradient>
+    <linearGradient id="lv-snow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5ffff"/>
+      <stop offset=".55" stop-color="#9be8ef"/>
+      <stop offset="1" stop-color="#396b89"/>
+    </linearGradient>
+    <radialGradient id="lv-cold" cx="50%" cy="42%" r="58%">
+      <stop offset="0" stop-color="#d9ffff" stop-opacity=".8"/>
+      <stop offset=".42" stop-color="#63d9e9" stop-opacity=".44"/>
+      <stop offset="1" stop-color="#2ea9c5" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="430" height="932" fill="url(#lv-sky)"/>
+  <path d="M0 262 58 188l48 59 41-96 53 91 46-73 50 75 49-108 65 116 40-48v237H0Z" fill="#161b26"/>
+  <path d="M0 321 77 235l57 81 85-47 71 51 73-91 67 78v190H0Z" fill="#252733"/>
+
+  <!-- Smoke masses stay broad and quiet so they read as depth, not particles. -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M60 247C23 201 44 171 76 151s22-49-6-67" stroke="#5c5360" stroke-width="30" opacity=".2"/>
+    <path d="M372 264c34-39 18-75-13-92-32-18-18-58 13-76" stroke="#6a5760" stroke-width="34" opacity=".18"/>
+    <path d="M127 214c-18-38 8-60 32-74" stroke="#777080" stroke-width="18" opacity=".12"/>
+  </g>
+
+  <!-- Snow sanctuary: a cool destination above the gameplay corridor. -->
+  <g>
+    <ellipse cx="215" cy="241" rx="92" ry="82" fill="url(#lv-cold)"/>
+    <path d="M162 264h106l18 34H144Z" fill="#243847"/>
+    <path d="M174 181h82l15 83H159Z" fill="#487a91"/>
+    <path d="M186 174h58l19 25h-96Z" fill="url(#lv-snow)"/>
+    <path d="M191 264v-45c0-33 48-33 48 0v45Z" fill="#142331"/>
+    <path d="M198 264v-42c0-24 34-24 34 0v42Z" fill="#bffcff" opacity=".88"/>
+    <path d="m164 181 17-33 21 26 15-45 20 45 18-27 18 34Z" fill="#e9ffff"/>
+    <circle cx="215" cy="151" r="6" fill="#fff"/>
+    <path d="M180 201h14m42 0h14" stroke="#a9f5f2" stroke-width="3" opacity=".8"/>
+  </g>
+
+  <!-- The central valley is intentionally cool charcoal with no orange behind gameplay. -->
+  <path d="M144 285C126 390 113 511 102 633 90 753 75 846 62 932h306c-15-95-29-196-40-304-13-125-25-243-42-343Z" fill="url(#lv-floor)"/>
+  <path d="M138 292C103 404 91 540 83 668 75 780 59 871 42 932H0V356c39-18 85-39 138-64Z" fill="url(#lv-rock)"/>
+  <path d="M292 290c31 112 47 239 55 378 7 107 23 198 41 264h42V346c-38-17-84-36-138-56Z" fill="url(#lv-rock)"/>
+  <path d="M126 325C111 453 99 612 91 735" fill="none" stroke="#6be0e7" stroke-opacity=".5" stroke-width="4"/>
+  <path d="M304 326c16 125 27 281 36 406" fill="none" stroke="#6be0e7" stroke-opacity=".46" stroke-width="4"/>
+  <path d="M134 327C119 456 111 603 103 734M296 327c15 126 23 273 31 402" fill="none" stroke="#b7ffff" stroke-opacity=".12" stroke-width="11"/>
+
+  <!-- Molten rivers are confined to the far edges to protect the orange memory cue. -->
+  <path d="M0 388c42 16 62 50 55 100-8 61-34 91-22 153 10 57 36 95 20 157-12 48-37 84-43 134H0Z" fill="#74190f"/>
+  <path d="M0 404c28 14 40 43 33 84-11 61-28 91-13 153 13 54 27 88 12 146-10 42-23 82-26 145H0Z" fill="url(#lv-magma)" opacity=".88"/>
+  <path d="M430 374c-39 24-54 62-47 110 8 58 31 91 19 145-14 61-35 99-21 163 11 48 31 90 36 140h13Z" fill="#7f1c11"/>
+  <path d="M430 400c-23 18-31 45-25 81 11 62 23 94 7 149-15 53-24 94-10 153 9 38 19 84 21 149h7Z" fill="url(#lv-magma)" opacity=".86"/>
+
+  <!-- Forge architecture and basalt spires frame the route. -->
+  <g>
+    <path d="M11 267h66v19H11Zm10 19h46v128H21Z" fill="#181d27"/>
+    <path d="M20 305h48" stroke="#65707e" stroke-width="6"/>
+    <path d="M353 254h67v19h-67Zm11 19h45v133h-45Z" fill="#171c26"/>
+    <path d="M363 292h47" stroke="#65707e" stroke-width="6"/>
+    <path d="M47 270v-48h16v48m304-11v-53h16v53" fill="none" stroke="#10151e" stroke-width="9"/>
+    <circle cx="55" cy="216" r="13" fill="#31414d" stroke="#61d5df" stroke-width="3"/>
+    <circle cx="375" cy="201" r="13" fill="#31414d" stroke="#61d5df" stroke-width="3"/>
+    <path d="M0 737 37 657l25 49 30-105 19 129-23 202H0Zm430 0-38-96-24 57-31-111-13 149 18 196h88Z" fill="#0a0e17"/>
+    <path d="m14 694 23-37 10 45m369-1-24-60-9 58" fill="none" stroke="#4f5a65" stroke-width="3" opacity=".55"/>
+  </g>
+
+  <!-- Ember moths remain peripheral. -->
+  <g fill="#ffbe48" opacity=".8">
+    <ellipse cx="50" cy="538" rx="6" ry="3" transform="rotate(-28 50 538)"/><ellipse cx="62" cy="536" rx="6" ry="3" transform="rotate(25 62 536)"/>
+    <ellipse cx="378" cy="560" rx="6" ry="3" transform="rotate(-22 378 560)"/><ellipse cx="390" cy="559" rx="6" ry="3" transform="rotate(28 390 559)"/>
+    <circle cx="56" cy="537" r="2"/><circle cx="384" cy="559" r="2"/>
+  </g>
+  <g fill="#e8fbff" opacity=".58">
+    <circle cx="190" cy="159" r="2"/><circle cx="248" cy="143" r="1.5"/><circle cx="272" cy="210" r="2"/><circle cx="157" cy="218" r="1.5"/>
+  </g>
+</svg>

@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 932" width="430" height="932" role="img" aria-label="Storm observatory spark grid world">
+  <defs>
+    <linearGradient id="grid-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#090b28"/>
+      <stop offset="0.46" stop-color="#2d225d"/>
+      <stop offset="1" stop-color="#151a52"/>
+    </linearGradient>
+    <radialGradient id="grid-storm" cx="54%" cy="38%" r="64%">
+      <stop offset="0" stop-color="#8c64ff" stop-opacity=".5"/>
+      <stop offset="0.48" stop-color="#4a2f86" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#090b28" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="grid-cloud" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a590d1"/>
+      <stop offset="0.5" stop-color="#4f437d"/>
+      <stop offset="1" stop-color="#231f56"/>
+    </linearGradient>
+    <linearGradient id="grid-ice" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#314a9e"/>
+      <stop offset="0.48" stop-color="#152b68"/>
+      <stop offset="1" stop-color="#07143d"/>
+    </linearGradient>
+    <linearGradient id="grid-copper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd07b"/>
+      <stop offset="0.27" stop-color="#c66e2f"/>
+      <stop offset="0.65" stop-color="#713225"/>
+      <stop offset="1" stop-color="#f0a44c"/>
+    </linearGradient>
+    <linearGradient id="grid-glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c9b3ff" stop-opacity=".82"/>
+      <stop offset="0.45" stop-color="#713cff" stop-opacity=".36"/>
+      <stop offset="1" stop-color="#31dfff" stop-opacity=".56"/>
+    </linearGradient>
+    <radialGradient id="grid-gold-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fff9bd"/>
+      <stop offset="0.35" stop-color="#ffd247"/>
+      <stop offset="1" stop-color="#ff8b2d" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="grid-vignette" cx="50%" cy="44%" r="76%">
+      <stop offset="0.5" stop-color="#08092d" stop-opacity="0"/>
+      <stop offset="1" stop-color="#030313" stop-opacity=".76"/>
+    </radialGradient>
+    <symbol id="grid-tower" viewBox="0 0 66 190">
+      <path d="M22 67h22l8 123H14Z" fill="url(#grid-copper)"/>
+      <path d="M18 61h30v13H18z" fill="#3a2141" stroke="#efa54d" stroke-width="3"/>
+      <path d="M27 24h12v39H27z" fill="url(#grid-copper)"/>
+      <ellipse cx="33" cy="23" rx="24" ry="9" fill="none" stroke="#e4a050" stroke-width="5"/>
+      <ellipse cx="33" cy="23" rx="8" ry="26" fill="none" stroke="#95502f" stroke-width="3"/>
+      <circle cx="33" cy="23" r="7" fill="#fff083"/>
+      <path d="M17 93h32M15 117h36M13 142h40" stroke="#4d2633" stroke-width="5"/>
+    </symbol>
+    <symbol id="grid-pine" viewBox="0 0 30 78">
+      <path d="m15 2-10 22h6L2 42h8L0 61h30L20 42h8l-9-18h6Z" fill="#101936"/>
+      <path d="M15 2 9 24h5L8 42h6L7 61h8Z" fill="#cad8ff" opacity=".7"/>
+      <path d="M12 61h6v17h-6z" fill="#402b3d"/>
+    </symbol>
+  </defs>
+
+  <rect width="430" height="932" fill="url(#grid-sky)"/>
+  <rect width="430" height="932" fill="url(#grid-storm)"/>
+  <path d="M-18 186Q215-45 448 186" fill="none" stroke="#c8e5ff" stroke-opacity=".28" stroke-width="7"/>
+  <path d="M3 163Q215-27 427 163" fill="none" stroke="#ffffff" stroke-opacity=".12" stroke-width="2"/>
+
+  <!-- Storm ceiling -->
+  <g fill="url(#grid-cloud)">
+    <ellipse cx="70" cy="164" rx="91" ry="52"/>
+    <ellipse cx="154" cy="137" rx="92" ry="59"/>
+    <ellipse cx="259" cy="150" rx="105" ry="67"/>
+    <ellipse cx="378" cy="162" rx="86" ry="52"/>
+  </g>
+  <g fill="#d8c7ff" opacity=".13"><ellipse cx="121" cy="122" rx="68" ry="24"/><ellipse cx="286" cy="125" rx="83" ry="27"/></g>
+  <path d="m89 178-22 52 22-12-15 45 48-70-25 8 17-38Z" fill="#dff9ff" opacity=".92"/>
+  <path d="m244 180-19 43 18-8-13 36 40-57-20 6 13-31Z" fill="#a9c7ff" opacity=".72"/>
+  <path d="m405 181-17 39 16-7-12 33 37-52-18 5 12-29Z" fill="#f2e8ff" opacity=".65"/>
+
+  <!-- Observatory destination in the upper third -->
+  <g>
+    <path d="M264 236q83-29 166 1v101H255Z" fill="url(#grid-ice)"/>
+    <path d="M263 231q85-32 167-2v18q-82-22-170 11Z" fill="#ced7ff" opacity=".72"/>
+    <path d="M300 191h101v70H300z" fill="#22234c" stroke="url(#grid-copper)" stroke-width="5"/>
+    <path d="M307 190a44 44 0 0 1 88 0Z" fill="url(#grid-glass)" stroke="url(#grid-copper)" stroke-width="5"/>
+    <path d="M320 190a31 31 0 0 1 62 0M351 148v43M322 174h59" fill="none" stroke="#f6b85a" stroke-opacity=".78" stroke-width="3"/>
+    <circle cx="351" cy="175" r="12" fill="#fff07e"/>
+    <circle cx="351" cy="175" r="43" fill="url(#grid-gold-glow)" opacity=".33"/>
+    <rect x="316" y="215" width="17" height="28" rx="7" fill="#ffc75e"/>
+    <rect x="369" y="215" width="17" height="28" rx="7" fill="#ffc75e"/>
+    <path d="M300 205h101M351 191v70" stroke="#c56c35" stroke-opacity=".72" stroke-width="3"/>
+  </g>
+
+  <!-- Quiet open cloud corridor for gameplay -->
+  <path d="M147 258c39 31 56 67 36 116-31 74-87 141-104 238-17 99 12 214 45 320h239c-28-103-17-201 0-294 19-104 0-204-56-278-38-50-22-81 23-106Z" fill="#25255b" opacity=".72"/>
+  <g fill="url(#grid-cloud)" opacity=".46">
+    <ellipse cx="143" cy="344" rx="73" ry="39"/><ellipse cx="272" cy="331" rx="82" ry="42"/>
+    <ellipse cx="111" cy="503" rx="67" ry="36"/><ellipse cx="311" cy="488" rx="91" ry="42"/>
+    <ellipse cx="139" cy="681" rx="94" ry="47"/><ellipse cx="314" cy="684" rx="88" ry="44"/>
+    <ellipse cx="176" cy="854" rx="118" ry="47"/><ellipse cx="328" cy="849" rx="96" ry="49"/>
+  </g>
+  <path d="M188 281c18 37 17 72-2 113-36 76-70 158-76 249-6 99 20 196 43 289" fill="none" stroke="#65ddff" stroke-opacity=".13" stroke-width="3"/>
+  <path d="M297 280c-25 46-24 89 6 137 42 68 51 150 38 242-13 95-12 181 3 273" fill="none" stroke="#b799ff" stroke-opacity=".14" stroke-width="2"/>
+
+  <!-- Floating copper instruments live at the edges -->
+  <g transform="translate(8 205)">
+    <ellipse cx="80" cy="42" rx="60" ry="20" fill="none" stroke="url(#grid-copper)" stroke-width="7" transform="rotate(-12 80 42)"/>
+    <ellipse cx="80" cy="42" rx="24" ry="58" fill="none" stroke="#a65b34" stroke-width="5" transform="rotate(30 80 42)"/>
+    <circle cx="80" cy="42" r="13" fill="#ffe26a"/>
+    <circle cx="80" cy="42" r="50" fill="url(#grid-gold-glow)" opacity=".26"/>
+  </g>
+  <use href="#grid-tower" x="-5" y="319" width="78" height="226"/>
+  <use href="#grid-tower" x="365" y="342" width="75" height="216"/>
+
+  <!-- Frostglass cliffs and copper circuitry frame the route -->
+  <path d="M0 310q52-31 127-9l-14 126-38 151-75 34Z" fill="url(#grid-ice)"/>
+  <path d="M0 304q57-33 132-10l-14 26q-62-16-118 15Z" fill="#d9e2ff" opacity=".72"/>
+  <path d="M19 359h56l17 58-25 81" fill="none" stroke="url(#grid-copper)" stroke-width="5"/>
+  <circle cx="75" cy="359" r="7" fill="#ffd769"/>
+  <circle cx="92" cy="417" r="7" fill="#ffd769"/>
+  <path d="M360 310q38-25 70-13v318l-85-18-26-104 26-109Z" fill="url(#grid-ice)"/>
+  <path d="M346 316q45-31 84-20v27q-40-5-78 23Z" fill="#d8e0ff" opacity=".72"/>
+  <path d="M409 362h-46l-17 66 22 83" fill="none" stroke="url(#grid-copper)" stroke-width="5"/>
+  <circle cx="363" cy="362" r="7" fill="#ffd769"/>
+  <circle cx="346" cy="428" r="7" fill="#ffd769"/>
+  <use href="#grid-pine" x="80" y="275" width="34" height="88"/>
+  <use href="#grid-pine" x="377" y="266" width="38" height="99"/>
+
+  <!-- Charged fireflies at the periphery -->
+  <g fill="#ffe66f">
+    <circle cx="52" cy="595" r="3"/><circle cx="89" cy="550" r="2"/><circle cx="375" cy="624" r="3"/><circle cx="403" cy="575" r="2"/>
+    <circle cx="47" cy="702" r="2"/><circle cx="386" cy="735" r="2.5"/>
+  </g>
+  <g stroke="#ffe66f" stroke-width="2" opacity=".75">
+    <path d="m52 585v20M42 595h20"/><path d="m375 614v20M365 624h20"/><path d="m386 726v18M377 735h18"/>
+  </g>
+
+  <!-- Foreground machinery -->
+  <path d="M0 608q52-29 101 8L81 932H0Z" fill="url(#grid-ice)"/>
+  <path d="M0 602q59-29 107 8L94 635q-49-26-94 2Z" fill="#d9e2ff" opacity=".68"/>
+  <path d="M430 608q-58-26-103 11l23 313h80Z" fill="url(#grid-ice)"/>
+  <path d="M430 603q-60-27-108 10l14 27q45-27 94-3Z" fill="#d7dfff" opacity=".68"/>
+  <use href="#grid-tower" x="-17" y="657" width="100" height="288"/>
+  <use href="#grid-tower" x="358" y="677" width="91" height="262"/>
+  <path d="M8 828h70l20 39h58M422 841h-67l-19 36h-56" fill="none" stroke="url(#grid-copper)" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="98" cy="867" r="10" fill="#ffe27a"/>
+  <circle cx="336" cy="877" r="10" fill="#ffe27a"/>
+  <path d="M0 877q73-34 140 5c59 34 104 31 156 0 48-29 91-29 134-9v59H0Z" fill="#b9b7e4" opacity=".37"/>
+  <path d="M0 906q81-25 151 6c54 24 101 18 148-5 50-25 91-18 131-4v29H0Z" fill="#55518d" opacity=".45"/>
+  <rect width="430" height="932" fill="url(#grid-vignette)" pointer-events="none"/>
+</svg>

@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 932" width="430" height="932" role="img" aria-label="Moonlit frozen lake world">
+  <defs>
+    <linearGradient id="lake-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#071227"/>
+      <stop offset="0.46" stop-color="#17335b"/>
+      <stop offset="1" stop-color="#0a607f"/>
+    </linearGradient>
+    <radialGradient id="lake-moon" cx="42%" cy="38%" r="58%">
+      <stop offset="0" stop-color="#fffbe0"/>
+      <stop offset="0.56" stop-color="#ffda8b"/>
+      <stop offset="1" stop-color="#ffb65c"/>
+    </radialGradient>
+    <linearGradient id="lake-water" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b5577"/>
+      <stop offset="0.52" stop-color="#073953"/>
+      <stop offset="1" stop-color="#031a34"/>
+    </linearGradient>
+    <linearGradient id="lake-ice" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8fbff"/>
+      <stop offset="0.34" stop-color="#83eaff"/>
+      <stop offset="1" stop-color="#13739c"/>
+    </linearGradient>
+    <linearGradient id="lake-cliff" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#42698a"/>
+      <stop offset="0.55" stop-color="#173d60"/>
+      <stop offset="1" stop-color="#09263f"/>
+    </linearGradient>
+    <linearGradient id="lake-snow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.52" stop-color="#cdefff"/>
+      <stop offset="1" stop-color="#76b9d6"/>
+    </linearGradient>
+    <linearGradient id="lake-cabin" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c4328"/>
+      <stop offset="1" stop-color="#301b24"/>
+    </linearGradient>
+    <radialGradient id="lake-lantern" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fffbd0"/>
+      <stop offset="0.42" stop-color="#ffc247"/>
+      <stop offset="1" stop-color="#ff8a2d" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lake-vignette" cx="50%" cy="45%" r="75%">
+      <stop offset="0.48" stop-color="#001628" stop-opacity="0"/>
+      <stop offset="1" stop-color="#010813" stop-opacity="0.72"/>
+    </radialGradient>
+    <symbol id="lake-pine" viewBox="0 0 34 88">
+      <path d="M16 4 5 26h7L2 45h10L0 68h32L21 45h10L21 26h7Z" fill="#0a2b41"/>
+      <path d="M16 4 10 26h5L8 45h7L7 67h9Z" fill="#e6f8ff" opacity=".84"/>
+      <path d="M14 68h6v20h-6z" fill="#472e29"/>
+    </symbol>
+  </defs>
+
+  <rect width="430" height="932" fill="url(#lake-sky)"/>
+  <path d="M-18 186Q215-45 448 186" fill="none" stroke="#b7eaff" stroke-opacity=".32" stroke-width="7"/>
+  <path d="M4 164Q215-27 426 164" fill="none" stroke="#ffffff" stroke-opacity=".14" stroke-width="2"/>
+  <circle cx="247" cy="135" r="56" fill="url(#lake-moon)" opacity=".94"/>
+  <circle cx="266" cy="119" r="57" fill="#112b50" opacity=".74"/>
+  <g fill="#d9f5ff" opacity=".9">
+    <circle cx="29" cy="92" r="1.5"/><circle cx="63" cy="53" r="1"/><circle cx="105" cy="118" r="1.8"/>
+    <circle cx="156" cy="59" r="1.3"/><circle cx="190" cy="149" r="1"/><circle cx="316" cy="62" r="1.4"/>
+    <circle cx="365" cy="112" r="1.1"/><circle cx="402" cy="57" r="1.7"/><circle cx="336" cy="168" r="1"/>
+  </g>
+  <g fill="#a7c8df" opacity=".7">
+    <path d="M0 255 42 191 77 238 116 176 166 249Z"/>
+    <path d="M242 248 294 171 335 231 365 186 430 253Z"/>
+  </g>
+  <path d="M0 256Q65 224 132 250T257 246T430 258V410H0Z" fill="#183a57"/>
+  <g opacity=".76">
+    <use href="#lake-pine" x="3" y="174" width="42" height="108"/>
+    <use href="#lake-pine" x="36" y="196" width="31" height="81"/>
+    <use href="#lake-pine" x="89" y="186" width="33" height="87"/>
+    <use href="#lake-pine" x="366" y="178" width="41" height="108"/>
+    <use href="#lake-pine" x="398" y="204" width="29" height="75"/>
+  </g>
+
+  <!-- Warm destination cabin in the upper third -->
+  <g>
+    <ellipse cx="337" cy="242" rx="80" ry="22" fill="#071b2b" opacity=".48"/>
+    <path d="M265 229Q329 209 407 227L430 286H265Z" fill="url(#lake-cliff)"/>
+    <path d="M260 224Q329 201 409 220L399 236Q337 224 269 241Z" fill="url(#lake-snow)"/>
+    <path d="M299 174h75v56h-75z" fill="url(#lake-cabin)"/>
+    <path d="m287 180 49-40 51 40-8 12-43-33-40 33Z" fill="#3b2530"/>
+    <path d="m288 177 48-40 51 40-11 1-40-28-38 29Z" fill="url(#lake-snow)"/>
+    <rect x="329" y="190" width="17" height="40" rx="3" fill="#2e1c25"/>
+    <rect x="306" y="189" width="15" height="17" rx="2" fill="#ffd36f"/>
+    <rect x="353" y="189" width="14" height="17" rx="2" fill="#ffd36f"/>
+    <path d="M313 189v17M360 189v17M306 197h15M353 197h14" stroke="#fff4bd" stroke-opacity=".5"/>
+    <rect x="362" y="143" width="8" height="30" rx="2" fill="#49303a"/>
+    <path d="M359 141h14l-3-8h-9Z" fill="url(#lake-snow)"/>
+    <circle cx="313" cy="197" r="30" fill="url(#lake-lantern)" opacity=".27"/>
+    <circle cx="360" cy="197" r="27" fill="url(#lake-lantern)" opacity=".24"/>
+  </g>
+
+  <!-- Open low-detail play corridor -->
+  <path d="M148 250C184 285 195 330 177 384 153 456 97 518 78 620 59 718 81 828 111 932H355c-16-94-3-184 3-269 7-103-6-194-51-270-38-65-25-107 17-143Z" fill="url(#lake-water)"/>
+  <path d="M185 264c23 39 24 77 8 118-35 91-82 176-87 272-5 96 17 181 39 278" fill="none" stroke="#50c9f0" stroke-opacity=".22" stroke-width="3"/>
+  <path d="M306 270c-30 57-32 108-9 161 33 78 42 162 30 251-12 88-17 164-2 250" fill="none" stroke="#97efff" stroke-opacity=".16" stroke-width="2"/>
+  <path d="M136 505c43 10 102 11 161-3M102 663c62 12 154 9 233-8M100 816c65 13 157 11 249-6" fill="none" stroke="#b7f4ff" stroke-opacity=".11" stroke-width="2"/>
+
+  <!-- Left waterfall and ice shelf -->
+  <path d="M0 242Q51 218 128 239l4 118-36 133-96 38Z" fill="url(#lake-cliff)"/>
+  <path d="M0 237Q55 208 132 231l-17 24Q51 246 0 271Z" fill="url(#lake-snow)"/>
+  <path d="M58 252c27 4 50 1 64-6l-5 131c-2 52-20 85-47 116l-28-17c22-39 28-71 25-115Z" fill="url(#lake-ice)"/>
+  <path d="M76 258c12 2 22 0 31-3l-8 122c-3 37-10 66-31 96" fill="none" stroke="#e6fbff" stroke-opacity=".82" stroke-width="7"/>
+  <path d="M35 489c25 13 64 16 94-5" fill="none" stroke="#7eeaff" stroke-opacity=".58" stroke-width="5"/>
+
+  <!-- Right icy ledges -->
+  <path d="M350 300Q399 275 430 286V587l-79 10-31-91 22-87Z" fill="url(#lake-cliff)"/>
+  <path d="M338 311q46-34 92-26v29q-35-8-85 23Z" fill="url(#lake-snow)"/>
+  <path d="M364 313l7 33 8-24 9 39 8-48 9 31 8-42" fill="none" stroke="#98e7ff" stroke-width="5" stroke-linecap="round"/>
+  <use href="#lake-pine" x="383" y="231" width="41" height="107"/>
+  <use href="#lake-pine" x="351" y="264" width="28" height="75"/>
+
+  <!-- Subtle wildlife beneath the ice, kept to the edge -->
+  <g opacity=".18" fill="#56b5d3">
+    <path d="M341 693c26-24 59-15 68 7 8 18-8 33-29 34-18 1-30-10-39-21l-23 15 5-25-15-16 29 8Z"/>
+    <path d="M395 698q24-14 35-1-19 3-27 15Z"/>
+    <circle cx="395" cy="700" r="2.5" fill="#d8fbff"/>
+  </g>
+
+  <!-- Framing snowbanks and warm edge lights -->
+  <path d="M0 609q44-24 91 7L73 932H0Z" fill="url(#lake-cliff)"/>
+  <path d="M0 602q49-22 98 4l-15 31q-42-20-83 6Z" fill="url(#lake-snow)"/>
+  <use href="#lake-pine" x="2" y="529" width="65" height="169"/>
+  <use href="#lake-pine" x="50" y="570" width="36" height="95"/>
+  <path d="M430 593q-53-13-92 25l19 314h73Z" fill="url(#lake-cliff)"/>
+  <path d="M430 587q-55-14-97 25l14 27q42-30 83-11Z" fill="url(#lake-snow)"/>
+  <use href="#lake-pine" x="371" y="520" width="58" height="153"/>
+  <use href="#lake-pine" x="343" y="572" width="39" height="103"/>
+  <g>
+    <circle cx="50" cy="736" r="42" fill="url(#lake-lantern)" opacity=".34"/>
+    <path d="M43 719h14v30H43z" fill="#583328"/><rect x="46" y="724" width="8" height="15" rx="2" fill="#ffd163"/>
+    <path d="m40 720 10-9 10 9M50 749v26" fill="none" stroke="#281c22" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="387" cy="786" r="49" fill="url(#lake-lantern)" opacity=".4"/>
+    <path d="M379 765h16v34h-16z" fill="#583328"/><rect x="382" y="771" width="10" height="17" rx="2" fill="#ffd163"/>
+    <path d="m376 766 11-10 11 10M387 799v28" fill="none" stroke="#281c22" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <path d="M0 870q68-33 137 5c57 31 104 31 157 5 48-24 92-27 136-6v58H0Z" fill="#d8f4ff" opacity=".68"/>
+  <path d="M0 900q85-29 154 6c55 28 98 19 147-3 47-20 89-17 129-2v31H0Z" fill="#79bcd4" opacity=".54"/>
+  <rect width="430" height="932" fill="url(#lake-vignette)" pointer-events="none"/>
+</svg>
