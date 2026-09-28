@@ -542,17 +542,75 @@ body.destination-open .app{opacity:0;pointer-events:none}
 #buyOv{z-index:26}
 /* v0.10: streaks, Daily Glow, friends, glow moods, star doors */
 #heroCrumb .cb-flame{scale:var(--fs,1)}
+/* v0.10.2 mailbox */
+.rail-btn .badge{position:absolute;top:2px;right:3px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#ff4d5c;color:#fff;font:800 11px/18px var(--ui);font-style:normal;box-shadow:0 0 0 2px rgba(3,10,22,.85)}
+.mail-card{display:grid;grid-template-rows:auto auto minmax(0,1fr);max-height:calc(100dvh - 32px)}
+.mail-list{overflow:auto;display:grid;gap:8px;align-content:start;min-height:120px;padding-bottom:4px}
+.mail-item{display:grid;grid-template-columns:10px 1fr auto;gap:8px;align-items:center;width:100%;min-height:56px;padding:8px 10px;border:1.5px solid var(--line);border-radius:12px;background:rgba(3,10,22,.35);color:var(--text);text-align:left;cursor:pointer;font-family:var(--ui)}
+.mail-item .u{width:9px;height:9px;border-radius:50%;background:transparent}.mail-item.unread .u{background:#ffb23e}.mail-item.unread b{color:#ffe3a8}
+.mail-item b{display:block;font-size:14px}.mail-item small{display:block;font-size:12px;color:#b8ccda;margin-top:2px}
+.mail-item .gift{font:800 11.5px var(--ui);padding:3px 8px;border-radius:99px;background:rgba(255,178,62,.18);color:#ffd08a;white-space:nowrap}
+.mail-item .gift.got{background:rgba(63,207,142,.15);color:#8de7bd}
+.mail-empty{color:#b8ccda;font-size:14px;text-align:center;padding:24px 8px}
+.mail-view{overflow:auto;display:grid;gap:8px;align-content:start;text-align:left}
+.mv-back{justify-self:start;min-height:40px;padding:0}
+.mail-view h3{margin:0;font-size:19px}.mv-date{margin:0;color:#b8ccda;font-size:12.5px}
+.mv-body{white-space:pre-wrap;font-size:14.5px;line-height:1.5}
+.mv-reward{display:grid;grid-template-columns:44px 1fr;gap:8px 10px;align-items:center;padding:10px;border:1.5px solid #ffb23e;border-radius:12px;background:rgba(255,178,62,.08)}
+.mv-reward .btn{grid-column:1/-1}.mv-art{width:44px;height:44px;display:grid;place-items:center}.mv-art svg{width:44px;height:44px}
+/* v0.10.2 profiles and friend requests */
+.lb-row.tap{cursor:pointer}.lb-row.tap:active{background:rgba(255,178,62,.12)}.lb-row.tap:focus-visible{outline:3px solid #fff;outline-offset:1px}
+.pf-sub{margin:2px 0 10px;color:#b8ccda;font-size:13.5px}
+.pf-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 12px}
+.pf-stats div{border:1.5px solid var(--line);border-radius:12px;padding:8px 4px;background:rgba(3,10,22,.35)}
+.pf-stats dt{font-size:11px;color:#b8ccda;margin:0}.pf-stats dd{margin:2px 0 0;font:400 20px var(--display)}
+.lb-reqs{margin:0 0 10px;padding:8px 10px;border:1.5px solid #ffb23e;border-radius:12px;background:rgba(255,178,62,.08)}
+.lb-reqs h3{margin:0 0 6px;font-size:13px;color:#ffe3a8}
+.req{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:6px;padding:4px 0}
+.req .who{border:0;background:none;color:var(--text);text-align:left;font:800 14px var(--ui);padding:0;cursor:pointer;min-height:40px}
+.req .who small{display:block;font-weight:600;font-size:11.5px;color:#b8ccda}
+.req .ok,.req .no{min-height:40px;padding:0 12px;border-radius:10px;font:800 13px var(--ui);cursor:pointer}
+.req .ok{border:0;background:#ffb23e;color:#2b1700}.req .no{border:1.5px solid var(--line);background:none;color:var(--text)}
+.tab-b .badge.soft{background:#3d8fe0}
+/* v0.10.1 home: rails, next reward and a tab bar (after the Clash Royale review, without the overload) */
+.title-scene.home{grid-template-rows:auto minmax(0,1fr) auto auto;grid-template-columns:minmax(0,1fr);padding-bottom:0}
+.home .title-top{min-width:0;gap:8px}.home .title-lockup{min-width:0}
+.home-wallet{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 13px 0 8px;border-radius:14px;border:1px solid rgba(255,178,62,.6);background:rgba(3,10,22,.58);color:var(--text);cursor:pointer;box-shadow:0 5px 16px rgba(0,0,0,.25)}
+.home-wallet svg{width:24px;height:24px}.home-wallet b{font-family:var(--display);font-weight:400;font-size:19px}
+.home-mid{display:grid;grid-template-columns:64px minmax(0,1fr) 64px;align-items:center;gap:4px;min-height:0}
+.rail{display:grid;gap:10px;align-content:center}
+.rail-btn{position:relative;display:grid;justify-items:center;gap:1px;width:64px;padding:7px 2px 8px;border:1px solid rgba(234,244,251,.24);border-radius:16px;background:rgba(3,10,22,.58);color:var(--text);cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.rail-btn .rail-ic{position:relative;width:34px;height:34px;display:grid;place-items:center;color:var(--hud-accent)}.rail-btn .rail-ic svg{width:28px;height:28px}
+.rail-btn b{font-size:10.5px;line-height:1.15;text-align:center}
+.rail-btn small{font-size:9.5px;line-height:1.2;color:#b8ccda;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rail-btn .dot,.tab-b .dot{position:absolute;top:5px;right:7px;width:10px;height:10px;border-radius:50%;background:#ff4d5c;box-shadow:0 0 0 2px rgba(3,10,22,.85)}
+.rail-btn.risk{border-color:#ffb23e;box-shadow:0 0 0 2px rgba(255,178,62,.28),0 6px 18px rgba(0,0,0,.25)}.rail-btn.risk small{color:#ffd08a}.rail-btn.done small{color:#8de7bd}
+.rail-ic.flame svg{width:32px;height:32px}.rail-ic.flame em{position:absolute;left:0;right:0;bottom:1px;text-align:center;font:400 13px var(--display);font-style:normal;color:#3a1602}
+.home-center{position:relative;display:grid;justify-items:center;align-content:center;min-height:0;min-width:0}
+.next-reward{position:relative;z-index:2;display:grid;grid-template-columns:auto 36px;column-gap:8px;align-items:center;text-align:left;padding:6px 8px 6px 11px;margin-bottom:-4px;max-width:100%;border:2px solid #ffb23e;border-radius:14px;background:#fff7e3;color:#3a2200;cursor:pointer;box-shadow:0 4px 0 #c47f00}
+.next-reward::after{content:"";position:absolute;left:50%;bottom:-8px;width:12px;height:12px;background:#fff7e3;border-right:2px solid #ffb23e;border-bottom:2px solid #ffb23e;transform:translateX(-50%) rotate(45deg)}
+.nr-k{grid-column:1;font:800 9.5px var(--ui);letter-spacing:.09em;text-transform:uppercase;color:#9d570e}
+.nr-t{grid-column:1;font:800 13.5px/1.2 var(--ui)}
+.nr-art{grid-column:2;grid-row:1/3;width:36px;height:36px;display:grid;place-items:center}.nr-art svg{width:36px;height:36px}
+.home .title-character{padding:0}.home .title-character::after{display:none}
+#startOv .home .hero{width:clamp(150px,min(58vw,31vh),280px);height:clamp(150px,min(58vw,31vh),280px);margin:0}
+.floe{width:min(60vw,250px);height:40px;margin-top:-30px;border-radius:50%;background:radial-gradient(ellipse at 50% 38%,rgba(238,248,255,.62),rgba(160,212,242,.3) 52%,rgba(3,10,22,0) 72%)}
+.nr-row{display:flex;align-items:center;gap:7px;margin-top:4px}.nr-n{font:800 12px var(--ui);color:#ffe3a8;text-shadow:0 1px 4px #020710;white-space:nowrap}
+.nr-bar{width:min(42vw,180px);height:9px;border-radius:99px;background:rgba(3,10,22,.62);border:1px solid rgba(234,244,251,.25);overflow:hidden}.nr-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#ffb23e,#ffe3a8)}
+.home .title-bottom{gap:8px;padding-top:6px}
+.tabbar{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;margin:8px calc(-1*max(20px,env(safe-area-inset-right,0px))) 0 calc(-1*max(20px,env(safe-area-inset-left,0px)));padding:4px 6px max(6px,env(safe-area-inset-bottom,0px));background:rgba(3,10,22,.86);border-top:1px solid rgba(234,244,251,.16)}
+.tab-b{position:relative;display:grid;justify-items:center;gap:2px;min-height:54px;padding:5px 2px 3px;border:0;background:none;color:#b8ccda;cursor:pointer;font-family:var(--ui)}
+.tab-b span{display:grid;place-items:center;width:30px;height:30px}.tab-b span svg{width:25px;height:25px}
+.tab-b b{font-size:11px;line-height:1.1}
+.tab-b.home-tab{margin-top:-22px}.tab-b.home-tab span{width:60px;height:56px;border-radius:18px;background:linear-gradient(180deg,#ffcf6b,#ffb23e);box-shadow:0 4px 0 #9d570e,0 8px 18px rgba(0,0,0,.3)}
+.tab-b.home-tab span svg{width:50px;height:50px}.tab-b.on b{color:#ffe3a8}
+.tab-b .badge{position:absolute;top:1px;left:calc(50% + 6px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#ff4d5c;color:#fff;font:800 11px/18px var(--ui);font-style:normal;box-shadow:0 0 0 2px rgba(3,10,22,.85)}
+.title-icon:focus-visible,.rail-btn:focus-visible,.tab-b:focus-visible,.home-wallet:focus-visible,.next-reward:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media (max-height:700px){.home-mid{grid-template-columns:58px minmax(0,1fr) 58px}.rail-btn{width:58px;padding:5px 1px 6px}.rail-btn small{display:none}.rail{gap:7px}#startOv .home .hero{width:clamp(120px,36vw,160px);height:clamp(120px,36vw,160px)}.floe{height:30px;margin-top:-24px}.home .title-play{min-height:54px}.tab-b{min-height:48px}.tab-b.home-tab span{width:52px;height:48px}}
+@media (max-width:370px){.home-wallet{padding:0 9px 0 6px}.home-wallet b{font-size:16px}.home .title-lockup .wordmark{font-size:clamp(21px,6.9vw,25px)}.home .title-zone{font-size:10px;letter-spacing:.12em}.home-mid{grid-template-columns:56px minmax(0,1fr) 56px;gap:3px}.rail-btn{width:56px}.nr-t{font-size:12px}.next-reward{grid-template-columns:minmax(0,auto) 28px;padding:5px 6px 5px 9px}.nr-art,.nr-art svg{width:28px;height:28px}}
+
 .hot1 .blob .cb-flame{scale:1.18}.hot2 .blob .cb-flame{scale:1.32}.hot3 .blob .cb-flame{scale:1.46;filter:drop-shadow(0 0 5px #ffb23e)}
-.title-streak{margin-top:9px;display:inline-grid;grid-template-columns:26px auto;align-items:center;gap:6px;min-height:44px;padding:4px 12px 4px 6px;border:1px solid rgba(255,178,62,.45);border-radius:14px;background:rgba(3,10,22,.5);color:var(--text);text-align:left;cursor:pointer;justify-self:start}
-.title-streak .ts-flame svg{width:26px;height:26px;display:block}
-.title-streak b{display:block;font-size:14px;line-height:1.1}.title-streak small{display:block;font-size:11px;color:#b8ccda}
-.title-streak.risk{border-color:#ffb23e;box-shadow:0 0 0 2px rgba(255,178,62,.25)}.title-streak.risk small{color:#ffd08a}
-.title-streak.done small{color:#8de7bd}
 .title-challenge{width:100%;min-height:44px;border:1px dashed rgba(255,178,62,.7);border-radius:12px;background:rgba(3,10,22,.55);color:#ffe3a8;font:800 13.5px var(--ui);padding:8px 12px;cursor:pointer}
-.title-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
-.title-shortcut{position:relative;grid-template-columns:1fr!important;justify-items:center;text-align:center!important;padding:8px 4px!important;gap:3px}
-.title-shortcut small{max-width:100%}
-.title-shortcut .dot{position:absolute;top:7px;right:12px;width:9px;height:9px;border-radius:50%;background:#ff4d5c;box-shadow:0 0 0 2px rgba(3,10,22,.8)}
 .streakline{margin:4px 0 0;font-weight:800;color:#ffd08a}
 .daily-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:6px auto 10px;max-width:280px}
 .daily-grid i{width:20px;height:20px;border-radius:5px;background:rgba(143,168,201,.2)}
@@ -690,27 +748,43 @@ body.destination-open .app{opacity:0;pointer-events:none}
 </div>
 
 <div class="ov" id="startOv" role="dialog" aria-modal="true" aria-labelledby="startTitle">
-  <div class="title-scene">
+  <div class="title-scene home">
     <div class="title-top">
       <div class="title-lockup">
         <div class="wordmark" id="startTitle">Crumble<span>Recall</span></div>
         <div class="title-zone" id="titleZone">Frozen Lake · Floor 1</div>
-        <button class="title-streak" id="streakBtn" type="button"><span class="ts-flame"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="url(#cbFlame)" d="M12 22c-4.4 0-7-2.8-7-6.4 0-3.1 2-5.2 3.4-7 .3 1.7 1.2 2.6 2.1 2.2.5-2.9 2.4-5.4 4.6-6.8-.6 2.6.6 4.2 1.8 5.9 1.2 1.7 2.1 3.4 2.1 5.7 0 3.6-2.6 6.4-7 6.4z"/><path fill="#ffe9bd" d="M12 20.2c-1.9 0-3.1-1.2-3.1-2.8 0-1.4.9-2.4 1.6-3.2.2.8.7 1.2 1.2 1 .3-1.3 1.1-2.4 2-3-.2 1.2.4 2 .9 2.8.5.8.9 1.5.9 2.5 0 1.6-1.2 2.7-3.5 2.7z"/></svg></span><span><b>Start a streak</b><small>Clear a floor each day</small></span></button>
       </div>
-      <button class="title-icon" id="startBoard" type="button" aria-label="World leaderboard" hidden></button>
+      <button class="home-wallet" id="homeWallet" type="button" aria-label="Crumble Tokens. Open the shop"><svg class="coin" id="homeCoin" viewBox="0 0 24 24" aria-hidden="true"></svg><b id="homeTokens">0</b></button>
     </div>
-    <div class="title-character"><div class="hero" id="heroCrumb"></div></div>
+    <div class="home-mid">
+      <div class="rail rail-l">
+        <button class="rail-btn" id="dailyBtn" type="button"><span class="rail-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></span><b>Daily Glow</b><small id="dailySub">3 tries</small><i class="dot" id="dailyDot" hidden></i></button>
+        <button class="rail-btn" id="drawBtn" type="button"><span class="rail-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 3v7M12 14v7M3 12h7M14 12h7M5.6 5.6l5 5M13.4 13.4l5 5M18.4 5.6l-5 5M10.6 13.4l-5 5"/></svg></span><b>Daily draw</b><small id="drawSub">Free</small><i class="dot" id="drawDot" hidden></i></button>
+        <button class="rail-btn" id="doorBtn" type="button" hidden><span class="rail-ic" id="doorIc"></span><b>Star door</b><small id="doorSub">Open</small><i class="dot"></i></button>
+      </div>
+      <div class="home-center">
+        <button class="next-reward" id="nextReward" type="button" hidden><span class="nr-k">Next reward</span><span class="nr-t" id="nrText"></span><span class="nr-art" id="nrArt"></span></button>
+        <div class="title-character"><div class="hero" id="heroCrumb"></div></div>
+        <div class="floe" aria-hidden="true"></div>
+        <div class="nr-row" id="nrBar" aria-hidden="true" hidden><div class="nr-bar"><i id="nrFill"></i></div><span class="nr-n" id="nrN"></span></div>
+      </div>
+      <div class="rail rail-r">
+        <button class="rail-btn" id="streakBtn" type="button"><span class="rail-ic flame"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="url(#cbFlame)" d="M12 22c-4.4 0-7-2.8-7-6.4 0-3.1 2-5.2 3.4-7 .3 1.7 1.2 2.6 2.1 2.2.5-2.9 2.4-5.4 4.6-6.8-.6 2.6.6 4.2 1.8 5.9 1.2 1.7 2.1 3.4 2.1 5.7 0 3.6-2.6 6.4-7 6.4z"/><path fill="#ffe9bd" d="M12 20.2c-1.9 0-3.1-1.2-3.1-2.8 0-1.4.9-2.4 1.6-3.2.2.8.7 1.2 1.2 1 .3-1.3 1.1-2.4 2-3-.2 1.2.4 2 .9 2.8.5.8.9 1.5.9 2.5 0 1.6-1.2 2.7-3.5 2.7z"/></svg><em id="streakN">0</em></span><b>Streak</b><small id="streakSub">Start today</small></button>
+        <button class="rail-btn" id="startBoard" type="button"><span class="rail-ic" id="rankIc"></span><b>Ranks</b><small id="rankSub">World</small></button>
+        <button class="rail-btn" id="mailBtn" type="button" aria-label="Mailbox"><span class="rail-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M4 7.5l8 6 8-6"/></svg></span><b>Mail</b><small id="mailSub">Inbox</small><i class="badge" id="mailBadge" hidden></i></button>
+      </div>
+    </div>
     <div class="title-bottom">
-      <p class="title-prompt"><span>Watch.</span> Remember. Hop before the world gives way.</p>
       <button class="title-challenge" id="titleChallenge" type="button" hidden></button>
       <button class="btn gold title-play" id="playBtn" type="button">Continue journey<small id="playSub">Floor 1</small></button>
-      <div class="title-shortcuts">
-        <button class="title-shortcut" id="mapBtn" type="button"><span class="title-shortcut-icon" aria-hidden="true">✦</span><span><strong>Journey</strong><small id="mapSub">Replay for stars</small></span></button>
-        <button class="title-shortcut" id="dailyBtn" type="button"><span class="title-shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></span><span><strong>Daily Glow</strong><small id="dailySub">New every day</small></span><i class="dot" id="dailyDot" hidden></i></button>
-        <button class="title-shortcut" id="storeBtn" type="button"><span class="title-shortcut-icon" id="shopIcon" aria-hidden="true"></span><span><strong>Shop</strong><small>Friends, skins &amp; gear</small></span></button>
-      </div>
-      <p class="title-build">v0.10 playtest · sound turns each path into a melody</p>
     </div>
+    <nav class="tabbar" aria-label="Main">
+      <button class="tab-b" id="storeBtn" type="button"><span id="shopIcon" aria-hidden="true"></span><b>Shop</b><i class="dot" id="shopDot" hidden></i></button>
+      <button class="tab-b" id="crewBtn" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.8l-4.8 2.6.9-5.4-3.9-3.8 5.4-.8z"/></svg></span><b>Crew</b></button>
+      <button class="tab-b home-tab on" id="homeTab" type="button" aria-current="page"><span id="homeIc" aria-hidden="true"></span><b>Home</b></button>
+      <button class="tab-b" id="friendsBtn" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.4"/><path d="M2.8 20c.6-3.6 3.1-5.6 6.2-5.6s5.6 2 6.2 5.6"/><circle cx="17" cy="9" r="2.6"/><path d="M16.2 14.5c2.6.1 4.4 1.8 5 4.6"/></svg></span><b>Friends</b><i class="badge" id="friendsBadge" hidden></i></button>
+      <button class="tab-b" id="mapBtn" type="button"><span id="mapIc" aria-hidden="true"></span><b>Journey</b><small id="mapSub" hidden></small></button>
+    </nav>
   </div>
 </div>
 
@@ -777,6 +851,7 @@ body.destination-open .app{opacity:0;pointer-events:none}
     <div class="lb-tabs" id="boardTabs" role="tablist"><button type="button" role="tab" data-b="world" class="on" aria-selected="true">World</button><button type="button" role="tab" data-b="friends" aria-selected="false">Friends</button><button type="button" role="tab" data-b="daily" aria-selected="false">Daily Glow</button></div>
     <p id="boardSub">Highest floor cleared. Ties go to more stars, then whoever got there first.</p>
     <div class="lb-cols" id="boardCols" aria-hidden="true" hidden><span>#</span><span></span><span>Player</span><span id="boardColA">Floor</span><span id="boardColB">★</span></div>
+    <div class="lb-reqs" id="boardReqs" hidden></div>
     <ol class="lb-list" id="boardList" aria-live="polite"></ol>
     <ol class="lb-list lb-pin" id="boardMe" aria-label="Your rank" hidden></ol>
     <button class="btn gold" id="boardInvite" type="button" hidden>Invite a friend</button>
@@ -815,7 +890,7 @@ body.destination-open .app{opacity:0;pointer-events:none}
     <div class="row2"><button class="chip" id="musicBtn" type="button" aria-pressed="true"></button><button class="chip" id="soundBtn" type="button" aria-pressed="true"></button></div>
     <button class="chip wide" id="cbBtn" type="button" aria-pressed="false"></button>
     <button class="btn textlink" id="menuExit" type="button">Exit to title</button>
-    <p class="fine">Your progress is saved on this phone.</p>
+    <p class="fine" id="menuFine">Your progress is saved on this phone.</p>
   </div>
 </div>
 
@@ -912,6 +987,36 @@ body.destination-open .app{opacity:0;pointer-events:none}
     <ol class="stk-track" id="stkTrack"></ol>
     <p class="fine" id="stkCoals"></p>
     <button class="btn gold" id="stkOk" type="button">Keep going</button>
+  </div>
+</div>
+
+<div class="ov" id="mailOv" role="dialog" aria-modal="true" aria-labelledby="mailTitle" hidden>
+  <div class="card mail-card">
+    <div class="lb-head"><h2 id="mailTitle">Mailbox</h2><button class="chip icon" id="mailClose" type="button" aria-label="Close"></button></div>
+    <div class="lb-tabs" id="mailTabs" role="tablist"><button type="button" role="tab" data-m="unread" class="on" aria-selected="true">Unread</button><button type="button" role="tab" data-m="read" aria-selected="false">Read</button><button type="button" role="tab" data-m="archived" aria-selected="false">Archived</button></div>
+    <div class="mail-list" id="mailList"></div>
+    <div class="mail-view" id="mailView" hidden>
+      <button class="btn textlink mv-back" id="mvBack" type="button">‹ Back</button>
+      <h3 id="mvTitle"></h3>
+      <p class="mv-date" id="mvDate"></p>
+      <div class="mv-body" id="mvBody"></div>
+      <div class="mv-reward" id="mvReward" hidden><span class="mv-art" id="mvArt"></span><b id="mvRewardName"></b><button class="btn gold" id="mvCollect" type="button">Collect</button></div>
+      <button class="btn line" id="mvArchive" type="button">Archive</button>
+      <p class="fine" id="mvNote"></p>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="profileOv" role="dialog" aria-modal="true" aria-labelledby="pfName" hidden>
+  <div class="card center">
+    <button class="chip icon corner" id="pfClose" type="button" aria-label="Close"></button>
+    <div class="hero sm" id="pfArt"></div>
+    <h2 id="pfName">Player</h2>
+    <p class="pf-sub" id="pfSub"></p>
+    <dl class="pf-stats" id="pfStats"></dl>
+    <button class="btn gold" id="pfAction" type="button">Add friend</button>
+    <button class="btn line" id="pfDecline" type="button" hidden>Decline</button>
+    <p class="fine" id="pfNote">Friends see each other on the Friends board.</p>
   </div>
 </div>
 
@@ -1305,6 +1410,16 @@ function noise(dur,freq,vol,sweep,type){rec('noise',arguments);if(S.muted)return
   var s=a.createBufferSource();s.buffer=buf;var f=a.createBiquadFilter();f.type=type||'lowpass';var t=a.currentTime+AT;f.frequency.setValueAtTime(freq,t);if(sweep)f.frequency.exponentialRampToValueAtTime(sweep,t+dur);var g=a.createGain();g.gain.value=vol;s.connect(f);f.connect(g);g.connect(AUD.sfx);s.start(t)}
 var PENT=[0,2,4,7,9,12,14,16,19,21,24,26];
 function noteFor(i){var n=G.n,r=Math.floor(i/n),c=i%n;return 293.66*Math.pow(2,PENT[(r*2+c)%12]/12)}
+function panFor(i){return G.n>1?(i%G.n)/(G.n-1)*1.5-0.75:0}
+/* Glow flow: each tile's note is panned by its column, glides in from just below the pitch, and swells and brightens along the path,
+   with a soft fifth underneath past the halfway point, so the glow plays as one rising phrase. j: position in the path, len: path length. */
+function flowNote(f,pan,j,len,dur){rec('flow',arguments);if(S.muted)return;var a=audio();if(!a)return;
+  var t=a.currentTime+AT,k=len>1?j/(len-1):1,vol=0.12+0.08*k,d=dur||0.42,out=a.createGain(),p=a.createStereoPanner?a.createStereoPanner():null;
+  if(p){p.pan.value=Math.max(-0.8,Math.min(0.8,pan||0));out.connect(p);p.connect(AUD.sfx)}else out.connect(AUD.sfx);
+  function osc(type,f0,f1,v,len2){var o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(f0,t);if(f1!==f0)o.frequency.exponentialRampToValueAtTime(f1,t+0.06);
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+0.014);g.gain.exponentialRampToValueAtTime(0.0001,t+len2);o.connect(g);g.connect(out);o.start(t);o.stop(t+len2+0.05)}
+  osc('sine',f*0.94,f,vol,d);osc('triangle',f*2,f*2,0.018+0.045*k,d*0.55);if(k>0.45)osc('sine',f*1.5,f*1.5,vol*0.22*k,d*0.8);
+}
 var sfx={
   crack:function(){noise(0.07,4200,0.1)},
   hup:function(){blip(520,860,0.07,0.06)},                                        // Crumb's little hop voice
@@ -1499,7 +1614,7 @@ function restore(idx){var t=G.tiles[idx];if(!t)return;t.classList.remove('sunk',
 /* ---------- Flow ---------- */
 function prepareLevel(){
   var P=G.mode?modeParams():params(G.L);G.n=P.n;G.life=P.life;G.blink=P.blink;G.path=makePath(G.mode?modeSeed():G.L,P.n,P.hops,G.mode?0:(G.variant|0));
-  G.step=0;G.rewindUsed=false;G.replayUsed=!!G.mode;G.assists=0;
+  G.step=0;G.rewindUsed=false;G.replayUsed=!!G.mode;G.assists=0;G.forgiven=0;
   sizeBoard();buildBoard();lvlEl.textContent=G.mode==='daily'?'#'+dailyNum():(G.mode==='door'?'★':G.L);$('floorK').textContent=G.mode==='daily'?'Daily':(G.mode==='door'?'Door':'Floor');
   renderDots();meterSet(1);updateReplayLabel();if(G.mode)replayBtn.innerHTML='Replay the glow<small>Off on special floors</small>';placeBlob(G.path[0]);mood('idle');eyes(crumb,0,0);applyWorld();
 }
@@ -1525,9 +1640,9 @@ function watch(from,done){
   var tok=++G.tok,seq=G.path.slice(from),j=0;if(M==='backwards')seq.reverse();
   function next(){
     if(tok!==G.tok)return;
-    if(j>=seq.length){setTimeout(function(){if(tok===G.tok){eyes(crumb,0,0);done()}},300);return}
+    if(j>=seq.length){if(M!=='hush'&&seq.length){var lf=noteFor(seq[seq.length-1]);tone(lf*2,0.5,'sine',0.045,0.12)}setTimeout(function(){if(tok===G.tok){eyes(crumb,0,0);done()}},300);return}   // a soft high note: your turn
     var b=M==='rush'?Math.round(G.blink*(1.35-0.65*(seq.length>1?j/(seq.length-1):0))):G.blink,on=Math.round(b*0.68),off=b-on;   // Rush: 1.35x slower at the start, 0.7x at the end
-    var i=seq[j],t=G.tiles[i];t.classList.add('glow');if(M!=='hush')tone(noteFor(i));lookAt(i);
+    var i=seq[j],t=G.tiles[i];t.classList.add('glow');if(M!=='hush')flowNote(noteFor(i),panFor(i),j,seq.length,Math.max(0.3,b/1000*0.9));lookAt(i);
     setTimeout(function(){t.classList.remove('glow');j++;setTimeout(next,off)},on);
   }
   setTimeout(next,450);
@@ -1535,8 +1650,8 @@ function watch(from,done){
 function beginHop(grace){
   var t=G.tiles[G.path[G.step]];t.dataset.crack='0';t.classList.remove('shake');
   setPhase('hop');mood('hop');G.warned=false;setStatus(G.L===1&&G.step===0?'Your turn. Hop '+charName()+' to the first tile that glowed.':'Hop in the same order');
-  G.curLife=G.world==='lava'?(G.path.length-1-G.step)*G.life*0.72+(grace||0):G.life+(grace||0);
-  G.base=G.world==='lava'?G.curLife:(G.world==='dunes'?G.life*1.5:G.life);G.tileStart=performance.now();if(!G.hopStart)G.hopStart=G.tileStart;hopStarted();cancelAnimationFrame(G.raf);G.raf=requestAnimationFrame(tick);
+  var nf=nmFactor(G.step);G.curLife=G.world==='lava'?(G.path.length-1-G.step)*G.life*0.72+(grace||0):G.life*nf+(grace||0);
+  G.base=G.world==='lava'?G.curLife:(G.world==='dunes'?G.life*1.5:G.life*nf);G.tileStart=performance.now();if(!G.hopStart)G.hopStart=G.tileStart;hopStarted();cancelAnimationFrame(G.raf);G.raf=requestAnimationFrame(tick);
 }
 function tick(now){
   if(G.phase!=='hop')return;
@@ -1558,13 +1673,13 @@ board.addEventListener('click',function(e){
   var i=+t.dataset.i,cur=G.path[G.step];if(i===cur||t.classList.contains('sunk'))return;
   G.taps++;if(!G.firstTap&&G.hopStart)G.firstTap=Math.round(performance.now()-G.hopStart);
   if(!adjacent(cur,i,G.n)){G.far++;t.classList.remove('nope');void t.offsetWidth;t.classList.add('nope');setStatus('Too far. Hop to a touching tile.','bad');return}
-  if(i===G.path[G.step+1])hopOK(i);else hopWrong(i);
+  if(i===G.path[G.step+1])hopOK(i);else if(!forgiveWrong(i))hopWrong(i);
 });
 function hopOK(i){
   var lt=G.tiles[i];if(lt&&!REDUCE){lt.classList.remove('land');void lt.offsetWidth;lt.classList.add('land')}
   G.hopMs.push(Math.round(performance.now()-(G.lastHopAt||G.tileStart)));G.lastHopAt=performance.now();
   var from=G.path[G.step];G.step++;G.tiles[from].classList.remove('shake');
-  tone(noteFor(i),0.28);sfx.hup();buzz(8);hopTo(i);setTimeout(function(){collapse(from,false)},90);renderDots();
+  flowNote(noteFor(i),panFor(i),G.step,G.path.length-1,0.28);sfx.hup();buzz(8);hopTo(i);setTimeout(function(){collapse(from,false)},90);renderDots();
   if(G.step>=G.path.length-1){cleared();return}
   mood('hop');G.warned=false;setStatus('Hop in the same order');worldHop(from);
 }
@@ -1575,14 +1690,16 @@ function fall(cause,idx){
   if(cause==='wrong')S.wrong++;else S.slow++;if(!G.mode)adjustEase('fail');hotEnd();save();
   if(G.mode==='daily')track('daily_fail',G.L,{day:S.daily.day,tr:S.daily.tries,got:G.step,total:G.path.length-1,cause:cause,m:G.mood||''});
   else if(G.mode==='door')track('door_fail',G.L,{k:MODE.door,got:G.step,total:G.path.length-1,cause:cause,m:G.mood||''});
-  else track('level_fail',G.L,{cause:cause,got:G.step,total:G.path.length-1,secs:secsNow(),taps:G.taps,far:G.far,first:G.firstTap,ease:+S.ease,rewound:G.rewindUsed,w:G.world,r:G.replay?1:0,m:G.mood||''});
+  else track('level_fail',G.L,{cause:cause,got:G.step,total:G.path.length-1,secs:secsNow(),taps:G.taps,far:G.far,first:G.firstTap,ease:+S.ease,rewound:G.rewindUsed,w:G.world,r:G.replay?1:0,m:G.mood||'',fg:G.forgiven|0,nm:NM?1:0});
   setStatus(cause==='wrong'?'Wrong tile! Tsss...':WORLD().melt+' Tsss...','bad');
   setTimeout(showFail,720);
 }
 function showFail(){
   setPhase('failed');var total=G.path.length-1,got=G.step,near=$('failNear');
-  $('failKicker').textContent=G.cause==='wrong'?'The trail broke':'The world gave way';
-  $('failTitle').textContent=G.cause==='wrong'?'Not that tile':WORLD().melt.replace(/!$/,'');
+  var hopsLeft=total-got,late=NM&&total>=4&&got/total>=0.75;
+  $('failKicker').textContent=late?'So close!':(G.cause==='wrong'?'The trail broke':'The world gave way');
+  $('failTitle').textContent=late?(hopsLeft===1?'One hop away':hopsLeft+' hops away'):(G.cause==='wrong'?'Not that tile':WORLD().melt.replace(/!$/,''));
+  $('rewindBtn').innerHTML='Rewind one hop<small>'+(late?'Only '+hopsLeft+(hopsLeft===1?' hop':' hops')+' to go':'Replay the remaining glow')+'</small>';
   near.textContent=got+' of '+total;var sm=document.createElement('small');sm.textContent='hops';near.appendChild(sm);
   var ft=$('failTrail');ft.innerHTML='';for(var i=0;i<total;i++){var mark=document.createElement('i');mark.className=i<got?'on':(i===got?'break':'');ft.appendChild(mark)}
   $('failLine').textContent=nearLine(got,total)+(got/total>=0.5?'So close. ':'')+(G.cause==='wrong'?'That tile was not next in the glow order.':WORLD().why)+(G.hotLost>=3?' Your hot streak of '+G.hotLost+' ended.':'');
@@ -1609,7 +1726,7 @@ function cleared(){
   var hm=G.hopMs.length?Math.round(G.hopMs.reduce(function(a,b){return a+b},0)/G.hopMs.length):0;
   var hot=0;if(!replay){S.hot=(S.hot||0)+1;hot=hotBonus(S.hot);applyHot()}
   var day=creditDay();beatChallenge();
-  track('level_complete',L,{secs:secsNow(),stars:stars,assists:G.assists,taps:G.taps,far:G.far,first:G.firstTap,hop:hm,att:S.att[L]||1,ease:+S.ease,w:G.world,r:replay?1:0,prev:prev,m:G.mood||'',hot:replay?0:(S.hot|0)});
+  track('level_complete',L,{secs:secsNow(),stars:stars,assists:G.assists,taps:G.taps,far:G.far,first:G.firstTap,hop:hm,att:S.att[L]||1,ease:+S.ease,w:G.world,r:replay?1:0,prev:prev,m:G.mood||'',hot:replay?0:(S.hot|0),fg:G.forgiven|0,nm:NM?1:0});
   adjustEase(G.assists===0&&(S.att[L]||1)===1?'perfect':'clear');save();
   if(!replay&&L>=INVITE_FLOOR)claimInvite();
   sfx.win();buzz([10,40,10]);setStatus('Floor cleared!');if(!replay)praise(stars,S.hot|0);board.classList.remove('ghosted');gusCancel();meltBlob(1);
@@ -1639,7 +1756,7 @@ function runAd(done){
 function pauseHop(){if(G.phase==='hop'){G.pausedAt=performance.now();cancelAnimationFrame(G.raf);G.resumeHop=true;G.phase='paused'}}
 function resumeHop(){if(G.resumeHop){G.resumeHop=false;G.tileStart+=performance.now()-G.pausedAt;setPhase('hop');G.raf=requestAnimationFrame(tick)}}
 var LAND=window.matchMedia?window.matchMedia('(orientation: landscape) and (max-height: 500px) and (pointer: coarse)'):null;
-function menusClosed(){return ['statsOv','boardOv','nameOv','menuOv','fbOv','shareOv','storeOv','buyOv','worldOv','gusOv','mapOv','rewardOv','dailyOv','streakOv'].every(function(id){return $(id).hidden})}
+function menusClosed(){return ['statsOv','boardOv','nameOv','menuOv','fbOv','shareOv','storeOv','buyOv','worldOv','gusOv','mapOv','rewardOv','dailyOv','streakOv','profileOv','mailOv'].every(function(id){return $(id).hidden})}
 function onLand(){if(LAND.matches)pauseHop();else if(menusClosed())resumeHop()}
 if(LAND){if(LAND.addEventListener)LAND.addEventListener('change',onLand);else if(LAND.addListener)LAND.addListener(onLand)}
 
@@ -1678,7 +1795,7 @@ $('startOv').addEventListener('pointermove',function(e){
 var BOARD={url:'https://oegckfehfkmvxjwbxjcw.supabase.co',key:'sb_publishable_UNyXDy_pBLq0d8HJm_mZ3w_4PuhQsMB',game:'crumble-recall'};  // publishable key: safe in client code
 var TROPHY='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 6h3v1.5A3.5 3.5 0 0 1 16.6 11M7 6H4v1.5A3.5 3.5 0 0 0 7.4 11"/></svg>';
 var XMARK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
-boardBtn.innerHTML=TROPHY;$('startBoard').innerHTML=TROPHY;$('boardClose').innerHTML=XMARK;
+boardBtn.innerHTML=TROPHY;$('rankIc').innerHTML=TROPHY;$('boardClose').innerHTML=XMARK;
 function starSum(){var t=0;for(var k in S.stars)t+=(+S.stars[k]||0);return t}
 function pid(){
   if(!S.pid){S.pid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(/x/g,function(){return(Math.random()*16|0).toString(16)});save()}
@@ -1699,7 +1816,7 @@ var Board={
     return fetch(BOARD.url.replace(/\/+$/,'')+'/rest/v1/rpc/'+fn,{method:'POST',headers:h,body:JSON.stringify(body),signal:ctl?ctl.signal:undefined})
       .then(function(r){clearTimeout(tm);if(!r.ok)throw new Error('http '+r.status);return r.json()},function(e){clearTimeout(tm);throw e});
   },
-  top:function(){return Board.call('get_leaderboard',{p_game:BOARD.game,p_limit:50,p_player:pid()})},
+  top:function(){var a={p_game:BOARD.game,p_limit:50,p_player:pid()};return Board.call('get_world_board',a).catch(function(){return Board.call('get_leaderboard',a)})},   // get_world_board adds profile handles (social.sql)
   submit:function(){return Board.call('submit_score',{p_game:BOARD.game,p_player:pid(),p_name:S.name,p_country:region(),p_best:S.best,p_stars:Math.min(starSum(),S.best*3)})}
 };
 function submitBest(){
@@ -1733,7 +1850,7 @@ $('nameCancel').addEventListener('click',function(){afterName=null;hide('nameOv'
 /* The board */
 function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
 function boardRow(r){
-  var li=el('li','lb-row'+(r.rank<=3?' p'+r.rank:'')+(r.is_me?' me':''));
+  var li=el('li','lb-row'+(r.rank<=3?' p'+r.rank:'')+(r.is_me?' me':'')+(r.handle?' tap':''));if(r.handle){li.dataset.h=r.handle;li.tabIndex=0;li.setAttribute('role','button')}
   li.appendChild(el('span','rk',String(r.rank)));
   var f=el('span','fl',flag(r.country));f.setAttribute('aria-hidden','true');li.appendChild(f);
   var nm=el('span','nm',r.name);if(r.is_me)nm.appendChild(el('i',null,' (you)'));li.appendChild(nm);
@@ -1773,7 +1890,7 @@ function renderBoard(state,rows){
 var BTAB='world';
 function loadBoard(){
   if(!Board.on()){renderBoard('off');return}
-  renderBoard('loading');var tab=BTAB;
+  renderBoard('loading');var tab=BTAB;$('boardReqs').hidden=true;if(tab==='friends')loadRequests();
   var p=tab==='daily'?Board.call('get_daily_board',{p_game:BOARD.game,p_day:today(),p_player:pid(),p_friends:false})
        :submitBest().then(function(){return tab==='friends'?Board.call('get_friends_board',{p_game:BOARD.game,p_player:pid()}):Board.top()});
   p.then(function(rows){if(!$('boardOv').hidden&&tab===BTAB)renderBoard('ok',rows)},function(){if(!$('boardOv').hidden&&tab===BTAB)renderBoard('error')});
@@ -1784,6 +1901,8 @@ function setBoardTab(t){
 }
 $('boardTabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.dataset.b===BTAB)return;track('board_tab',G.L,{tab:b.dataset.b});setBoardTab(b.dataset.b)});
 $('boardInvite').addEventListener('click',function(){doShare('friends')});
+function rowTap(e){var li=e.target.closest('.lb-row.tap');if(!li)return;if(e.type==='keydown'&&e.key!=='Enter'&&e.key!==' ')return;e.preventDefault();openProfile(li.dataset.h,BTAB)}
+['boardList','boardMe'].forEach(function(id){$(id).addEventListener('click',rowTap);$(id).addEventListener('keydown',rowTap)});
 function openBoard(tab){pauseHop();S.boardViews=(S.boardViews||0)+1;save();show('boardOv');setBoardTab(typeof tab==='string'?tab:BTAB);track('board_open',G.L,{tab:BTAB})}
 function closeBoard(){hide('boardOv');if(!(LAND&&LAND.matches)&&menusClosed())resumeHop()}
 boardBtn.addEventListener('click',openBoard);
@@ -1856,7 +1975,7 @@ function flush(leaving){
 }
 
 /* Which screen is showing, second by second. Tells us where time goes: the glow, hopping, menus, the leaderboard, later the shop. */
-var SCREENS=[['rewardOv','reward'],['streakOv','streak'],['dailyOv','daily_result'],['mapOv','map'],['nameOv','name'],['fbOv','feedback'],['shareOv','share'],['buyOv','store_buy'],['storeOv','store'],['worldOv','intro'],['gusOv','gus_intro'],['boardOv','board'],['statsOv','stats'],['menuOv','menu'],['adOv','relight'],['failOv','fail'],['clearOv','clear'],['startOv','title']];
+var SCREENS=[['rewardOv','reward'],['profileOv','profile'],['mailOv','mail'],['streakOv','streak'],['dailyOv','daily_result'],['mapOv','map'],['nameOv','name'],['fbOv','feedback'],['shareOv','share'],['buyOv','store_buy'],['storeOv','store'],['worldOv','intro'],['gusOv','gus_intro'],['boardOv','board'],['statsOv','stats'],['menuOv','menu'],['adOv','relight'],['failOv','fail'],['clearOv','clear'],['startOv','title']];
 function screenNow(){
   if(LAND&&LAND.matches)return 'sideways';
   for(var i=0;i<SCREENS.length;i++){var e=$(SCREENS[i][0]);if(e&&!e.hidden)return SCREENS[i][1]==='store'?'store_'+STORE.tab:SCREENS[i][1]}
@@ -1877,7 +1996,7 @@ function sessionStart(kind){
   if(m&&kind==='open'&&/^[a-f0-9]{8}$/i.test(m[1]))openedFriendLink(m[1].toLowerCase());   // every shared link also makes you friends on the board
   try{src=document.referrer?new URL(document.referrer).hostname:''}catch(e){}
   try{mm=window.matchMedia('(display-mode: standalone)').matches}catch(e){}
-  track('session_start',Math.max(1,S.level|0),{kind:kind,n:S.sessions,days:S.days.length,streak:streakDays(),fs:streakNow(),hot:S.hot|0,best:S.best,
+  track('session_start',Math.max(1,S.level|0),{kind:kind,n:S.sessions,days:S.days.length,streak:streakDays(),fs:streakNow(),hot:S.hot|0,nm:NM?1:0,best:S.best,
     mobile:/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent),os:osName(),app:inApp(),w:innerWidth,h:innerHeight,dpr:window.devicePixelRatio||1,
     lang:navigator.language||'',ref:(m&&kind==='open')?m[1]:'',firstRef:S.ref||'',src:kind==='open'?src:'',hour:d.getHours(),dow:d.getDay(),
     home:!!(navigator.standalone||mm),sound:!S.muted,music:!S.muted&&!S.musicOff,ease:+S.ease||1,cores:navigator.hardwareConcurrency||0,mem:navigator.deviceMemory||0});
@@ -2019,7 +2138,7 @@ function exitToTitle(from){
   if(G.mode){leaveMode('title');return}
   G.tok++;cancelAnimationFrame(G.raf);G.resumeHop=false;
   if(G.L<=S.best)G.L=reachNext();G.replay=false;G.variant=0;G.retry=false;   // Play now always continues the journey; replays live on the map
-  ['clearOv','failOv','menuOv','shareOv','fbOv','boardOv','nameOv','statsOv','storeOv','buyOv','worldOv','gusOv','mapOv','dailyOv','streakOv'].forEach(hide);gusCancel();
+  ['clearOv','failOv','menuOv','shareOv','fbOv','boardOv','nameOv','statsOv','storeOv','buyOv','worldOv','gusOv','mapOv','dailyOv','streakOv','profileOv','mailOv'].forEach(hide);gusCancel();
   prepareLevel();setPhase('idle');setStatus('Tap Play to start');
   titleSubs();show('startOv');
 }
@@ -2127,10 +2246,11 @@ function hopStarted(){
 }
 function worldHop(from){
   var now=performance.now(),el=(now-G.tileStart)/1000,rem=Math.max(0,G.curLife-el);
-  if(G.world==='springs'){G.curLife=Math.min(rem+G.life*0.8,G.life*1.5);G.tileStart=now}
-  else if(G.world==='dunes'){G.curLife=Math.min(rem+G.life*0.65,G.life*1.5);G.tileStart=now}
+  var nf=nmFactor(G.step);   // near-miss tuning: more time early in the path, less near the end
+  if(G.world==='springs'){G.curLife=Math.min(rem+G.life*0.8*nf,G.life*1.5);G.tileStart=now}
+  else if(G.world==='dunes'){G.curLife=Math.min(rem+G.life*0.65*nf,G.life*1.5);G.tileStart=now}
   else if(G.world==='lava'){/* one budget for the whole floor */}
-  else{G.curLife=G.life;G.tileStart=now}
+  else{G.curLife=G.life*nf;G.base=G.curLife;G.tileStart=now}
   if(G.world==='haunted')markHere();
   if(G.world==='grid')sparkChain(from);
   if(G.gusPlan&&G.gusPlan.indexOf(G.step)>=0)gusQueue(G.path[G.step]);
@@ -2212,7 +2332,7 @@ $('worldKeep').addEventListener('click',closeWorldIntro);
 /* ---------- Crumble Tokens ---------- */
 var COIN='<circle cx="12" cy="12" r="10" fill="#ffb23e" stroke="#c86d0f" stroke-width="1.6"/><circle cx="12" cy="12" r="6.6" fill="none" stroke="#ffe3a8" stroke-width="1.4"/><path d="M13.8 9.4a3.2 3.2 0 1 0 0 5.2" fill="none" stroke="#8a4a08" stroke-width="1.9" stroke-linecap="round"/>';
 function coinSVG(cls){return '<svg class="'+(cls||'coin')+'" viewBox="0 0 24 24" aria-hidden="true">'+COIN+'</svg>'}
-function renderWallet(){var n=String(S.tokens||0);$('hudTokens').textContent=(S.tokens||0)>=10000?Math.floor(S.tokens/1000)+'k':n;$('tokenCount').textContent=n;var sb=$('storeBtn').querySelector('small');if(sb)sb.textContent=spinReady()?'Free draw waiting':n+' tokens to spend';$('spinDot').hidden=!spinReady()}
+function renderWallet(){var n=String(S.tokens||0),cn=(S.tokens||0)>=10000?Math.floor(S.tokens/1000)+'k':n;$('hudTokens').textContent=cn;if($('homeTokens')){$('homeTokens').textContent=cn;$('drawDot').hidden=!spinReady();$('drawSub').textContent=spinReady()?'Free today':untilMidnight()}$('tokenCount').textContent=n;var sb=$('storeBtn').querySelector('small');if(sb)sb.textContent=spinReady()?'Free draw waiting':n+' tokens to spend';$('spinDot').hidden=!spinReady()}
 function addTokens(n,why){S.tokens=(S.tokens||0)+n;S.earned=(S.earned||0)+n;save();renderWallet();track('token_earn',G.L,{n:n,why:why,total:S.tokens})}
 function coinShower(n,target,done,total){   // total: the tokens to count up to when fewer coins fly than tokens earned
   var box=target||$('earnRow');if(!box){if(done)done();return}
@@ -2250,7 +2370,7 @@ var STORE={tab:'chars',focus:{}};
 function el2(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
 function openStore(from,tab){pauseHop();checkInvites();STORE.from=from||'';if(from==='title')hide('startOv');STORE.tab=tab||STORE.tab||'chars';renderWallet();renderStore();show('storeOv');track('store_open',G.L,{from:from,tab:STORE.tab})}
 function closeStore(){BUY=null;hide('buyOv');hide('storeOv');if(STORE.from==='title'){STORE.from='';show('startOv');return}if(!(LAND&&LAND.matches)&&menusClosed())resumeHop()}
-$('storeBtn').addEventListener('click',function(){openStore('title','chars')});
+$('storeBtn').addEventListener('click',function(){openStore('title','outfits')});
 $('menuStore').addEventListener('click',function(){openStore('menu')});
 $('storeClose').addEventListener('click',closeStore);$('storeClose').innerHTML=XMARK;
 Array.prototype.forEach.call(document.querySelectorAll('#storeTabs .tab'),function(b){b.addEventListener('click',function(){STORE.tab=b.dataset.tab;renderStore();track('store_tab',G.L,{tab:STORE.tab})})});
@@ -2706,7 +2826,7 @@ function renderMix(events,seconds){
   var live=AUD,mu=S.muted,mo=S.musicOff;S.muted=false;S.musicOff=false;
   AUD={ac:null,offline:true,started:true,next:0.1,beat:0,duck:1};buses(oc);applyVolumes(true);startWind();
   while(AUD.next<seconds){playBeat(AUD.next,AUD.beat);AUD.next+=BEAT;AUD.beat++}
-  var F={tone:tone,blip:blip,noise:noise};
+  var F={tone:tone,blip:blip,noise:noise,flow:flowNote};
   events.forEach(function(e){if(e.t<0||e.t>seconds)return;AT=e.t;
     if(e.fn==='duck')AUD.music.gain.setTargetAtTime(MUSIC_VOL*e.args[0],e.t,0.35);else F[e.fn].apply(null,e.args)});
   AT=0;AUD=live;S.muted=mu;S.musicOff=mo;
@@ -2792,7 +2912,7 @@ function dailyOpen(){return (S.best||0)>=3}
 function untilMidnight(){var d=new Date(),m=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1),s=Math.max(0,Math.round((m-d)/1000));return Math.floor(s/3600)+'h '+Math.floor(s%3600/60)+'m'}
 function renderDailyBtn(){
   var D=dailyState(),sub=$('dailySub'),open=dailyOpen();if(!sub)return;
-  sub.textContent=!open?'Opens at floor 3':(D.cleared?'Done · share it':(D.tries>=DAILY_TRIES?'Back tomorrow':(D.tries?(DAILY_TRIES-D.tries)+' tries left':'#'+D.num+' · 3 tries')));
+  sub.textContent=!open?'At floor 3':(D.cleared?'Done ✓':(D.tries>=DAILY_TRIES?untilMidnight():(D.tries?(DAILY_TRIES-D.tries)+' left':'#'+D.num+' new')));
   $('dailyDot').hidden=!open||D.cleared||D.tries>0;
 }
 function startDaily(){
@@ -2865,8 +2985,8 @@ function grantStreak(n,m){
 }
 function renderStreak(){
   var b=$('streakBtn');if(!b)return;var s=streakState(),n=streakNow(),done=s.last===today();
-  b.querySelector('b').textContent=n?(n+'-day streak'):'Start a streak';
-  b.querySelector('small').textContent=done?'Today done · back tomorrow':(n?'Clear a floor today to keep it':'Clear a floor each day');
+  $('streakN').textContent=n;$('streakSub').textContent=done?'Done today':(n?'Keep it alive':'Start today');
+  b.setAttribute('aria-label',(n?n+'-day streak. ':'No streak yet. ')+(done?'Today counts.':'Clear a floor today.'));
   b.classList.toggle('done',done);b.classList.toggle('risk',!!n&&!done);
   $('heroCrumb').style.setProperty('--fs',(1+Math.min(n,30)/40).toFixed(3));   // Crumb's flame grows with the streak
 }
@@ -2894,6 +3014,22 @@ $('stkOk').addEventListener('click',function(){hide('streakOv');if(!(LAND&&LAND.
 function hotBonus(n){return n>=10?3:(n>=6?2:(n>=3?1:0))}
 function applyHot(){var t=hotBonus(S.hot|0);document.body.classList.remove('hot1','hot2','hot3');if(t)document.body.classList.add('hot'+t)}
 function hotEnd(){if(G.mode||G.replay)return;var n=S.hot|0;G.hotLost=n;if(n>=3)track('hot_end',G.L,{n:n});S.hot=0;applyHot()}
+
+/* Near-miss tuning (Seem's decision, 2026-09-27; docs/03-decisions.md). The same rules for every player, and paths never change, so boards stay fair:
+   1. Time is front-loaded: the first hop gets 1.25x the tile time, the last hop 0.8x, so falls tend to come near the end of a path.
+   2. The first wrong tile in the first half of a path is forgiven once per attempt: Crumb wobbles back and loses 30% of that tile's time.
+   3. A fall in the last quarter reads "So close! One hop away" and Rewind says how few hops are left.
+   ?nm=0 turns 1 and 2 off on this phone for testing. Every fail logs where it happened so the stats page can show whether late falls bring more retries.
+   Never pair this with paid continues or paid extra time. */
+var NM=!/[?&]nm=0/.test(location.search);
+function nmFactor(step){if(!NM)return 1;var h=G.path.length-1;return h>1?1.25-0.45*(step/(h-1)):1}
+function forgiveWrong(i){
+  var h=G.path.length-1;if(!NM||G.forgiven||G.step>=Math.floor(h/2))return false;
+  G.forgiven=1;var t=G.tiles[i];t.classList.remove('nope');void t.offsetWidth;t.classList.add('nope');
+  mood('scared');G.moodHold=performance.now()+600;buzz([20,30,20]);sfx.crack();
+  var el=(performance.now()-G.tileStart)/1000;G.curLife=el+Math.max(0.4,(G.curLife-el)*0.7);
+  setStatus('Careful! Not that one.','bad');track('nm_forgive',G.L,{got:G.step,total:h,mode:G.mode||''});return true;
+}
 
 /* Juice: a praise word when a floor is cleared (by stars and hot streak), and each floor remembers your furthest hop, so a fall reads as progress. */
 var PRAISE={3:['Clean!','Sharp!','Spot on!','Crisp!'],2:['Nice save!','Got it!'],1:['Made it!','Phew!']};
@@ -2926,17 +3062,170 @@ function sendFriends(){
   });
 }
 function checkRivals(){
+  checkRivals.at=Date.now();
   if(!Board.on()||!S.name||!S.best)return;
   Board.call('get_friends_board',{p_game:BOARD.game,p_player:pid()}).then(function(rows){
-    var snap=S.rivals||{},next={},msg='';
-    (rows||[]).forEach(function(r){if(r.is_me)return;next[r.name]=+r.best||0;if(!msg&&+r.best>S.best&&(snap[r.name]||0)<=S.best)msg=r.name+' passed you: floor '+r.best+'. Take it back!'});
-    S.rivals=next;save();if(msg&&!$('startOv').hidden){toast(msg);track('friend_passed',G.L,{})}
+    var snap=S.rivals||{},next={},msg='',ft=0;
+    (rows||[]).forEach(function(r){if(r.is_me)return;if(+r.today>0)ft++;next[r.name]=+r.best||0;if(!msg&&+r.best>S.best&&(snap[r.name]||0)<=S.best)msg=r.name+' passed you: floor '+r.best+'. Take it back!'});
+    S.rivals=next;S.friendsToday=ft;save();renderHome();loadRequests(true);if(msg&&!$('startOv').hidden){toast(msg);track('friend_passed',G.L,{})}
   },function(){});
 }
 function renderChallenge(){var b=$('titleChallenge'),c=S.challenge;if(!b)return;var on=!!(c&&(S.best||0)<=c.floor);b.hidden=!on;if(on)b.textContent=c.by+' reached floor '+c.floor+'. Can you beat it?'}
 function beatChallenge(){var c=S.challenge;if(c&&S.best>c.floor){toast('You beat '+c.by+"'s floor "+c.floor+'! Send them your link.');track('challenge_beaten',G.L,{floor:c.floor});S.challenge=null;save()}}
 $('titleChallenge').addEventListener('click',function(){track('challenge_tap',G.L,{});openBoard('friends')});
-function titleV10(){renderStreak();renderDailyBtn();renderChallenge()}
+/* Mailbox: update notes shipped with each build, plus mail Seem sends from the stats page (backend/supabase/mail.sql).
+   Unread, Read and Archived tabs. Archived mail is deleted 30 days after archiving. Mail with a reward can't be archived until it's collected.
+   Read and archive state stays on this phone; server rewards are claimed through claim_mail, so each can only be collected once. */
+var LOCAL_MAIL=[
+  {id:'L-v0.10',sent:'2026-09-27',title:"What's new: streaks, Daily Glow and friends",reward:{kind:'tokens',n:25},
+   body:"Thanks for playing Crumble Recall! This update adds:\n\n• A daily streak. Clear one floor a day to keep Crumb's fire going.\n• Hot streaks: clean floors in a row earn bonus tokens.\n• The Daily Glow: one new floor a day, the same for everyone. Share your result!\n• Glow moods after floor 30, and star doors on the Journey map.\n• Friends: tap any player on a leaderboard to see their card and add them.\n\nHere are 25 tokens to celebrate."}
+];
+var MAIL={tab:'unread',open:null,DAY:864e5};
+function mailState(id){S.mail=S.mail&&typeof S.mail==='object'?S.mail:{};return S.mail[id]||(S.mail[id]={})}
+function allMail(){
+  var list=LOCAL_MAIL.map(function(m){return{id:m.id,title:m.title,body:m.body,sent:new Date(m.sent+'T12:00:00').getTime(),reward:m.reward||null,local:true}});
+  (S.mailCache||[]).forEach(function(m){list.push({id:'S-'+m.id,sid:m.id,title:m.title,body:m.body,sent:new Date(m.sent_at).getTime(),exp:m.expires_at?new Date(m.expires_at).getTime():0,
+    reward:m.reward_kind?{kind:m.reward_kind,id:m.reward_id,n:m.reward_n}:null,claimed:!!m.claimed})});
+  var now=Date.now();
+  return list.filter(function(m){var st=mailState(m.id);if(st.a&&now-st.a>30*MAIL.DAY){st.gone=1}return !st.gone&&!(m.exp&&m.exp<now)}).sort(function(a,b){return b.sent-a.sent});
+}
+function mailBox(m){var st=mailState(m.id);return st.a?'archived':(st.r?'read':'unread')}
+function mailCollected(m){return !m.reward||!!mailState(m.id).c||m.claimed}
+function rewardName(r){if(!r)return '';if(r.kind==='tokens')return r.n+' Crumble Tokens';if(r.kind==='skin'){var k=skinInfo(r.id);return k?k.name:'A new look'}var it=SHOP.filter(function(x){return x.id===r.id})[0];return it?it.name:'A gift'}
+function rewardArt(r){if(!r||r.kind==='tokens')return coinSVG('coin');if(r.kind==='skin'){var k=skinInfo(r.id);return k?charSVG(k.base,'happy',null,k.id):coinSVG('coin')}var it=SHOP.filter(function(x){return x.id===r.id})[0];return it?'<svg viewBox="0 0 48 48" aria-hidden="true">'+it.art+'</svg>':coinSVG('coin')}
+function renderMailBtn(){var b=$('mailBadge');if(!b)return;var n=allMail().filter(function(m){return mailBox(m)==='unread'}).length,g=allMail().filter(function(m){return !mailCollected(m)}).length;
+  b.hidden=!n;b.textContent=n;$('mailSub').textContent=n?n+' new':(g?'Gift waiting':'Inbox');$('mailBtn').setAttribute('aria-label','Mailbox'+(n?', '+n+' unread':''))}
+function fetchMail(){
+  if(!Board.on())return Promise.resolve();
+  return Board.call('get_mail',{p_game:BOARD.game,p_player:pid()}).then(function(rows){S.mailCache=(rows||[]).map(function(r){return{id:r.id,title:r.title,body:r.body,reward_kind:r.reward_kind,reward_id:r.reward_id,reward_n:r.reward_n,sent_at:r.sent_at,expires_at:r.expires_at,claimed:r.claimed}});save();renderMailBtn();if(!$('mailOv').hidden&&!MAIL.open)renderMailList()},function(){});
+}
+function openMail(){pauseHop();MAIL.open=null;show('mailOv');renderMailList();fetchMail();track('mail_open',G.L,{unread:allMail().filter(function(m){return mailBox(m)==='unread'}).length})}
+function setMailTab(t){MAIL.tab=t;MAIL.open=null;Array.prototype.forEach.call(document.querySelectorAll('#mailTabs button'),function(b){var on=b.dataset.m===t;b.classList.toggle('on',on);b.setAttribute('aria-selected',String(on))});renderMailList()}
+function mailDate(ms){return new Date(ms).toLocaleDateString(undefined,{month:'short',day:'numeric'})}
+function renderMailList(){
+  var all=allMail(),list=$('mailList');$('mailView').hidden=true;list.hidden=false;list.textContent='';
+  var counts={unread:0,read:0,archived:0};all.forEach(function(m){counts[mailBox(m)]++});
+  Array.prototype.forEach.call(document.querySelectorAll('#mailTabs button'),function(b){var k=b.dataset.m;b.textContent=k.charAt(0).toUpperCase()+k.slice(1)+(counts[k]?' ('+counts[k]+')':'')});
+  var rows=all.filter(function(m){return mailBox(m)===MAIL.tab});
+  if(!rows.length){list.appendChild(el('p','mail-empty',MAIL.tab==='unread'?'No new mail. Updates and gifts land here.':(MAIL.tab==='read'?'Nothing here yet.':'Archived mail is deleted 30 days after you archive it.')));save();renderMailBtn();return}
+  rows.forEach(function(m){
+    var b=el('button','mail-item'+(mailBox(m)==='unread'?' unread':''));b.type='button';b.appendChild(el('i','u'));
+    var tx=el('span');tx.appendChild(el('b',null,m.title));var st=mailState(m.id);
+    tx.appendChild(el('small',null,MAIL.tab==='archived'?'Deletes in '+Math.max(1,30-Math.floor((Date.now()-st.a)/MAIL.DAY))+' days':mailDate(m.sent)));b.appendChild(tx);
+    if(m.reward)b.appendChild(el('span','gift'+(mailCollected(m)?' got':''),mailCollected(m)?'Collected':'Gift'));else b.appendChild(el('span'));
+    b.addEventListener('click',function(){openMessage(m.id)});list.appendChild(b);
+  });
+  save();renderMailBtn();
+}
+function openMessage(id){
+  var m=allMail().filter(function(x){return x.id===id})[0];if(!m)return;MAIL.open=id;
+  var st=mailState(id);if(!st.r){st.r=Date.now();save();track('mail_read',G.L,{id:id})}
+  $('mailList').hidden=true;$('mailView').hidden=false;$('mvTitle').textContent=m.title;$('mvDate').textContent=mailDate(m.sent)+(m.exp?' · expires '+mailDate(m.exp):'');$('mvBody').textContent=m.body;
+  var rw=$('mvReward');rw.hidden=!m.reward;
+  if(m.reward){$('mvArt').innerHTML=rewardArt(m.reward);$('mvRewardName').textContent=rewardName(m.reward);var got=mailCollected(m);$('mvCollect').disabled=got;$('mvCollect').textContent=got?'Collected ✓':'Collect'}
+  var arch=!!st.a,locked=!!m.reward&&!mailCollected(m);$('mvArchive').textContent=arch?'Move back to Read':'Archive';$('mvArchive').disabled=!arch&&locked;
+  $('mvNote').textContent=!arch&&locked?'Collect the gift first. Mail with a gift can be archived once it is collected.':(arch?'Archived mail is deleted 30 days after you archive it.':'');
+  renderMailBtn();
+}
+function applyMailReward(r,id){
+  if(r.kind==='tokens'){addTokens(r.n,'mail');toast('+'+r.n+' Crumble Tokens')}
+  else if(r.kind==='skin'&&skinInfo(r.id)){var k=skinInfo(r.id);S.skinsOwned=S.skinsOwned||[];if(S.skinsOwned.indexOf(k.id)<0)S.skinsOwned.push(k.id);RWQ.push({m:{at:0,kind:'skin',id:k.id},tokens:0,use:owns(k.base)==='yes'?'skin':null,kicker:'Mail gift',note:'A gift from the Crumble Recall team.'});if(!RW)showReward()}
+  else if(r.kind==='outfit'&&SLOT[r.id]){S.owned=S.owned||[];if(S.owned.indexOf(r.id)<0)S.owned.push(r.id);toast(rewardName(r)+' added to your gear.')}
+  save();renderChar();renderWallet();track('mail_collect',G.L,{id:id,kind:r.kind,n:r.n||0,rid:r.id||''});
+}
+$('mvCollect').addEventListener('click',function(){
+  var m=allMail().filter(function(x){return x.id===MAIL.open})[0];if(!m||mailCollected(m))return;var btn=$('mvCollect');btn.disabled=true;
+  function done(){mailState(m.id).c=Date.now();save();openMessage(m.id)}
+  if(m.local){applyMailReward(m.reward,m.id);done();return}
+  Board.call('claim_mail',{p_game:BOARD.game,p_player:pid(),p_mail:m.sid}).then(function(r){if(r)applyMailReward(r,m.id);else toast('Already collected.');done()},function(){btn.disabled=false;toast("Couldn't reach the server. Try again.")});
+});
+$('mvArchive').addEventListener('click',function(){
+  var m=allMail().filter(function(x){return x.id===MAIL.open})[0];if(!m)return;var st=mailState(m.id);
+  if(st.a){delete st.a;track('mail_unarchive',G.L,{id:m.id})}else{if(m.reward&&!mailCollected(m))return;st.a=Date.now();track('mail_archive',G.L,{id:m.id})}
+  save();renderMailList();
+});
+$('mvBack').addEventListener('click',renderMailList);
+$('mailTabs').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setMailTab(b.dataset.m)});
+$('mailClose').innerHTML=XMARK;$('mailClose').addEventListener('click',function(){hide('mailOv');MAIL.open=null;renderMailBtn();if(!(LAND&&LAND.matches)&&menusClosed())resumeHop()});
+$('mailBtn').addEventListener('click',openMail);
+
+/* Profiles and friend requests (backend/supabase/social.sql). Tap a player on any board to see their card and ask to be friends.
+   Shared links still link friends straight away; requests are for people you only know from a board. */
+var PF={h:'',rel:''};
+function openProfile(h,from){
+  if(!h||!Board.on())return;PF.h=h;PF.rel='';
+  $('pfName').textContent='Loading...';$('pfSub').textContent='';$('pfStats').textContent='';$('pfArt').innerHTML=charSVG('crumb','idle');
+  $('pfAction').hidden=true;$('pfDecline').hidden=true;$('pfNote').textContent='';show('profileOv');
+  Board.call('get_profile',{p_game:BOARD.game,p_player:pid(),p_handle:h}).then(function(p){
+    if(PF.h!==h||$('profileOv').hidden)return;
+    if(!p){$('pfName').textContent='Player not found';return}
+    PF.rel=p.rel;var W=WORLDS[worldIndex(Math.max(1,p.best||1))],ch=ALLCHARS.indexOf(p.char)>=0?p.char:'crumb';
+    $('pfArt').innerHTML=charSVG(ch,'happy');$('pfName').textContent=p.name;
+    $('pfSub').textContent=(flag(p.country)?flag(p.country)+' · ':'')+'Reached '+W.name+(p.since?' · playing since '+new Date(p.since+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'}):'');
+    var dl=$('pfStats');dl.textContent='';
+    [['Best floor',p.best],['Stars',p.stars],['Streak',(p.streak|0)+'d'],['Days played',p.days|0],['Floors this week',p.week|0],['Daily Glows',p.daily_clears|0]].forEach(function(x){var d=el('div'),dt=el('dt',null,x[0]),dd=el('dd',null,String(x[1]));d.appendChild(dt);d.appendChild(dd);dl.appendChild(d)});
+    renderProfileAction();track('profile_open',G.L,{rel:p.rel,from:from||''});
+  },function(){if(PF.h===h)$('pfName').textContent="Couldn't load this player. Check your connection."});
+}
+function renderProfileAction(){
+  var a=$('pfAction'),d=$('pfDecline'),r=PF.rel;a.hidden=r==='me';d.hidden=r!=='incoming';a.disabled=r==='friend'||r==='requested';
+  a.textContent=r==='friend'?'Friends ✓':(r==='requested'?'Request sent':(r==='incoming'?'Accept friend request':'Add friend'));
+  $('pfNote').textContent=r==='me'?'This is you. Others see this card when they tap your name.':(r==='incoming'?'They asked to be friends with you.':(r==='requested'?'They will see your request next time they open the game.':'Friends see each other on the Friends board.'));
+}
+$('pfAction').addEventListener('click',function(){
+  var h=PF.h,r=PF.rel;if(!h)return;
+  if(!S.name){openName(function(){submitBest().then(function(){$('pfAction').click()})});return}   // a board name is needed so they know who asked
+  var btn=$('pfAction');btn.disabled=true;
+  var call=r==='incoming'?Board.call('answer_friend_request',{p_game:BOARD.game,p_player:pid(),p_handle:h,p_accept:true}):Board.call('send_friend_request',{p_game:BOARD.game,p_player:pid(),p_handle:h});
+  call.then(function(res){
+    PF.rel=res==='friend'?'friend':(res==='requested'?'requested':PF.rel);renderProfileAction();
+    if(res==='friend')toast($('pfName').textContent+' is now your friend.');else if(res==='requested')toast('Request sent.');else if(res==='limit'){toast('That is a lot of requests for one day. Try again tomorrow.');btn.disabled=false}
+    track(r==='incoming'?'friend_answer':'friend_request',G.L,{res:res,accept:true});loadRequests(true);if(!$('boardOv').hidden&&BTAB==='friends')loadBoard();
+  },function(){btn.disabled=false;toast("Couldn't reach the server. Try again.")});
+});
+$('pfDecline').addEventListener('click',function(){answerRequest(PF.h,false,function(){PF.rel='none';renderProfileAction();$('pfAction').hidden=true;$('pfDecline').hidden=true;$('pfNote').textContent='Request declined.'})});
+$('pfClose').innerHTML=XMARK;$('pfClose').addEventListener('click',function(){hide('profileOv');PF.h='';if(!(LAND&&LAND.matches)&&menusClosed())resumeHop()});
+function answerRequest(h,accept,done){
+  Board.call('answer_friend_request',{p_game:BOARD.game,p_player:pid(),p_handle:h,p_accept:!!accept}).then(function(res){
+    track('friend_answer',G.L,{res:res,accept:!!accept});if(accept&&res==='friend')toast('New friend added.');if(done)done(res);loadRequests(true);if(!$('boardOv').hidden&&BTAB==='friends')loadBoard();
+  },function(){toast("Couldn't reach the server. Try again.")});
+}
+function loadRequests(quiet){
+  if(!Board.on())return;
+  Board.call('get_friend_requests',{p_game:BOARD.game,p_player:pid()}).then(function(rows){
+    rows=rows||[];S.friendReqs=rows.length;save();renderHome();
+    var box=$('boardReqs'),on=!!rows.length&&BTAB==='friends'&&!$('boardOv').hidden;box.textContent='';box.hidden=!on;if(!on)return;
+    box.appendChild(el('h3',null,rows.length===1?'1 friend request':rows.length+' friend requests'));
+    rows.forEach(function(r){var row=el('div','req'),who=el('button','who',r.name);who.type='button';var sm=el('small',null,'Best floor '+r.best+' · ★ '+r.stars);who.appendChild(sm);
+      who.addEventListener('click',function(){openProfile(r.handle,'requests')});
+      var ok=el('button','ok','Accept'),no=el('button','no','Decline');ok.type=no.type='button';
+      ok.addEventListener('click',function(){ok.disabled=no.disabled=true;answerRequest(r.handle,true)});no.addEventListener('click',function(){ok.disabled=no.disabled=true;answerRequest(r.handle,false)});
+      row.appendChild(who);row.appendChild(ok);row.appendChild(no);box.appendChild(row)});
+  },function(){});
+}
+function titleV10(){renderStreak();renderDailyBtn();renderChallenge();renderHome();renderMailBtn();if(Date.now()-(checkRivals.at||0)>60000)checkRivals()}
+/* Home screen: the next star reward above Crumb, your rank, an open star door, friends who played today */
+function openDoorWorld(){var top=Math.floor((S.best||0)/10);for(var k=0;k<top;k++){if((S.doors||{})[k])continue;var ws=0;for(var f=k*10+1;f<=k*10+10;f++)ws+=(+S.stars[f]||0);if(ws>=DOOR_STARS)return k}return -1}
+function renderHome(){
+  if(!$('homeTokens'))return;
+  var nm=nextMile(),st=starSum(),prev=0;MILES.forEach(function(m){if(m.at<=st&&m.at>prev)prev=m.at});
+  $('nextReward').hidden=$('nrBar').hidden=!nm;
+  if(nm){$('nrText').textContent=(nm.at-st)+' ★ to '+mileName(nm);$('nrArt').innerHTML=mileArt(nm);$('nrFill').style.width=Math.max(4,Math.round(100*(st-prev)/Math.max(1,nm.at-prev)))+'%';$('nrN').textContent=st+' / '+nm.at+' ★';
+    $('nextReward').setAttribute('aria-label','Next reward: '+mileName(nm)+', '+(nm.at-st)+' more stars. Open Journey')}
+  $('rankSub').textContent=S.rank?'#'+S.rank:'World';
+  var dk=openDoorWorld();$('doorBtn').hidden=dk<0;if(dk>=0)$('doorSub').textContent='Open!';
+  var ft=S.friendsToday|0,rq=S.friendReqs|0,fb=$('friendsBadge');fb.hidden=!(ft||rq);fb.textContent=rq||ft;fb.classList.toggle('soft',!rq);
+  $('friendsBtn').setAttribute('aria-label','Friends'+(rq?', '+rq+(rq===1?' friend request':' friend requests'):'')+(ft?', '+ft+' played today':''));
+  $('homeIc').innerHTML=fullSVG('happy');
+}
+$('homeCoin').innerHTML=COIN;$('mapIc').innerHTML=MAPICON;$('doorIc').innerHTML=DOORICON;
+$('homeWallet').addEventListener('click',function(){openStore('title','outfits')});
+$('crewBtn').addEventListener('click',function(){openStore('title','chars')});
+$('drawBtn').addEventListener('click',function(){openStore('title','spin')});
+$('doorBtn').addEventListener('click',function(){audio();startMusic();openMap('title')});
+$('nextReward').addEventListener('click',function(){audio();startMusic();openMap('title')});
+$('friendsBtn').addEventListener('click',function(){openBoard('friends')});
+$('homeTab').addEventListener('click',function(){var c=$('heroCrumb').firstChild;if(c&&c.setAttribute){c.setAttribute('data-mood','happy');setTimeout(function(){c.setAttribute('data-mood','idle')},900)}sfx.hup()});
 
 /* ---------- Boot ---------- */
 renderSound();
@@ -2954,7 +3243,7 @@ statsBtn.hidden=!/[?&](playtest|debug)=1/.test(Q);
 if(!S.aliveSeeded){S.aliveMs=Math.max(S.aliveMs||0,Math.round((S.ms||0)*0.8));S.aliveSeeded=1}   // testers from v0.3: estimate from time played
 sessionStart('open');
 save();
-applyHot();sendFriends();setTimeout(checkRivals,2500);
+applyHot();sendFriends();setTimeout(fetchMail,3000);$('menuFine').textContent='Your progress is saved on this phone. '+VERSION+' playtest';
 G.L=DBG&&DBG.floor?DBG.floor:Math.max(1,S.level|0);prepareLevel();setPhase('idle');
 titleSubs();
 syncDestination();

@@ -100,6 +100,10 @@ td:first-child,th:first-child,td.l,th.l{text-align:left}
 .note{color:var(--muted);font-size:12.5px;margin:10px 0 0}
 .empty{color:var(--muted);font-size:13.5px;padding:6px 0}
 /* sign-in */
+.mform label{display:grid;gap:5px;margin:0 0 11px;font-size:13px;font-weight:600;color:var(--text2)}
+.mform input,.mform select,.mform textarea{width:100%;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--page);color:var(--text);font:15px var(--ui);padding:8px 10px}
+.mform textarea{min-height:110px;resize:vertical}.mform .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mini{min-height:34px;padding:0 10px;font-size:12.5px}
 .login{max-width:380px;margin:12vh auto 0;padding:0 16px}
 .login .card{padding:22px}
 .login h1{margin-bottom:4px}
@@ -164,6 +168,9 @@ td:first-child,th:first-child,td.l,th.l{text-align:left}
     <div class="card"><h2>Glow moods after floor 30</h2><p class="cap">Fail % on first plays of floors 31 and up</p><div class="bars" id="moods"></div><p class="note">Rush starts slow and speeds up. Hush drops the notes. Backwards plays the glow last to first. Same target band: 20 to 45%.</p></div>
     <div class="card"><h2>Hot streaks, star doors, friends</h2><div class="grid tiles" id="hookTiles" style="grid-template-columns:repeat(2,1fr)"></div></div>
   </section>
+  <section class="card"><h2>Near-miss tuning</h2><p class="cap">Where first-play falls happen along the path, and how often each is followed by a retry or rewind within 3 minutes</p>
+    <div class="grid two"><div class="bars" id="nearPos"></div><div class="grid tiles" id="nearTiles" style="grid-template-columns:repeat(2,1fr)"></div></div>
+    <p class="note">Time is front-loaded (1.25x on the first hop, 0.8x on the last) and the first wrong tile in the first half of a path is forgiven once. If late falls don't bring more retries than early ones, the tuning isn't earning its keep.</p></section>
 
   <p class="sec-title">Floors in detail</p>
   <section class="card"><h2>Every floor</h2><p class="cap">All builds, first plays only. Help is the average extra time the game gave struggling players (1.00 = none)</p><div class="tbl"><table id="levels"></table></div></section>
@@ -194,6 +201,23 @@ td:first-child,th:first-child,td.l,th.l{text-align:left}
     <div class="card"><h2>Feedback</h2><div class="fb" id="feedback"></div></div>
     <div class="card"><h2>Who brought new players</h2><div class="bars" id="referrals"></div><h2 style="margin-top:16px">How they found it</h2><div class="bars" id="sources"></div><h2 style="margin-top:16px">Phones</h2><div class="bars" id="devices"></div><h2 style="margin-top:16px">Sharing</h2><div class="bars" id="shares"></div></div>
   </section>
+  <p class="sec-title">Mailbox</p>
+  <section class="grid two">
+    <div class="card"><h2>Send mail</h2><p class="cap">Lands in the in-game Mailbox. Gifts are fixed amounts, never random. Needs backend/supabase/mail.sql</p>
+      <form class="mform" id="mailForm">
+        <div class="row"><label>To<select id="mTo"><option value="all">Everyone</option><option value="one">One player</option></select></label>
+          <label id="mNameL" hidden>Board name<input id="mName" type="text" maxlength="16" autocomplete="off" placeholder="Exact name"></label></div>
+        <label>Title<input id="mTitle" type="text" maxlength="80" required></label>
+        <label>Message<textarea id="mBody" maxlength="2000" required></textarea></label>
+        <div class="row"><label>Gift<select id="mKind"><option value="">None</option><option value="tokens">Tokens</option><option value="skin">Skin</option><option value="outfit">Gear</option></select></label>
+          <label id="mNL" hidden>Tokens<input id="mN" type="number" min="1" max="1000" value="25"></label><label id="mIdL" hidden>Item<select id="mId"></select></label></div>
+        <label>Expires after (days, optional)<input id="mDays" type="number" min="1" max="365" placeholder="Never"></label>
+        <button class="btn primary" id="mSend" type="submit">Send mail</button>
+        <p class="note" id="mMsg" role="status"></p>
+      </form></div>
+    <div class="card"><h2>Sent mail</h2><p class="cap">Newest first, with how many players collected each gift</p><div class="tbl"><table id="mailSent"></table></div></div>
+  </section>
+
   <section class="card"><h2>Recent sessions</h2><div class="tbl"><table id="sessions"></table></div></section>
   <section class="grid two">
     <div class="card"><h2>Buttons tapped</h2><div class="bars" id="clicks"></div></div>
@@ -231,7 +255,7 @@ $('loginForm').addEventListener('submit',function(e){
   e.preventDefault();var k=$('pass').value.trim(),btn=$('signIn');
   if(!k){$('loginErr').textContent='Enter the password.';return}
   btn.disabled=true;$('loginErr').textContent='Checking...';
-  fetchStats(k).then(function(d){key=k;keep(k,$('remember').checked);$('gate').hidden=true;$('app').hidden=false;render(d);startTimers()},
+  fetchStats(k).then(function(d){key=k;keep(k,$('remember').checked);$('gate').hidden=true;$('app').hidden=false;render(d);loadSent();startTimers()},
     function(err){$('loginErr').textContent=err.message==='key'?"That password didn't work. Check it and try again.":"Couldn't reach the server. Check your connection."})
     .then(function(){btn.disabled=false});
 });
@@ -370,6 +394,9 @@ function render(d){
     ['Star doors cleared',num(dc),pl(dp,'player')+' tried one'],['Friend links',num(SO.friend_links),num(SO.friend_adds)+' saved on the server'],
     ['Challenges',num(SO.challenges_opened)+' opened',num(SO.challenges_beaten)+' beaten · '+num(SO.passed_notices)+' "passed you"'],['Board tabs',num(SO.tab_friends)+' friends',num(SO.tab_daily)+' Daily Glow · '+num(SO.daily_shares)+' daily shares']]);
 
+  var NR=V.near||{},nt=(+NR.early||0)+(+NR.mid||0)+(+NR.late||0);
+  bars('nearPos',[['Early (under half the path)','early'],['Middle (half to 3/4)','mid'],['Late (last quarter)','late']].map(function(x){var v=+NR[x[1]]||0;return{k:x[0],v:v,label:num(v)+' · '+pct(v,nt)}}),{max:nt||1,empty:'No falls yet.'});
+  tiles('nearTiles',[['Retry after a late fall',pct(NR.retry_late,NR.late),num(NR.retry_late)+' of '+num(NR.late)],['Retry after an early fall',pct(NR.retry_early,NR.early),num(NR.retry_early)+' of '+num(NR.early)],['Forgiven stumbles',num(NR.forgiven),'first wrong tile, first half']]);
   table('levels',[
     {h:'Floor',f:function(r){return r.floor}},{h:'Players',f:function(r){return r.players}},{h:'Tries',f:function(r){return r.starts}},
     {h:'Fail %',f:function(r){var p=+r.fail_pct||0;return pill(p+'%',failClass(p,r.floor))}},
@@ -380,7 +407,7 @@ function render(d){
   ],d.levels||[],'No floors played yet.');
 
   var SCN={store_chars:'shop: friends',store_skins:'shop: skins',store_outfits:'shop: gear',store_spin:'shop: daily draw',store_buy:'shop: buy card',intro:'new world card',gus_intro:'Gus card',map:'journey map',reward:'reward card',
-    streak:'streak card',daily_result:'Daily Glow result',daily_glow:'Daily Glow: glow',daily_play:'Daily Glow: hopping',door_glow:'star door: glow',door_play:'star door: hopping'};
+    streak:'streak card',profile:'player profile',mail:'mailbox',daily_result:'Daily Glow result',daily_glow:'Daily Glow: glow',daily_play:'Daily Glow: hopping',door_glow:'star door: glow',door_play:'star door: hopping'};
   function scn(k){return SCN[k]||k}
   bars('screens',(d.screens||[]).map(function(s){return{k:scn(s.screen),v:s.minutes,label:mins(s.minutes)}}));
   bars('exits',(d.exits||[]).map(function(s){return{k:scn(s.screen),v:s.times,label:num(s.times)+' · '+num(s.players)+'p',c:(s.screen==='play'||s.screen==='glow'||s.screen==='fail')?'critical':''}}));
@@ -436,10 +463,39 @@ function render(d){
   (d.errors||[]).forEach(function(e){var it=el('div','card');it.style.cssText='padding:8px 10px;margin-bottom:8px;font-size:13px';it.appendChild(el('div',null,e.message));it.appendChild(el('div','sub',pl(e.times,'time')+' · '+pl(e.players,'player')+' · '+ago(e.last_seen)+' · '+(e.build||'')));er.appendChild(it)});
 }
 
+/* ---------- mailbox composer (backend/supabase/mail.sql) ---------- */
+function rpc(fn,body){return fetch(API.url+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'Content-Type':'application/json',apikey:API.key},body:JSON.stringify(body)})
+  .then(function(r){return r.json().catch(function(){return null}).then(function(j){if(!r.ok){var e=new Error((j&&j.message)||('http '+r.status));e.status=r.status;throw e}return j})})}
+var GIFTS={skin:[['frost_crumb','Frost Crumb'],['midnight_crumb','Midnight Crumb'],['golden_crumb','Golden Crumb'],['campfire_crumb','Campfire Crumb'],['sunset_pip','Sunset Pip'],['neon_watts','Neon Watts'],['aurora_lumi','Aurora Lumi']],
+  outfit:[['scarf_candy','Candy scarf'],['mittens','Mittens'],['beanie','Bobble beanie'],['earmuffs','Earmuffs'],['eyepatch','Frostglass eyepatch'],['boots','Snow boots'],['ice_crown','Ice crown']]};
+function syncMailForm(){var k=$('mKind').value;$('mNL').hidden=k!=='tokens';$('mIdL').hidden=!(k==='skin'||k==='outfit');$('mNameL').hidden=$('mTo').value!=='one';
+  if(GIFTS[k]){var sel=$('mId');sel.textContent='';GIFTS[k].forEach(function(g){var o=el('option',null,g[1]);o.value=g[0];sel.appendChild(o)})}}
+$('mKind').addEventListener('change',syncMailForm);$('mTo').addEventListener('change',syncMailForm);
+function loadSent(){
+  rpc('owner_list_mail',{p_game:API.game,p_key:key}).then(function(rows){
+    table('mailSent',[{h:'Sent',l:1,f:function(r){return ago(r.sent_at)}},{h:'Title',l:1,f:function(r){return r.title}},{h:'To',l:1,f:function(r){return r.to_name||'Everyone'}},
+      {h:'Gift',l:1,f:function(r){return r.reward_kind==='tokens'?r.reward_n+' tokens':(r.reward_id||'')}},{h:'Collected',f:function(r){return r.reward_kind?r.claims:''}},
+      {h:'',f:function(r){var b=el('button','btn mini','Delete');b.type='button';b.addEventListener('click',function(){if(!confirm('Delete "'+r.title+'" from every mailbox?'))return;rpc('owner_delete_mail',{p_game:API.game,p_key:key,p_mail:r.id}).then(loadSent,function(e){alert("Couldn't delete: "+e.message)})});return b}}],rows||[],'No mail sent yet.');
+  },function(e){table('mailSent',[],[],e.status===404?'Mail is off. Run backend/supabase/mail.sql in Supabase to turn it on.':"Couldn't load sent mail.")});
+}
+$('mailForm').addEventListener('submit',function(e){
+  e.preventDefault();var k=$('mKind').value,one=$('mTo').value==='one',msg=$('mMsg'),btn=$('mSend');
+  var body={p_game:API.game,p_key:key,p_title:$('mTitle').value.trim(),p_body:$('mBody').value.trim(),p_reward_kind:k||null,p_reward_id:(k==='skin'||k==='outfit')?$('mId').value:null,
+    p_reward_n:k==='tokens'?Math.max(1,Math.min(1000,parseInt($('mN').value,10)||0)):null,p_to_handle:one?$('mName').value.trim():null,p_days:$('mDays').value?parseInt($('mDays').value,10):null};
+  if(!body.p_title||!body.p_body){msg.textContent='Add a title and a message.';return}
+  if(one&&!body.p_to_handle){msg.textContent='Type the player\'s board name.';return}
+  if(!one&&!confirm('Send "'+body.p_title+'" to every player?'))return;
+  btn.disabled=true;msg.textContent='Sending...';
+  rpc('owner_send_mail',body).then(function(){msg.textContent='Sent. Players see it next time they open the Mailbox.';$('mTitle').value='';$('mBody').value='';loadSent()},
+    function(err){msg.textContent=/unknown player/.test(err.message)?'No player has that board name.':(/not unique/.test(err.message)?'More than one player has that name.':(err.status===404?'Mail is off. Run backend/supabase/mail.sql first.':"Couldn't send: "+err.message))})
+    .then(function(){btn.disabled=false});
+});
+syncMailForm();
+
 var busy=false,timers=false;
 function load(){
   if(busy||!key)return;busy=true;$('refresh').disabled=true;
-  fetchStats(key).then(render,function(e){
+  fetchStats(key).then(function(d){render(d);loadSent()},function(e){
     if(e.message==='key'){forget();key='';showGate('The saved password no longer works. Sign in again.');return}
     $('updated').textContent="Couldn't load the stats. Check your connection and tap Refresh.";
   }).then(function(){busy=false;$('refresh').disabled=false});
