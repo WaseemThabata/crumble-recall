@@ -61,7 +61,8 @@ button{font:inherit;color:inherit}
 .dot.on{background:var(--glow);transform:scale(1.15)}
 .tools{display:flex;gap:5px}
 .chip{border:1.5px solid var(--hud-line);background:linear-gradient(145deg,rgba(255,255,255,.12),var(--hud-glass));border-radius:999px;height:44px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 5px 16px rgba(0,0,0,.2);backdrop-filter:blur(10px)}
-.chip.icon{width:44px;padding:0;justify-content:center}
+.chip.icon{width:44px;padding:0;justify-content:center;flex:none}
+@media (max-width:370px){.hud{gap:4px}.floor{max-width:108px;padding:5px 8px;gap:6px}.world-name{max-width:58px}.tools{gap:4px;min-width:0}.coinchip{padding:0 8px;gap:4px}.floor .v{font-size:22px}}
 .chip svg{width:19px;height:19px}
 .chip[aria-pressed="false"]{color:var(--muted)}
 .chip:disabled{opacity:.4;cursor:default}
@@ -527,13 +528,15 @@ body.destination-open .app{opacity:0;pointer-events:none}
 .title-play{width:100%;min-height:64px;border-radius:14px;font-size:19px;box-shadow:0 6px 0 #9d570e,0 12px 28px rgba(0,0,0,.28)}
 .title-shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .title-shortcut{min-height:52px;border:0;border-top:1px solid rgba(234,244,251,.28);background:rgba(3,10,22,.38);color:var(--text);display:grid;grid-template-columns:32px 1fr;align-items:center;text-align:left;padding:8px 10px;cursor:pointer}
-.title-shortcut-icon{font-family:var(--display);font-size:20px;color:var(--hud-accent);text-align:center}
+.title-shortcut-icon{font-family:var(--display);font-size:20px;color:var(--hud-accent);text-align:center}.title-shortcut-icon svg{width:24px;height:24px;display:block;margin:auto}
 .title-shortcut strong{display:block;font-size:14px;line-height:1.05}.title-shortcut small{display:block;margin-top:3px;font-size:11px;color:#b8ccda;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .title-build{font-size:10px;color:#a7bdcd;text-align:center;margin:0}
 @keyframes sceneIn{from{opacity:0;transform:translateY(8px)}}
 
 /* Character camp */
 #storeOv{z-index:24}
+#buyOv{z-index:26}
+.btn:disabled{opacity:.5;filter:grayscale(.7);cursor:default;box-shadow:none}
 #storeOv::before{background:linear-gradient(180deg,rgba(3,10,22,.8),rgba(3,10,22,.1) 24%,rgba(3,10,22,.28) 43%,rgba(3,10,22,.96) 66%,#030a16)}
 .store-scene{position:relative;width:min(100%,560px);height:100%;margin:auto;padding:max(14px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:8px;overflow:hidden;animation:sceneIn .25s ease-out}
 .store-top{display:grid;grid-template-columns:48px minmax(0,1fr) auto;align-items:center;gap:10px}
@@ -632,7 +635,7 @@ body.destination-open .app{opacity:0;pointer-events:none}
       <button class="chip coinchip" id="walletBtn" type="button" aria-label="Crumble Tokens and store"><svg id="hudCoin" viewBox="0 0 24 24" aria-hidden="true"></svg><b id="hudTokens">0</b></button>
       <button class="chip icon" id="menuBtn" type="button" aria-label="Pause and menu"></button>
       <button class="chip icon" id="boardBtn" type="button" aria-label="World leaderboard"></button>
-      <button class="chip" id="statsBtn" type="button" hidden>Playtest</button>
+      <button class="chip icon" id="statsBtn" type="button" aria-label="Playtest stats" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 20V11M12 20V4M19 20v-6"/></svg></button>
     </div>
   </header>
   <div class="dots" id="dots" aria-label="Hop progress"></div>
@@ -665,7 +668,7 @@ body.destination-open .app{opacity:0;pointer-events:none}
       <button class="btn gold title-play" id="playBtn" type="button">Continue journey<small id="playSub">Floor 1</small></button>
       <div class="title-shortcuts">
         <button class="title-shortcut" id="mapBtn" type="button"><span class="title-shortcut-icon" aria-hidden="true">✦</span><span><strong>Journey</strong><small id="mapSub">Replay for stars</small></span></button>
-        <button class="title-shortcut" id="storeBtn" type="button"><span class="title-shortcut-icon" aria-hidden="true">●</span><span><strong>Trail Camp</strong><small>Friends &amp; keepsakes</small></span></button>
+        <button class="title-shortcut" id="storeBtn" type="button"><span class="title-shortcut-icon" id="shopIcon" aria-hidden="true"></span><span><strong>Shop</strong><small>Friends, skins &amp; gear</small></span></button>
       </div>
       <p class="title-build">v0.9 playtest · sound turns each path into a melody</p>
     </div>
@@ -801,8 +804,8 @@ body.destination-open .app{opacity:0;pointer-events:none}
 <div class="ov" id="storeOv" role="dialog" aria-modal="true" aria-labelledby="storeTitle" hidden>
   <div class="store-scene">
     <header class="store-top">
-      <button class="store-back" id="storeClose" type="button" aria-label="Leave Trail Camp"></button>
-      <div class="store-heading"><h2 id="storeTitle">Trail Camp</h2><p>Choose who crosses the next world.</p></div>
+      <button class="store-back" id="storeClose" type="button" aria-label="Leave the shop"></button>
+      <div class="store-heading"><h2 id="storeTitle">Shop</h2><p>Trail Camp: spend tokens on friends, skins and gear.</p></div>
       <div class="wallet" aria-label="Crumble Tokens"><svg class="coin" id="walletCoin" viewBox="0 0 24 24" aria-hidden="true"></svg><b id="tokenCount">0</b></div>
     </header>
     <div class="tabs" id="storeTabs" role="tablist"><button class="tab on" type="button" role="tab" data-tab="chars" id="tabChars">Friends</button><button class="tab" type="button" role="tab" data-tab="skins" id="tabSkins">Skins</button><button class="tab" type="button" role="tab" data-tab="outfits" id="tabOutfits">Gear</button><button class="tab" type="button" role="tab" data-tab="spin" id="tabSpin">Daily<i class="dot" id="spinDot" hidden></i></button></div>
@@ -1144,6 +1147,18 @@ function blank(){return{first:today(),days:[],best:0,level:1,cleared:0,attempts:
 var S=blank();
 try{var raw=localStorage.getItem(KEY);if(raw){var o=JSON.parse(raw);if(o&&typeof o==='object')S=Object.assign(blank(),o)}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+/* A damaged save must never stop the game from booting: fix field types, keep what is still usable */
+(function(){
+  var b=blank();
+  for(var k in b){var d=b[k],v=S[k];
+    if(Array.isArray(d)){if(!Array.isArray(v))S[k]=d}
+    else if(d&&typeof d==='object'){if(!v||typeof v!=='object'||Array.isArray(v))S[k]=d}
+    else if(typeof d==='number'){v=+v;S[k]=isFinite(v)?v:d}}
+  ['tokens','earned','spent','spins','invites','best','level'].forEach(function(k){if(S[k]!=null){var v=Math.floor(+S[k]);S[k]=isFinite(v)&&v>=0?v:0}});
+  S.level=Math.max(1,S.level);
+  ['chars','owned','skinsOwned','miles'].forEach(function(k){if(S[k]!=null&&!Array.isArray(S[k]))S[k]=[]});
+  ['equip','skin','worldsSeen'].forEach(function(k){if(S[k]!=null&&(typeof S[k]!=='object'||Array.isArray(S[k])))S[k]={}});
+})();
 if(S.days.indexOf(today())<0){S.days.push(today());save()}
 
 /* ---------- Level generation (same seed per floor, so every tester sees the same floors) ---------- */
@@ -2083,7 +2098,7 @@ $('worldKeep').addEventListener('click',closeWorldIntro);
 /* ---------- Crumble Tokens ---------- */
 var COIN='<circle cx="12" cy="12" r="10" fill="#ffb23e" stroke="#c86d0f" stroke-width="1.6"/><circle cx="12" cy="12" r="6.6" fill="none" stroke="#ffe3a8" stroke-width="1.4"/><path d="M13.8 9.4a3.2 3.2 0 1 0 0 5.2" fill="none" stroke="#8a4a08" stroke-width="1.9" stroke-linecap="round"/>';
 function coinSVG(cls){return '<svg class="'+(cls||'coin')+'" viewBox="0 0 24 24" aria-hidden="true">'+COIN+'</svg>'}
-function renderWallet(){var n=String(S.tokens||0);$('hudTokens').textContent=n;$('tokenCount').textContent=n;var sb=$('storeBtn').querySelector('small');if(sb)sb.textContent=spinReady()?'Free draw waiting':'Friends & keepsakes';$('spinDot').hidden=!spinReady()}
+function renderWallet(){var n=String(S.tokens||0);$('hudTokens').textContent=(S.tokens||0)>=10000?Math.floor(S.tokens/1000)+'k':n;$('tokenCount').textContent=n;var sb=$('storeBtn').querySelector('small');if(sb)sb.textContent=spinReady()?'Free draw waiting':n+' tokens to spend';$('spinDot').hidden=!spinReady()}
 function addTokens(n,why){S.tokens=(S.tokens||0)+n;S.earned=(S.earned||0)+n;save();renderWallet();track('token_earn',G.L,{n:n,why:why,total:S.tokens})}
 function coinShower(n,target,done){
   var box=target||$('earnRow');if(!box){if(done)done();return}
@@ -2104,7 +2119,7 @@ function sparkle(el){
   for(var i=0;i<10;i++){var s=document.createElement('span');s.className='glint';ov.appendChild(s);var a=i/10*6.283,d=30+Math.random()*30,x=b.left-r.left+b.width/2,y=b.top-r.top+b.height/2+(ov.scrollTop||0);
     if(s.animate&&!REDUCE)s.animate([{transform:'translate('+x+'px,'+y+'px) scale(.2)',opacity:1},{transform:'translate('+(x+Math.cos(a)*d)+'px,'+(y+Math.sin(a)*d)+'px) scale(1)',opacity:0}],{duration:600,easing:'ease-out'}).onfinish=(function(s){return function(){s.remove()}})(s);else s.remove()}
 }
-$('earnCoin').innerHTML=COIN;$('hudCoin').innerHTML=COIN;$('walletCoin').innerHTML=COIN;$('buyCoin').innerHTML=COIN;
+$('shopIcon').innerHTML=coinSVG();$('earnCoin').innerHTML=COIN;$('hudCoin').innerHTML=COIN;$('walletCoin').innerHTML=COIN;$('buyCoin').innerHTML=COIN;
 $('walletBtn').addEventListener('click',function(){openStore('hud')});
 
 /* ---------- Store: Friends, Outfits, Free spin ---------- */
@@ -2120,7 +2135,7 @@ var SHOP=[
 var STORE={tab:'chars',focus:{}};
 function el2(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
 function openStore(from,tab){pauseHop();checkInvites();STORE.from=from||'';if(from==='title')hide('startOv');STORE.tab=tab||STORE.tab||'chars';renderWallet();renderStore();show('storeOv');track('store_open',G.L,{from:from,tab:STORE.tab})}
-function closeStore(){hide('storeOv');if(STORE.from==='title'){STORE.from='';show('startOv');return}if(!(LAND&&LAND.matches)&&menusClosed())resumeHop()}
+function closeStore(){BUY=null;hide('buyOv');hide('storeOv');if(STORE.from==='title'){STORE.from='';show('startOv');return}if(!(LAND&&LAND.matches)&&menusClosed())resumeHop()}
 $('storeBtn').addEventListener('click',function(){openStore('title','chars')});
 $('menuStore').addEventListener('click',function(){openStore('menu')});
 $('storeClose').addEventListener('click',closeStore);$('storeClose').innerHTML=XMARK;
@@ -2203,7 +2218,7 @@ function openBuy(kind,id){
   BUY={kind:kind,id:id,price:price,name:name};
   $('buyArt').innerHTML=art;$('buyTitle').textContent=(kind==='char'?'Unlock ':'Buy ')+name+'?';$('buyPrice').textContent=String(price);
   var short=price-(S.tokens||0);$('buyNote').textContent=short>0?'You need '+short+' more tokens. Clear floors or take your free spin.':(kind==='char'?name+' can play every world.':kind==='skin'?aRar(skinInfo(id).rarity)+' skin. You can switch back to the classic look anytime.':'Put it on '+charName()+' right away.');
-  $('buyGo').disabled=short>0;show('buyOv');track('buy_open',G.L,{id:id,price:price,short:Math.max(0,short)});
+  $('buyGo').disabled=short>0;$('buyGo').textContent=short>0?'Need '+short+' more tokens':(kind==='char'?'Unlock':'Buy');show('buyOv');track('buy_open',G.L,{id:id,price:price,short:Math.max(0,short)});
 }
 $('buyGo').addEventListener('click',function(){
   if(!BUY||(S.tokens||0)<BUY.price)return;
