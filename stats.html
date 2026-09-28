@@ -5,251 +5,409 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta name="theme-color" content="#0a1a33">
+<meta name="theme-color" content="#081630">
 <title>Crumble Recall stats</title>
 <style>
 :root{
   color-scheme:dark;
-  --bg:#07142a; --panel:#0e2244; --panel2:#132b54; --line:#23427a; --text:#e9f1fb; --muted:#8fa8c9;
-  --blue:#3d8fe0; --blue2:#79b8f5; --red:#ff4d5c; --amber:#ffb23e; --green:#3fcf8e;
-  --ui:ui-rounded,"SF Pro Rounded","Segoe UI",system-ui,-apple-system,sans-serif;
+  --page:#081630; --surface:#0f2346; --surface2:#132b56; --line:#24457e; --grid:#1d3866; --axis:#35598f;
+  --text:#eef4fc; --text2:#b9cbe2; --muted:#8aa3c4;
+  --s1:#3987e5; --s2:#d95926; --band:rgba(57,135,229,.14);
+  --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b; --good-ink:#5fd35f; --crit-ink:#ff8a8a; --warn-ink:#ffd27a;
+  --ui:system-ui,-apple-system,"Segoe UI",sans-serif;
 }
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    color-scheme:light;
+    --page:#f3f6fb; --surface:#ffffff; --surface2:#f7f9fd; --line:#d8e0ec; --grid:#e6ebf3; --axis:#c3cfdf;
+    --text:#0b1422; --text2:#3e4c61; --muted:#6b7a90;
+    --s1:#2a78d6; --s2:#eb6834; --band:rgba(42,120,214,.10);
+    --good-ink:#006300; --crit-ink:#b42828; --warn-ink:#8a5a00;
+  }
+}
+:root[data-theme="dark"]{color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 var(--ui);-webkit-text-size-adjust:100%}
-.wrap{max-width:1100px;margin:0 auto;padding:max(14px,env(safe-area-inset-top)) 16px 40px}
-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-h1{margin:0;font-size:22px;letter-spacing:.01em}
-h1 span{color:var(--red)}
+body{margin:0;background:var(--page);color:var(--text);font:15px/1.45 var(--ui);-webkit-text-size-adjust:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:max(14px,env(safe-area-inset-top)) 16px 48px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+h1{margin:0;font-size:22px}
+h1 span{color:var(--s2)}
 .sub{color:var(--muted);font-size:13px}
-.btn{border:1.5px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;min-height:40px;padding:0 14px;font:700 14px var(--ui);cursor:pointer}
-.btn:active{transform:translateY(1px)}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;min-height:44px;padding:0 14px;font:600 14px var(--ui);cursor:pointer}
+.btn.primary{background:var(--s1);border-color:var(--s1);color:#fff}
+.btn:disabled{opacity:.55;cursor:default}
+.btn:focus-visible,input:focus-visible{outline:3px solid var(--s1);outline-offset:2px}
 .grid{display:grid;gap:12px}
-.kpis{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
-.two{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
-.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1.5px solid var(--line);border-radius:16px;padding:14px;min-width:0}
-.card h2{margin:0 0 10px;font-size:15px;letter-spacing:.02em}
-.card h2 small{font-weight:500;color:var(--muted);margin-left:6px}
-.kpi .v{font-size:28px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
-.kpi .k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.kpi .d{font-size:12.5px;color:var(--muted);margin-top:2px}
-.bars{display:grid;gap:7px}
-.bar{display:grid;grid-template-columns:minmax(90px,38%) 1fr auto;align-items:center;gap:8px;font-size:13.5px}
-.bar .lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bar .track{height:12px;background:rgba(143,168,201,.13);border-radius:99px;overflow:hidden}
-.bar .track,.bar .fill{display:block}
-.bar .fill{height:100%;background:var(--blue);border-radius:99px}
-.bar .fill.red{background:var(--red)}.bar .fill.amber{background:var(--amber)}.bar .fill.green{background:var(--green)}
-.bar .num{font-variant-numeric:tabular-nums;font-weight:700;min-width:44px;text-align:right}
-.tbl{overflow:auto;-webkit-overflow-scrolling:touch;margin:0 -14px;padding:0 14px}
+.tiles{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.three{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.card h2{margin:0 0 2px;font-size:15px}
+.card .cap{margin:0 0 12px;color:var(--muted);font-size:12.5px}
+section{margin-top:14px}
+.sec-title{margin:26px 0 4px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+/* stat tiles */
+.tile .k{font-size:12.5px;color:var(--text2)}
+.tile .v{font-size:28px;font-weight:650;line-height:1.15;margin-top:2px}
+.tile .d{font-size:12.5px;color:var(--muted);margin-top:2px}
+/* gates */
+.gate{display:grid;gap:8px}
+.gate .row{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.gate .v{font-size:34px;font-weight:650;line-height:1}
+.status{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:99px;border:1px solid var(--line);color:var(--text)}
+.status i{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;font-style:normal;font-size:11px;color:#fff}
+.status.good i{background:var(--good)}.status.warning i{background:var(--warning);color:#241a00}.status.critical i{background:var(--critical)}.status.none i{background:var(--muted)}
+.meter{position:relative;height:10px;border-radius:99px;background:var(--grid);margin-top:4px}
+.meter b{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--s1)}
+.meter .tick{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--text2);border-radius:1px}
+.meter-l{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted)}
+.gate .d{font-size:12.5px;color:var(--muted)}
+/* bars list */
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:minmax(90px,36%) 1fr auto;align-items:center;gap:10px;font-size:13.5px}
+.bar .lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2)}
+.bar .track{height:10px;display:block;position:relative}
+.bar .fill{display:block;height:100%;border-radius:0 4px 4px 0;background:var(--s1);min-width:2px}
+.bar .fill.critical{background:var(--critical)}.bar .fill.good{background:var(--good)}.bar .fill.warning{background:var(--warning)}
+.bar .num{font-variant-numeric:tabular-nums;font-weight:600;min-width:44px;text-align:right}
+/* charts */
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart text{fill:var(--muted);font:11px var(--ui)}
+.chart .gl{stroke:var(--grid);stroke-width:1}
+.chart .ax{stroke:var(--axis);stroke-width:1}
+.chart .hit{fill:transparent;cursor:crosshair}
+.chart .hl{fill:var(--text);opacity:.06}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--text2);margin-top:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.tip{position:fixed;z-index:50;pointer-events:none;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:12.5px;line-height:1.4;box-shadow:0 8px 24px rgba(0,0,0,.28);max-width:240px;color:var(--text)}
+.tip b{font-weight:650}
+/* tables */
+.tbl{overflow:auto;-webkit-overflow-scrolling:touch;margin:0 -16px;padding:0 16px}
 table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
-th,td{padding:7px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid rgba(35,66,122,.6)}
-th{color:var(--muted);font-weight:700;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;position:sticky;top:0;background:var(--panel)}
-td:first-child,th:first-child{text-align:left}
-td.l,th.l{text-align:left}
-.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;font-weight:700}
-.pill.red{background:rgba(255,77,92,.18);color:#ff9aa3}.pill.amber{background:rgba(255,178,62,.18);color:#ffd08a}.pill.green{background:rgba(63,207,142,.16);color:#8de7bd}
+th,td{padding:7px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--grid)}
+th{color:var(--muted);font-weight:600;font-size:12px;position:sticky;top:0;background:var(--surface)}
+td:first-child,th:first-child,td.l,th.l{text-align:left}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:1px 8px;border-radius:99px;font-size:12px;font-weight:600;border:1px solid var(--line)}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--muted)}
+.pill.critical::before{background:var(--critical)}.pill.good::before{background:var(--good)}.pill.warning::before{background:var(--warning)}.pill.ok::before{background:var(--s1)}
 .fb{display:grid;gap:10px}
-.fb .it{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:rgba(7,20,42,.5)}
-.fb .top{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--muted)}
-.fb .stars{color:var(--amber);letter-spacing:1px}
+.fb .it{border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.fb .meta{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--muted)}
+.fb .stars{color:var(--warning);letter-spacing:1px}
 .fb p{margin:6px 0 0;white-space:pre-wrap;word-break:break-word}
-.note{color:var(--muted);font-size:13px;margin:8px 0 0}
-.chart svg{display:block;width:100%;height:auto}
+.note{color:var(--muted);font-size:12.5px;margin:10px 0 0}
 .empty{color:var(--muted);font-size:13.5px;padding:6px 0}
-.msg{max-width:520px;margin:18vh auto;text-align:center;padding:0 20px}
-.msg h1{margin-bottom:10px}
-.legend{display:flex;gap:14px;font-size:12.5px;color:var(--muted);margin-top:6px}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-section{margin-top:12px}
+/* sign-in */
+.login{max-width:380px;margin:12vh auto 0;padding:0 16px}
+.login .card{padding:22px}
+.login h1{margin-bottom:4px}
+.login label{display:block;font-size:13px;font-weight:600;color:var(--text2);margin:14px 0 6px}
+.login input[type=text],.login input[type=password]{width:100%;min-height:46px;border:1px solid var(--line);border-radius:10px;background:var(--page);color:var(--text);font:16px var(--ui);padding:0 12px}
+.login .remember{display:flex;align-items:center;gap:8px;margin:14px 0 16px;font-size:13.5px;color:var(--text2)}
+.login .remember input{width:20px;height:20px}
+.login .btn{width:100%}
+.login .err{min-height:20px;margin:10px 0 0;font-size:13.5px;color:var(--crit-ink)}
+.login .hint{margin:14px 0 0;font-size:12.5px;color:var(--muted)}
 </style>
 </head>
 <body>
-<div class="msg" id="gate" hidden>
-  <h1>Crumble Recall <span>stats</span></h1>
-  <p class="sub" id="gateText">This page needs Seem's private link.</p>
+<div class="login" id="gate" hidden>
+  <div class="card">
+    <h1>Crumble Recall <span>stats</span></h1>
+    <p class="sub">Owner sign-in</p>
+    <form id="loginForm" autocomplete="on">
+      <label for="user">Username</label>
+      <input type="text" id="user" name="username" autocomplete="username" value="crumble-owner" autocapitalize="off" spellcheck="false">
+      <label for="pass">Password</label>
+      <input type="password" id="pass" name="password" autocomplete="current-password" required>
+      <label class="remember"><input type="checkbox" id="remember" checked> Stay signed in on this device</label>
+      <button class="btn primary" id="signIn" type="submit">Sign in</button>
+      <p class="err" id="loginErr" role="alert"></p>
+    </form>
+    <p class="hint">Your password manager can save this login. The password is the owner key; only its fingerprint is stored on the server.</p>
+  </div>
 </div>
 
 <div class="wrap" id="app" hidden>
-  <header>
+  <header class="top">
     <div><h1>Crumble Recall <span>stats</span></h1><div class="sub" id="updated">Loading...</div></div>
-    <div style="display:flex;gap:8px"><button class="btn" id="refresh" type="button">Refresh</button><button class="btn" id="forget" type="button">Forget this phone</button></div>
+    <div style="display:flex;gap:8px"><button class="btn" id="refresh" type="button">Refresh</button><button class="btn" id="signOut" type="button">Sign out</button></div>
   </header>
 
-  <div class="grid kpis" id="kpis"></div>
+  <p class="sec-title">Prototype gate</p>
+  <div class="grid three" id="gates"></div>
+  <p class="note" id="gateNote"></p>
 
+  <section class="grid tiles" id="kpis"></section>
+
+  <p class="sec-title">Progress</p>
   <section class="grid two">
-    <div class="card"><h2>How far players get<small>share of everyone who opened the game</small></h2><div class="bars" id="funnel"></div></div>
-    <div class="card chart"><h2>Players per day<small>last 30 days, New York time</small></h2><div id="daily"></div>
-      <div class="legend"><span><i style="background:var(--blue)"></i>Returning</span><span><i style="background:var(--red)"></i>New</span></div></div>
+    <div class="card"><h2>How far players get</h2><p class="cap">Players whose best floor reached each floor</p><div class="chart" id="reach"></div></div>
+    <div class="card"><h2>Fail % per floor</h2><p class="cap">First plays only. The shaded band is the 20 to 45% target</p><div class="chart" id="failc"></div>
+      <div class="legend"><span><i style="background:var(--s1)"></i>In or near target</span><span><i style="background:var(--critical)"></i>Above 55%, players quit</span><span><i style="background:var(--warning)"></i>Under 10%, too easy</span></div></div>
   </section>
-
-  <section class="card"><h2>Floors<small>where it gets too hard or too easy</small></h2>
-    <div class="tbl"><table id="levels"></table></div>
-    <p class="note">All builds, first plays only (replays are left out). Fail % is falls per attempt. Aim for about 20 to 45%. Above 55% people start quitting, below 10% it's too easy. "Help" is the average time boost the game gave struggling players on that floor (1.00 = none).</p>
-  </section>
-
   <section class="grid two">
-    <div class="card"><h2>Where time goes<small>minutes on each screen</small></h2><div class="bars" id="screens"></div>
-      <p class="note">Glow = watching the path. Play = hopping. Store time is split by tab: friends, skins, outfits and free spin.</p></div>
-    <div class="card"><h2>Where they leave<small>screen showing when they closed or switched apps</small></h2><div class="bars" id="exits"></div></div>
+    <div class="card"><h2>Players per day</h2><p class="cap">Last 30 days, New York time</p><div class="chart" id="daily"></div>
+      <div class="legend"><span><i style="background:var(--s1)"></i>Returning</span><span><i style="background:var(--s2)"></i>New</span></div></div>
+    <div class="card"><h2>How far players get, step by step</h2><p class="cap">Share of everyone who opened the game</p><div class="bars" id="funnel"></div></div>
   </section>
 
+  <p class="sec-title">Hooks (v0.10)</p>
   <section class="grid two">
-    <div class="card"><h2>This build<small id="bnote">fail % on first plays, per floor</small></h2><div class="bars" id="lvlBuild"></div>
-      <p class="note">Target 20 to 45%. Red is above 55%, where players start quitting. Replays from the map are left out.</p></div>
-    <div class="card"><h2>Journey map<small>replays for stars and star rewards</small></h2><div class="grid kpis" id="mapK" style="grid-template-columns:repeat(2,1fr)"></div>
-      <h2 style="margin-top:14px">Star rewards<small>players who got each one</small></h2><div class="bars" id="mapR"></div>
-      <p class="note" id="cbNote"></p></div>
+    <div class="card"><h2>Daily streaks</h2><p class="cap">Players with a streak alive today or yesterday, by length</p><div class="grid tiles" id="streakTiles" style="grid-template-columns:repeat(3,1fr);margin-bottom:12px"></div><div class="bars" id="streakBars"></div></div>
+    <div class="card"><h2>Daily Glow</h2><p class="cap">One seeded floor a day, 3 tries</p><div class="chart" id="dailyGlow"></div>
+      <div class="legend"><span><i style="background:var(--s1)"></i>Cleared</span><span><i style="background:var(--s2)"></i>Played, not cleared</span></div><div class="tbl" style="margin-top:10px"><table id="dailyTbl"></table></div></div>
   </section>
-
-  <section class="card"><h2>Store<small>what players want to buy first</small></h2><div class="sub" id="storeSum"></div><div class="bars" id="storeItems" style="margin-top:8px"></div></section>
-
   <section class="grid two">
-    <div class="card"><h2>Crumble Tokens</h2><div class="grid kpis" id="econ" style="grid-template-columns:repeat(2,1fr)"></div>
-      <h2 style="margin-top:14px">Bought</h2><div class="bars" id="buys"></div></div>
-    <div class="card"><h2>Worlds<small>players who reached each world, and how often they fall there</small></h2><div class="bars" id="worlds"></div>
-      <h2 style="margin-top:14px">Played as<small>floors started with each character</small></h2><div class="bars" id="chars"></div>
-      <p class="note" id="gusNote"></p></div>
+    <div class="card"><h2>Glow moods after floor 30</h2><p class="cap">Fail % on first plays of floors 31 and up</p><div class="bars" id="moods"></div><p class="note">Rush starts slow and speeds up. Hush drops the notes. Backwards plays the glow last to first. Same target band: 20 to 45%.</p></div>
+    <div class="card"><h2>Hot streaks, star doors, friends</h2><div class="grid tiles" id="hookTiles" style="grid-template-columns:repeat(2,1fr)"></div></div>
   </section>
 
-  <section class="card"><h2>Players<small>newest activity first</small></h2><div class="tbl"><table id="players"></table></div></section>
+  <p class="sec-title">Floors in detail</p>
+  <section class="card"><h2>Every floor</h2><p class="cap">All builds, first plays only. Help is the average extra time the game gave struggling players (1.00 = none)</p><div class="tbl"><table id="levels"></table></div></section>
 
+  <p class="sec-title">Attention</p>
+  <section class="grid two">
+    <div class="card"><h2>Where time goes</h2><p class="cap">Minutes on each screen</p><div class="bars" id="screens"></div></div>
+    <div class="card"><h2>Where they leave</h2><p class="cap">Screen showing when they closed or switched apps</p><div class="bars" id="exits"></div></div>
+  </section>
+  <section class="grid two">
+    <div class="card"><h2>When people play</h2><p class="cap">Sessions by the player's local hour</p><div class="chart" id="hours"></div></div>
+    <div class="card"><h2>This build</h2><p class="cap" id="bnote">Fail % on first plays, per floor</p><div class="bars" id="lvlBuild"></div></div>
+  </section>
+
+  <p class="sec-title">Economy and shop</p>
+  <section class="grid two">
+    <div class="card"><h2>Crumble Tokens</h2><div class="grid tiles" id="econ" style="grid-template-columns:repeat(2,1fr)"></div><h2 style="margin-top:14px">Bought</h2><div class="bars" id="buys"></div></div>
+    <div class="card"><h2>Shop</h2><p class="cap" id="storeSum"></p><div class="bars" id="storeItems"></div></div>
+  </section>
+  <section class="grid two">
+    <div class="card"><h2>Journey map</h2><div class="grid tiles" id="mapK" style="grid-template-columns:repeat(2,1fr)"></div><h2 style="margin-top:14px">Star rewards</h2><div class="bars" id="mapR"></div><p class="note" id="cbNote"></p></div>
+    <div class="card"><h2>Worlds</h2><p class="cap">Players who reached each world, and fail % there</p><div class="bars" id="worlds"></div><h2 style="margin-top:14px">Played as</h2><div class="bars" id="chars"></div><p class="note" id="gusNote"></p></div>
+  </section>
+
+  <p class="sec-title">People</p>
+  <section class="card"><h2>Players</h2><p class="cap">Newest activity first</p><div class="tbl"><table id="players"></table></div></section>
   <section class="grid two">
     <div class="card"><h2>Feedback</h2><div class="fb" id="feedback"></div></div>
-    <div class="card"><h2>Who brought new players<small>from shared links</small></h2><div class="bars" id="referrals"></div>
-      <h2 style="margin-top:16px">How they found it</h2><div class="bars" id="sources"></div>
-      <h2 style="margin-top:16px">Phones</h2><div class="bars" id="devices"></div></div>
+    <div class="card"><h2>Who brought new players</h2><div class="bars" id="referrals"></div><h2 style="margin-top:16px">How they found it</h2><div class="bars" id="sources"></div><h2 style="margin-top:16px">Phones</h2><div class="bars" id="devices"></div><h2 style="margin-top:16px">Sharing</h2><div class="bars" id="shares"></div></div>
   </section>
-
-  <section class="grid two">
-    <div class="card"><h2>Sharing</h2><div class="bars" id="shares"></div></div>
-    <div class="card chart"><h2>When people play<small>their local hour, by session</small></h2><div id="hours"></div></div>
-  </section>
-
   <section class="card"><h2>Recent sessions</h2><div class="tbl"><table id="sessions"></table></div></section>
-
   <section class="grid two">
     <div class="card"><h2>Buttons tapped</h2><div class="bars" id="clicks"></div></div>
-    <div class="card"><h2>Errors<small>bugs players hit</small></h2><div id="errors"></div></div>
+    <div class="card"><h2>Errors</h2><p class="cap">Bugs players hit</p><div id="errors"></div></div>
   </section>
 </div>
+<div class="tip" id="tip" hidden></div>
 
 <script>
 (function(){
 'use strict';
-var API={url:'https://oegckfehfkmvxjwbxjcw.supabase.co',key:'sb_publishable_UNyXDy_pBLq0d8HJm_mZ3w_4PuhQsMB',game:'crumble-recall'};
+var API={url:'https://oegckfehfkmvxjwbxjcw.supabase.co',key:'sb_publishable_UNyXDy_pBLq0d8HJm_mZ3w_4PuhQsMB',game:'crumble-recall'};   // publishable key: safe in client code
 var SKEY='crumble-recall-owner';
 function $(id){return document.getElementById(id)}
 function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=String(text);return e}
 function num(n,d){n=+n||0;return n.toLocaleString('en-US',{maximumFractionDigits:d==null?0:d})}
-function pct(a,b){return b?Math.round(100*a/b)+'%':'0%'}
+function pct(a,b){return b?Math.round(100*a/b)+'%':'n/a'}
 function ago(t){if(!t)return '';var s=(Date.now()-new Date(t).getTime())/1000;if(s<90)return 'just now';if(s<3600)return Math.round(s/60)+'m ago';if(s<86400)return Math.round(s/3600)+'h ago';var d=Math.round(s/86400);return d===1?'yesterday':d+'d ago'}
-function pl(n,w){return num(n)+' '+w+(+n===1?'':'s')}
+function pl(n,w){return num(n)+' '+(+n===1?w:(w==='try'?'tries':w+'s'))}
 function mins(m){m=+m||0;if(m<60)return num(m,1)+' min';return Math.floor(m/60)+'h '+Math.round(m%60)+'m'}
+function store(){try{return localStorage.getItem(SKEY)||sessionStorage.getItem(SKEY)||''}catch(e){return ''}}
+function keep(k,remember){try{localStorage.removeItem(SKEY);sessionStorage.removeItem(SKEY);(remember?localStorage:sessionStorage).setItem(SKEY,k)}catch(e){}}
+function forget(){try{localStorage.removeItem(SKEY);sessionStorage.removeItem(SKEY)}catch(e){}}
 
-/* the key comes from the private link (#k=...), then stays on this phone only */
+/* ---------- sign-in: the password is the owner key. #k=... links still work. ---------- */
 var key='';
 var m=/[#&]k=([A-Za-z0-9_-]{16,128})/.exec(location.hash);
-if(m){key=m[1];try{localStorage.setItem(SKEY,key)}catch(e){}history.replaceState(null,'',location.pathname)}
-else{try{key=localStorage.getItem(SKEY)||''}catch(e){}}
-window.addEventListener('hashchange',function(){if(/[#&]k=/.test(location.hash))location.reload()});
-if(!key){$('gate').hidden=false;return}
-$('app').hidden=false;
+if(m){key=m[1];keep(key,true);history.replaceState(null,'',location.pathname)}else key=store();
+function fetchStats(k){
+  return fetch(API.url+'/rest/v1/rpc/owner_stats',{method:'POST',headers:{'Content-Type':'application/json',apikey:API.key},body:JSON.stringify({p_game:API.game,p_key:k})})
+    .then(function(r){if(r.status===401||r.status===403)throw new Error('key');if(!r.ok)throw new Error('http '+r.status);return r.json()});
+}
+function showGate(msg){$('app').hidden=true;$('gate').hidden=false;$('loginErr').textContent=msg||'';setTimeout(function(){try{$('pass').focus()}catch(e){}},50)}
+$('loginForm').addEventListener('submit',function(e){
+  e.preventDefault();var k=$('pass').value.trim(),btn=$('signIn');
+  if(!k){$('loginErr').textContent='Enter the password.';return}
+  btn.disabled=true;$('loginErr').textContent='Checking...';
+  fetchStats(k).then(function(d){key=k;keep(k,$('remember').checked);$('gate').hidden=true;$('app').hidden=false;render(d);startTimers()},
+    function(err){$('loginErr').textContent=err.message==='key'?"That password didn't work. Check it and try again.":"Couldn't reach the server. Check your connection."})
+    .then(function(){btn.disabled=false});
+});
+$('signOut').addEventListener('click',function(){forget();key='';location.reload()});
 
+/* ---------- tooltip ---------- */
+var tip=$('tip');
+function showTip(html,x,y){tip.innerHTML=html;tip.hidden=false;var w=tip.offsetWidth,h=tip.offsetHeight,px=Math.min(innerWidth-w-8,Math.max(8,x+14)),py=y-h-12<8?y+16:y-h-12;tip.style.left=px+'px';tip.style.top=py+'px'}
+function hideTip(){tip.hidden=true}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+
+/* ---------- small SVG kit ---------- */
+var NS='http://www.w3.org/2000/svg';
+function S(tag,attrs,parent){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+function niceMax(v){if(v<=5)return 5;var p=Math.pow(10,Math.floor(Math.log10(v))),f=v/p;return (f<=1?1:f<=2?2:f<=5?5:10)*p}
+function colPath(x,y,w,h){if(h<=0)return '';var r=Math.min(4,w/2,h);return 'M'+x+' '+(y+h)+'V'+(y+r)+'Q'+x+' '+y+' '+(x+r)+' '+y+'H'+(x+w-r)+'Q'+(x+w)+' '+y+' '+(x+w)+' '+(y+r)+'V'+(y+h)+'Z'}
+/* columns: items [{label, parts:[{v,color}], tip}] stacked, 2px surface gap between segments and neighbours */
+function columns(id,items,opts){
+  var box=$(id);box.textContent='';opts=opts||{};
+  if(!items.length){box.appendChild(el('div','empty',opts.empty||'Nothing yet.'));return}
+  var W=Math.max(300,Math.round(box.clientWidth||640)),H=opts.h||200,L=34,R=8,T=10,B=22,iw=W-L-R,ih=H-T-B,n=items.length;
+  var tot=items.map(function(i){return i.parts.reduce(function(a,p){return a+(+p.v||0)},0)}),max=opts.max||niceMax(Math.max.apply(null,tot)||1);
+  var svg=S('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':opts.aria||''},box);
+  if(opts.band){var y1=T+ih*(1-opts.band[1]/max),y0=T+ih*(1-opts.band[0]/max);S('rect',{x:L,y:y1,width:iw,height:y0-y1,fill:'var(--band)'},svg)}
+  for(var g=0;g<=4;g++){var gy=T+ih*g/4;S('line',{x1:L,x2:W-R,y1:gy,y2:gy,'class':g===4?'ax':'gl'},svg);var tx=S('text',{x:L-6,y:gy+4,'text-anchor':'end'},svg);tx.textContent=num(max*(1-g/4))+(opts.unit||'')}
+  var slot=iw/n,bw=Math.min(24,Math.max(2,slot-2)),hl=S('rect',{'class':'hl',y:T,height:ih,width:slot,x:0,visibility:'hidden'},svg);
+  items.forEach(function(it,i){
+    var x=L+i*slot+(slot-bw)/2,y=T+ih;
+    it.parts.forEach(function(p,j){var h=ih*(+p.v||0)/max;if(h<=0)return;var gap=j>0?2:0,top=y-h;
+      S('path',{d:j===it.parts.length-1||it.parts.slice(j+1).every(function(q){return !(+q.v)})?colPath(x,top,bw,h-gap):'M'+x+' '+(y-gap)+'V'+top+'H'+(x+bw)+'V'+(y-gap)+'Z',fill:p.color},svg);y=top});
+    var every=Math.ceil(n/Math.min(opts.ticks||12,Math.floor(iw/34)));if(i%every===0||n<=12){var lt=S('text',{x:L+i*slot+slot/2,y:H-6,'text-anchor':'middle'},svg);lt.textContent=it.label}
+    var hit=S('rect',{'class':'hit',x:L+i*slot,y:T,width:slot,height:ih},svg);
+    function on(e){hl.setAttribute('x',L+i*slot);hl.setAttribute('visibility','visible');showTip(it.tip,e.clientX,e.clientY)}
+    hit.addEventListener('pointermove',on);hit.addEventListener('pointerdown',on);hit.addEventListener('pointerleave',function(){hl.setAttribute('visibility','hidden');hideTip()});
+  });
+}
+/* area + line for one series, with crosshair */
+function areaLine(id,pts,opts){
+  var box=$(id);box.textContent='';opts=opts||{};
+  if(pts.length<2){box.appendChild(el('div','empty',opts.empty||'Not enough data yet.'));return}
+  var W=Math.max(300,Math.round(box.clientWidth||640)),H=opts.h||200,L=34,R=40,T=12,B=22,iw=W-L-R,ih=H-T-B,max=niceMax(Math.max.apply(null,pts.map(function(p){return p.y}))||1),n=pts.length;
+  function X(i){return L+iw*i/(n-1)}function Y(v){return T+ih*(1-v/max)}
+  var svg=S('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':opts.aria||''},box);
+  for(var g=0;g<=4;g++){var gy=T+ih*g/4;S('line',{x1:L,x2:W-R,y1:gy,y2:gy,'class':g===4?'ax':'gl'},svg);var tx=S('text',{x:L-6,y:gy+4,'text-anchor':'end'},svg);tx.textContent=num(max*(1-g/4))}
+  var d=pts.map(function(p,i){return (i?'L':'M')+X(i).toFixed(1)+' '+Y(p.y).toFixed(1)}).join('');
+  S('path',{d:d+'L'+X(n-1)+' '+(T+ih)+'L'+X(0)+' '+(T+ih)+'Z',fill:'var(--s1)',opacity:'.1'},svg);
+  S('path',{d:d,fill:'none',stroke:'var(--s1)','stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+  var every=Math.ceil(n/Math.min(12,Math.floor(iw/34)));pts.forEach(function(p,i){if(i%every===0||i===n-1){var t=S('text',{x:X(i),y:H-6,'text-anchor':'middle'},svg);t.textContent=p.label}});
+  var last=pts[n-1];S('circle',{cx:X(n-1),cy:Y(last.y),r:4.5,fill:'var(--s1)',stroke:'var(--surface)','stroke-width':2},svg);
+  var lab=S('text',{x:X(n-1)+8,y:Y(last.y)+4,style:'fill:var(--text);font-weight:600'},svg);lab.textContent=num(last.y);
+  var cross=S('line',{x1:L,x2:L,y1:T,y2:T+ih,stroke:'var(--axis)','stroke-width':1,visibility:'hidden'},svg),dot=S('circle',{r:4.5,cx:L,cy:T,fill:'var(--s1)',stroke:'var(--surface)','stroke-width':2,visibility:'hidden'},svg);
+  var hit=S('rect',{'class':'hit',x:L,y:T,width:iw,height:ih},svg);
+  function on(e){var r=svg.getBoundingClientRect(),vx=(e.clientX-r.left)*W/r.width,i=Math.max(0,Math.min(n-1,Math.round((vx-L)/iw*(n-1))));
+    cross.setAttribute('x1',X(i));cross.setAttribute('x2',X(i));dot.setAttribute('cx',X(i));dot.setAttribute('cy',Y(pts[i].y));cross.setAttribute('visibility','visible');dot.setAttribute('visibility','visible');showTip(pts[i].tip,e.clientX,e.clientY)}
+  hit.addEventListener('pointermove',on);hit.addEventListener('pointerdown',on);hit.addEventListener('pointerleave',function(){cross.setAttribute('visibility','hidden');dot.setAttribute('visibility','hidden');hideTip()});
+}
 function bars(id,rows,opts){
   var box=$(id);box.textContent='';opts=opts||{};
   if(!rows.length){box.appendChild(el('div','empty',opts.empty||'Nothing yet.'));return}
   var max=opts.max||Math.max.apply(null,rows.map(function(r){return +r.v||0}))||1;
-  rows.forEach(function(r){
-    var b=el('div','bar');b.appendChild(el('span','lab',r.k));
-    var t=el('span','track'),f=el('span','fill '+(r.c||''));f.style.width=Math.max(1.5,100*(+r.v||0)/max)+'%';t.appendChild(f);b.appendChild(t);
-    b.appendChild(el('span','num',r.label!=null?r.label:num(r.v,1)));box.appendChild(b);
-  });
+  rows.forEach(function(r){var b=el('div','bar');b.appendChild(el('span','lab',r.k));b.title=r.k;
+    var t=el('span','track'),f=el('span','fill '+(r.c||''));f.style.width=Math.max(0.5,100*(+r.v||0)/max)+'%';t.appendChild(f);b.appendChild(t);
+    b.appendChild(el('span','num',r.label!=null?r.label:num(r.v,1)));box.appendChild(b)});
 }
+function tiles(id,list){var k=$(id);k.textContent='';list.forEach(function(x){var c=el('div','card tile');c.appendChild(el('div','k',x[0]));c.appendChild(el('div','v',x[1]));if(x[2])c.appendChild(el('div','d',x[2]));k.appendChild(c)})}
 function table(id,cols,rows,empty){
   var t=$(id);t.textContent='';
-  if(!rows.length){var tr0=el('tr');var td0=el('td','empty',empty||'Nothing yet.');tr0.appendChild(td0);t.appendChild(tr0);return}
+  if(!rows.length){var tr0=el('tr');tr0.appendChild(el('td','empty',empty||'Nothing yet.'));t.appendChild(tr0);return}
   var th=el('tr');cols.forEach(function(c){th.appendChild(el('th',c.l?'l':'',c.h))});var thead=el('thead');thead.appendChild(th);t.appendChild(thead);
   var tb=el('tbody');rows.forEach(function(r){var tr=el('tr');cols.forEach(function(c){var v=c.f(r),td=el('td',c.l?'l':'');if(v instanceof Node)td.appendChild(v);else td.textContent=v==null?'':String(v);tr.appendChild(td)});tb.appendChild(tr)});t.appendChild(tb);
 }
 function pill(text,cls){return el('span','pill '+cls,text)}
-function svgBars(id,items,stack){
-  /* items: [{label, a, b}] stacked a (blue) + b (red) */
-  var box=$(id);box.textContent='';
-  if(!items.length){box.appendChild(el('div','empty','Nothing yet.'));return}
-  var W=600,H=180,pad=22,n=items.length,bw=(W-pad*2)/n,max=Math.max.apply(null,items.map(function(i){return(i.a||0)+(i.b||0)}))||1;
-  var NS='http://www.w3.org/2000/svg',s=document.createElementNS(NS,'svg');s.setAttribute('viewBox','0 0 '+W+' '+(H+24));s.setAttribute('role','img');
-  function r(x,y,w,h,c){var e=document.createElementNS(NS,'rect');e.setAttribute('x',x);e.setAttribute('y',y);e.setAttribute('width',w);e.setAttribute('height',Math.max(0,h));e.setAttribute('rx',Math.min(4,w/3));e.setAttribute('fill',c);s.appendChild(e)}
-  function tx(x,y,t,c,a){var e=document.createElementNS(NS,'text');e.setAttribute('x',x);e.setAttribute('y',y);e.setAttribute('fill',c||'#8fa8c9');e.setAttribute('font-size','11');e.setAttribute('text-anchor',a||'middle');e.textContent=t;s.appendChild(e)}
-  items.forEach(function(it,i){
-    var x=pad+i*bw+bw*0.15,w=bw*0.7,ha=(H-10)*(it.a||0)/max,hb=(H-10)*(it.b||0)/max;
-    r(x,H-ha,w,ha,'#3d8fe0');if(stack)r(x,H-ha-hb,w,hb,'#ff4d5c');
-    var tot=(it.a||0)+(it.b||0);if(tot&&n<=31)tx(x+w/2,H-ha-hb-4,String(tot),'#e9f1fb');
-    if(n<=12||i%Math.ceil(n/12)===0)tx(x+w/2,H+16,it.label);
-  });
-  box.appendChild(s);
+function failClass(p,floor){return p>55?'critical':(p<10&&floor>3?'warning':'ok')}
+
+/* ---------- prototype gate, from docs/03-decisions.md ---------- */
+function gateCard(o){
+  var c=el('div','card gate'),row=el('div','row');row.appendChild(el('div','k',o.k));
+  var st=o.v==null?['none','–','Not enough data']:(o.v>=o.keep?['good','✓','Keep going']:(o.v>=o.drop?['warning','!','Rework']:['critical','✕','Drop']));
+  var s=el('span','status '+st[0]);var i=el('i',null,st[1]);s.appendChild(i);s.appendChild(document.createTextNode(st[2]));row.appendChild(s);c.appendChild(row);
+  c.appendChild(el('div','v',o.v==null?'n/a':o.fmt(o.v)));
+  var mt=el('div','meter'),fill=el('b');fill.style.width=o.v==null?'0':Math.min(100,100*o.v/o.max)+'%';mt.appendChild(fill);
+  [o.drop,o.keep].forEach(function(t){var tk=el('span','tick');tk.style.left='calc('+(100*t/o.max)+'% - 1px)';mt.appendChild(tk)});c.appendChild(mt);
+  var ml=el('div','meter-l');ml.appendChild(el('span',null,'Drop under '+o.fmt(o.drop)));ml.appendChild(el('span',null,'Keep at '+o.fmt(o.keep)+'+'));c.appendChild(ml);
+  c.appendChild(el('div','d',o.d));return c;
+}
+function renderGates(d){
+  var P=(d.players||[]).filter(function(p){return (+p.sessions||0)>0}),n=P.length,g=$('gates');g.textContent='';
+  var two=P.filter(function(p){return (+p.days||0)>=2}).length,best=P.map(function(p){return +p.best_floor||0}).sort(function(a,b){return a-b});
+  var med=n?(n%2?best[(n-1)/2]:(best[n/2-1]+best[n/2])/2):null,RW=(d.v010||{}).rewind||{},off=+RW.offered||0;
+  g.appendChild(gateCard({k:'Played on 2+ days',v:n?100*two/n:null,keep:40,drop:20,max:100,fmt:function(v){return Math.round(v)+'%'},d:num(two)+' of '+num(n)+' players'}));
+  g.appendChild(gateCard({k:'Median best floor',v:med,keep:6,drop:4,max:20,fmt:function(v){return num(v,1)},d:'Half the players cleared at least this floor'}));
+  g.appendChild(gateCard({k:'Rewind used when offered',v:off?100*(+RW.taken||0)/off:null,keep:30,drop:15,max:100,fmt:function(v){return Math.round(v)+'%'},d:off?num(RW.taken)+' of '+pl(off,'offer'):'Counted from v0.10 on'}));
+  $('gateNote').textContent=(n<10?'Only '+pl(n,'player')+' so far. Decide after at least 10 testers. ':'')+'Thresholds are the estimates in docs/03-decisions.md, not industry benchmarks.';
 }
 
+var LAST=null,rt=0;
+window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){if(LAST)render(LAST)},200)});
 function render(d){
-  var T=d.totals||{},R=d.retention||{};
+  LAST=d;
+  var T=d.totals||{},R=d.retention||{},V=d.v010||{};
   $('updated').textContent='Updated '+new Date(d.generated_at).toLocaleString()+' · refreshes every minute';
-  var k=$('kpis');k.textContent='';
-  [['Players',num(T.players),num(T.new_today)+' new today'],
-   ['Playing today',num(T.today),'last seen today'],
-   ['Time played',mins(T.minutes),num(T.avg_minutes,1)+' min per player'],
-   ['Avg session',num(T.avg_session_minutes,1)+' min',pl(T.sessions,'session')],
-   ['Came back next day',R.d1_base?pct(R.d1,R.d1_base):'n/a',num(R.d1)+' of '+num(R.d1_base)+' who started before today'],
-   ['Came back after a week',R.d7_base?pct(R.d7,R.d7_base):'n/a',num(R.d7)+' of '+num(R.d7_base)],
-   ['Shares',num(T.shares),pl(d.share_opens,'share tap')],
-   ['Rating',T.avg_rating?num(T.avg_rating,1)+' / 5':'n/a',pl(T.ratings,'rating')]
-  ].forEach(function(x){var c=el('div','card kpi');c.appendChild(el('div','k',x[0]));c.appendChild(el('div','v',x[1]));c.appendChild(el('div','d',x[2]));k.appendChild(c)});
+  renderGates(d);
+  tiles('kpis',[
+   ['Players',num(T.players),num(T.new_today)+' new today'],['Playing today',num(T.today),'last seen today'],
+   ['Time played',mins(T.minutes),num(T.avg_minutes,1)+' min per player'],['Avg session',num(T.avg_session_minutes,1)+' min',pl(T.sessions,'session')],
+   ['Back next day',R.d1_base?pct(R.d1,R.d1_base):'n/a',num(R.d1)+' of '+num(R.d1_base)],['Back after a week',R.d7_base?pct(R.d7,R.d7_base):'n/a',num(R.d7)+' of '+num(R.d7_base)],
+   ['Shares',num(T.shares),pl(d.share_opens,'share tap')],['Rating',T.avg_rating?num(T.avg_rating,1)+' / 5':'n/a',pl(T.ratings,'rating')]]);
 
-  var F=d.funnel||[],top=F.length?(+F[0].players||0):0;
-  bars('funnel',F.map(function(f,i){return{k:f.step,v:f.players,label:num(f.players)+' · '+pct(f.players,top),c:i>=7?'green':''}}),{max:top||1});
+  /* how far players get: survival curve from best floors */
+  var P=(d.players||[]),top=Math.max.apply(null,P.map(function(p){return +p.best_floor||0}).concat([0])),tot=P.length,pts=[];
+  for(var f=1;f<=top;f++){var c=P.filter(function(p){return (+p.best_floor||0)>=f}).length;pts.push({label:String(f),y:c,tip:'<b>Floor '+f+'</b><br>'+pl(c,'player')+' got this far ('+pct(c,tot)+')'})}
+  areaLine('reach',pts,{aria:'Players who reached each floor',empty:'No floors cleared yet.'});
+
+  var LV=(d.levels||[]).filter(function(l){return +l.starts>0});
+  columns('failc',LV.map(function(l){var p=+l.fail_pct||0,c=failClass(p,l.floor);return{label:String(l.floor),parts:[{v:p,color:c==='critical'?'var(--critical)':(c==='warning'?'var(--warning)':'var(--s1)')}],
+    tip:'<b>Floor '+l.floor+'</b><br>'+p+'% fail · '+pl(l.starts,'try')+'<br>'+pl(l.players,'player')+' · '+(l.wrong_tile||0)+' wrong, '+(l.too_slow||0)+' slow'}}),{max:100,unit:'%',band:[20,45],aria:'Fail percent per floor',empty:'No floors played yet.'});
 
   var days=(d.daily||[]).slice().reverse();
-  svgBars('daily',days.map(function(x){var dd=String(x.day).slice(5);return{label:dd.replace('-','/'),a:(x.players||0)-(x.new_players||0),b:x.new_players||0}}),true);
+  columns('daily',days.map(function(x){var nw=+x.new_players||0,rt=(+x.players||0)-nw,dd=String(x.day).slice(5).replace('-','/');
+    return{label:dd,parts:[{v:rt,color:'var(--s1)'},{v:nw,color:'var(--s2)'}],tip:'<b>'+esc(x.day)+'</b><br>'+pl(x.players,'player')+': '+num(rt)+' returning, '+num(nw)+' new'}}),{aria:'Players per day',ticks:10});
+  var F=d.funnel||[],first=F.length?(+F[0].players||0):0;
+  bars('funnel',F.map(function(s){return{k:s.step,v:s.players,label:num(s.players)+' · '+pct(s.players,first)}}),{max:first||1});
+
+  /* hooks */
+  var SK=V.streaks||{},SE=V.streak_events||{};
+  tiles('streakTiles',[['Alive now',num(SK.active),'of '+pl(SK.players,'player')],['Longest now',num(SK.longest_now)+'d',''],['Coals used',num(SE.coals_used),num(SE.resets)+' resets']]);
+  bars('streakBars',(SK.buckets||[]).map(function(b){return{k:b.k,v:b.players,label:pl(b.players,'player')}}),{empty:'No streaks yet. They start with v0.10.'});
+  var DG=(V.daily||[]).slice().reverse();
+  columns('dailyGlow',DG.map(function(x){var c=+x.cleared||0,p=+x.players||0;return{label:x.num?'#'+x.num:String(x.day).slice(5).replace('-','/'),parts:[{v:c,color:'var(--s1)'},{v:Math.max(0,p-c),color:'var(--s2)'}],
+    tip:'<b>Daily Glow #'+esc(x.num)+'</b> · '+esc(x.day)+'<br>'+pl(p,'player')+', '+num(c)+' cleared ('+pct(c,p)+')<br>'+pl(x.tries,'try')+' · '+pl(x.shares,'share')}}),{h:160,aria:'Daily Glow players per day',empty:'No Daily Glow plays yet.'});
+  table('dailyTbl',[{h:'#',f:function(r){return r.num}},{h:'Day',l:1,f:function(r){return r.day}},{h:'Players',f:function(r){return r.players}},{h:'Tries',f:function(r){return r.tries}},{h:'Cleared',f:function(r){return pct(r.cleared,r.players)}},{h:'Shares',f:function(r){return r.shares}}],V.daily||[],'No Daily Glow plays yet.');
+  var MN={none:'No mood',rush:'Rush',hush:'Hush',backwards:'Backwards'};
+  bars('moods',(V.moods||[]).map(function(x){var p=x.starts?Math.round(100*x.fails/x.starts):0;return{k:MN[x.mood]||x.mood,v:p,label:p+'% · '+pl(x.starts,'try'),c:p>55?'critical':(p<10?'warning':'')}}),{max:100,empty:'Nobody has passed floor 30 on v0.10 yet.'});
+  var H=V.hot||{},SO=V.social||{},doors=V.doors||[],dc=doors.reduce(function(a,x){return a+(+x.clears||0)},0),dp=doors.reduce(function(a,x){return a+(+x.players||0)},0);
+  tiles('hookTiles',[['Hot streak ×3+',pl(H.players_3,'player'),'×6: '+num(H.players_6)+' · ×10: '+num(H.players_10)],['Longest hot streak',num(H.longest),num(H.tokens)+' bonus tokens'],
+    ['Star doors cleared',num(dc),pl(dp,'player')+' tried one'],['Friend links',num(SO.friend_links),num(SO.friend_adds)+' saved on the server'],
+    ['Challenges',num(SO.challenges_opened)+' opened',num(SO.challenges_beaten)+' beaten · '+num(SO.passed_notices)+' "passed you"'],['Board tabs',num(SO.tab_friends)+' friends',num(SO.tab_daily)+' Daily Glow · '+num(SO.daily_shares)+' daily shares']]);
 
   table('levels',[
     {h:'Floor',f:function(r){return r.floor}},{h:'Players',f:function(r){return r.players}},{h:'Tries',f:function(r){return r.starts}},
-    {h:'Fail %',f:function(r){var p=+r.fail_pct||0;return pill(p+'%',p>55?'red':(p>=20?'amber':(p<10&&r.floor>3?'green':'amber')))}},
+    {h:'Fail %',f:function(r){var p=+r.fail_pct||0;return pill(p+'%',failClass(p,r.floor))}},
     {h:'Tries to clear',f:function(r){return r.avg_tries==null?'':r.avg_tries}},{h:'Secs',f:function(r){return r.avg_secs==null?'':r.avg_secs}},
     {h:'Wrong',f:function(r){return r.wrong_tile}},{h:'Slow',f:function(r){return r.too_slow}},{h:'Quit',f:function(r){return r.quits}},
     {h:'1st tap',f:function(r){return r.first_tap_ms==null?'':(r.first_tap_ms/1000).toFixed(1)+'s'}},{h:'Hop',f:function(r){return r.hop_ms==null?'':(r.hop_ms/1000).toFixed(2)+'s'}},
-    {h:'Rewinds',f:function(r){return r.rewinds}},{h:'Replays',f:function(r){return r.replays}},{h:'Help',f:function(r){return r.avg_ease==null?'':(+r.avg_ease).toFixed(2)}},
-    {h:'Cleared by',f:function(r){return r.players_cleared}}
+    {h:'Rewinds',f:function(r){return r.rewinds}},{h:'Replays',f:function(r){return r.replays}},{h:'Help',f:function(r){return r.avg_ease==null?'':(+r.avg_ease).toFixed(2)}},{h:'Cleared by',f:function(r){return r.players_cleared}}
   ],d.levels||[],'No floors played yet.');
 
-  var SCN={store_chars:'store: friends',store_skins:'store: skins',store_outfits:'store: outfits',store_spin:'store: free spin',store_buy:'store: buy card',intro:'new world card',gus_intro:'Gus card',map:'journey map',reward:'star reward card'};
+  var SCN={store_chars:'shop: friends',store_skins:'shop: skins',store_outfits:'shop: gear',store_spin:'shop: daily draw',store_buy:'shop: buy card',intro:'new world card',gus_intro:'Gus card',map:'journey map',reward:'reward card',
+    streak:'streak card',daily_result:'Daily Glow result',daily_glow:'Daily Glow: glow',daily_play:'Daily Glow: hopping',door_glow:'star door: glow',door_play:'star door: hopping'};
   function scn(k){return SCN[k]||k}
   bars('screens',(d.screens||[]).map(function(s){return{k:scn(s.screen),v:s.minutes,label:mins(s.minutes)}}));
-  bars('exits',(d.exits||[]).map(function(s){return{k:scn(s.screen),v:s.times,label:num(s.times)+' · '+num(s.players)+'p',c:(s.screen==='play'||s.screen==='glow'||s.screen==='fail')?'red':''}}));
+  bars('exits',(d.exits||[]).map(function(s){return{k:scn(s.screen),v:s.times,label:num(s.times)+' · '+num(s.players)+'p',c:(s.screen==='play'||s.screen==='glow'||s.screen==='fail')?'critical':''}}));
+  var hrs=[];for(var h=0;h<24;h++)hrs.push({label:String(h),parts:[{v:0,color:'var(--s1)'}],tip:''});
+  (d.hours||[]).forEach(function(x){if(hrs[x.hour]){hrs[x.hour].parts[0].v=x.sessions}});hrs.forEach(function(x,i){x.tip='<b>'+i+':00</b><br>'+pl(x.parts[0].v,'session')});
+  columns('hours',hrs,{h:160,ticks:8,aria:'Sessions by hour'});
+  $('bnote').textContent='Fail % on first plays in '+(d.build_now||'the newest build');
+  bars('lvlBuild',(d.levels_build||[]).map(function(l){var fp=l.starts?Math.round(100*l.fails/l.starts):0;return{k:'Floor '+l.floor,v:fp,label:fp+'% · '+pl(l.players,'player'),c:fp>55?'critical':''}}),{max:100,empty:'No floors played on this build yet.'});
 
-  var ST=d.store||{},NAMES={scarf_candy:'Candy scarf',beanie:'Bobble beanie',boots:'Snow boots',earmuffs:'Earmuffs',mittens:'Mittens',ice_crown:'Ice crown',eyepatch:'Frostglass eyepatch',
-    frost_crumb:'Frost Crumb',midnight_crumb:'Midnight Crumb',golden_crumb:'Golden Crumb',sunset_pip:'Sunset Pip',neon_watts:'Neon Watts',aurora_lumi:'Aurora Lumi',
+  var NAMES={scarf_candy:'Candy scarf',beanie:'Bobble beanie',boots:'Snow boots',earmuffs:'Earmuffs',mittens:'Mittens',ice_crown:'Ice crown',eyepatch:'Frostglass eyepatch',
+    frost_crumb:'Frost Crumb',midnight_crumb:'Midnight Crumb',golden_crumb:'Golden Crumb',campfire_crumb:'Campfire Crumb',sunset_pip:'Sunset Pip',neon_watts:'Neon Watts',aurora_lumi:'Aurora Lumi',
     crumb:'Crumb',pip:'Pip',watts:'Watts',petal:'Petal',blip:'Blip',lumi:'Lumi',snowdrop:'Snowdrop',cocoa:'Cocoa',pebble:'Pebble',mochi:'Mochi',
     aurie:'Aurie',comet:'Comet',drizzle:'Drizzle',twinkle:'Twinkle',marsh:'Marsh',piney:'Piney',moootrika:'Moootrika'};
   var WN={lake:'Frozen Lake (1 to 10)',springs:'Hot Springs (11 to 20)',grid:'Spark Grid (21 to 30)',dunes:'Dry Dunes (31 to 40)',lava:'Lava Rocks (41 to 50)',haunted:'Haunted Hall (51 to 60)'};
-  var E=d.economy||{},ec=$('econ');ec.textContent='';
-  [['Earned',num(E.earned),num(E.earned_floors)+' from floors, '+num(E.earned_spins)+' from spins'],['Spent',num(E.spent),pl(E.buyers||0,'buyer')],
-   ['Free spins',num(E.spins),pl(E.spinners||0,'player')],['Looked at buying',num(E.buy_views),'times the buy card opened']
-  ].forEach(function(x){var c=el('div','card kpi');c.appendChild(el('div','k',x[0]));c.appendChild(el('div','v',x[1]));c.appendChild(el('div','d',x[2]));ec.appendChild(c)});
+  var E=d.economy||{},ST=d.store||{};
+  tiles('econ',[['Earned',num(E.earned),num(E.earned_floors)+' floors, '+num(E.earned_spins)+' spins'],['Spent',num(E.spent),pl(E.buyers||0,'buyer')],['Free spins',num(E.spins),pl(E.spinners||0,'player')],['Buy card opens',num(E.buy_views),'']]);
   bars('buys',(E.buys||[]).map(function(b){return{k:NAMES[b.id]||b.id,v:b.players,label:pl(b.players,'player')}}),{empty:'Nothing bought yet.'});
-  bars('worlds',(d.worlds||[]).map(function(w){var fp=w.starts?Math.round(100*w.fails/w.starts):0;return{k:WN[w.world]||w.world,v:w.players,label:pl(w.players,'player')+' · '+fp+'% fail',c:fp>55?'red':''}}),{empty:'No floors played yet.'});
-  bars('chars',(d.characters||[]).map(function(c){return{k:NAMES[c.id]||c.id,v:c.floors,label:num(c.floors)+' · '+pl(c.players,'player')}}));
-  $('bnote').textContent='fail % on first plays in '+(d.build_now||'the newest build');
-  bars('lvlBuild',(d.levels_build||[]).map(function(l){var fp=l.starts?Math.round(100*l.fails/l.starts):0;return{k:'Floor '+l.floor,v:fp,label:fp+'% · '+pl(l.players,'player')+(l.fails?' · '+l.wrong+' wrong, '+l.slow+' slow':''),c:fp>55?'red':''}}),{max:100,empty:'No floors played on this build yet.'});
-  var MP=d.map||{},mk=$('mapK');mk.textContent='';
-  [['Map opens',num(MP.opens),pl(MP.players||0,'player')],['Replays',num(MP.replays),pl(MP.replay_players||0,'player')],
-   ['New stars from replays',num(MP.new_stars),pl(MP.replay_clears||0,'replay')+' cleared'],['Tokens from stars',num((E.earned_replays||0)+(E.earned_stars||0)),num(E.earned_replays||0)+' replays, '+num(E.earned_stars||0)+' rewards']
-  ].forEach(function(x){var c=el('div','card kpi');c.appendChild(el('div','k',x[0]));c.appendChild(el('div','v',x[1]));c.appendChild(el('div','d',x[2]));mk.appendChild(c)});
+  $('storeSum').textContent=pl(ST.players||0,'player')+' opened the shop '+pl(ST.opens||0,'time')+'.';
+  bars('storeItems',(ST.items||[]).map(function(i){return{k:NAMES[i.item]||i.item,v:i.players,label:pl(i.players,'player')+' · '+pl(i.taps,'tap')}}),{empty:'No item taps yet.'});
+  var MP=d.map||{};
+  tiles('mapK',[['Map opens',num(MP.opens),pl(MP.players||0,'player')],['Replays',num(MP.replays),pl(MP.replay_players||0,'player')],['New stars from replays',num(MP.new_stars),''],['Tokens from stars',num((E.earned_replays||0)+(E.earned_stars||0)),'']]);
   bars('mapR',(MP.rewards||[]).map(function(r){return{k:r.at+' stars: '+(r.kind==='tokens'?'tokens':(NAMES[r.id]||r.id)),v:r.players,label:pl(r.players,'player')}}),{empty:'No star rewards yet.'});
   var skins=(MP.skins||[]).map(function(k){return (NAMES[k.id]||k.id)+' '+pl(k.floors,'floor')}).join(', ');
   $('cbNote').textContent='Colorblind help is on for '+pl(MP.colorblind||0,'player')+'.'+(skins?' Skins in play: '+skins+'.':'');
+  bars('worlds',(d.worlds||[]).map(function(w){var fp=w.starts?Math.round(100*w.fails/w.starts):0;return{k:WN[w.world]||w.world,v:w.players,label:pl(w.players,'player')+' · '+fp+'% fail',c:fp>55?'critical':''}}),{empty:'No floors played yet.'});
+  bars('chars',(d.characters||[]).map(function(c){return{k:NAMES[c.id]||c.id,v:c.floors,label:num(c.floors)+' · '+pl(c.players,'player')}}));
   var GS=d.gus||{};$('gusNote').textContent=GS.throws?'Gus threw '+pl(GS.throws,'snowball')+' and hit '+Math.round(100*GS.hits/GS.throws)+'% of the time.':'Gus has not thrown any snowballs yet (he starts on floor 11).';
-  $('storeSum').textContent=pl(ST.players||0,'player')+' opened the store '+pl(ST.opens||0,'time')+'.';
-  bars('storeItems',(ST.items||[]).map(function(i){return{k:NAMES[i.item]||i.item,v:i.players,label:pl(i.players,'player')+' · '+pl(i.taps,'tap')}}),{empty:'No item taps yet.'});
 
   table('players',[
     {h:'Player',l:1,f:function(r){return r.name}},{h:'Best',f:function(r){return r.best_floor}},{h:'Minutes',f:function(r){return num(r.minutes,1)}},
@@ -258,53 +416,38 @@ function render(d){
     {h:'Came from',l:1,f:function(r){return r.app||r.site||(r.ref?'friend link':'')}},{h:'Phone',l:1,f:function(r){return r.os||''}},
     {h:'First seen',f:function(r){return ago(r.first_seen)}},{h:'Last seen',f:function(r){return ago(r.last_seen)}}
   ],d.players||[],'No players yet. Share the game link.');
-
   var fb=$('feedback');fb.textContent='';
-  if(!(d.feedback||[]).length)fb.appendChild(el('div','empty','No feedback yet. Players get asked once, after floor 4, and anytime from the pause menu.'));
-  (d.feedback||[]).forEach(function(f){
-    var it=el('div','it'),top=el('div','top');
-    var left=el('span');left.appendChild(el('b',null,f.name||'Anonymous'));left.appendChild(document.createTextNode(' · floor '+(f.floor||0)+' · '+ago(f.at)));
-    top.appendChild(left);top.appendChild(el('span','stars',f.rating?'★★★★★'.slice(0,f.rating)+'☆☆☆☆☆'.slice(0,5-f.rating):''));
-    it.appendChild(top);if(f.message)it.appendChild(el('p',null,f.message));fb.appendChild(it);
-  });
-
+  if(!(d.feedback||[]).length)fb.appendChild(el('div','empty','No feedback yet. Players get asked once, after floor 4, and any time from the pause menu.'));
+  (d.feedback||[]).forEach(function(f){var it=el('div','it'),mt=el('div','meta'),left=el('span');left.appendChild(el('b',null,f.name||'Anonymous'));left.appendChild(document.createTextNode(' · floor '+(f.floor||0)+' · '+ago(f.at)));
+    mt.appendChild(left);mt.appendChild(el('span','stars',f.rating?'★★★★★'.slice(0,f.rating)+'☆☆☆☆☆'.slice(0,5-f.rating):''));it.appendChild(mt);if(f.message)it.appendChild(el('p',null,f.message));fb.appendChild(it)});
   bars('referrals',(d.referrals||[]).map(function(r){return{k:r.by,v:r.players,label:pl(r.players,'player')}}),{empty:'No one has joined from a shared link yet.'});
   bars('sources',(d.sources||[]).map(function(r){return{k:r.source,v:r.players,label:num(r.players)}}));
   bars('devices',(d.devices||[]).map(function(r){return{k:r.os,v:r.players,label:num(r.players)}}));
-  var sh=(d.shares||[]).map(function(s){var how={card:'Picture card',link:'Link',copy:'Copied link',save:'Saved picture'}[s.how]||s.how,from={clear:'after a floor',menu:'from the menu'}[s.from]||s.from;return{k:how+' '+from,v:s.times,label:num(s.times)}});
-  bars('shares',sh,{empty:'No shares yet.'});
-  var hrs=[];for(var h=0;h<24;h++)hrs.push({label:String(h),a:0});(d.hours||[]).forEach(function(x){if(hrs[x.hour])hrs[x.hour].a=x.sessions});
-  svgBars('hours',hrs,false);
-
+  bars('shares',(d.shares||[]).map(function(s){var how={card:'Picture card',link:'Link',copy:'Copied link',save:'Saved picture',daily:'Daily Glow result',daily_copy:'Daily Glow, copied'}[s.how]||s.how,
+    from={clear:'after a floor',menu:'from the menu',invite:'invite',friends:'from the Friends board',daily:''}[s.from];return{k:how+(from?' '+from:(from===''?'':' '+s.from)),v:s.times,label:num(s.times)}}),{empty:'No shares yet.'});
   table('sessions',[
     {h:'Player',l:1,f:function(r){return r.player}},{h:'Started',f:function(r){return ago(r.started)}},{h:'Minutes',f:function(r){return num(r.minutes,1)}},
     {h:'Floors tried',f:function(r){return r.starts}},{h:'Cleared',f:function(r){return r.clears}},{h:'Fails',f:function(r){return r.fails}},
-    {h:'Last floor',f:function(r){return r.last_floor==null?'':r.last_floor}},{h:'Last action',l:1,f:function(r){return (r.last_action||'').replace(/_/g,' ')}},
-    {h:'Left from',l:1,f:function(r){return r.left_from||''}}
+    {h:'Last floor',f:function(r){return r.last_floor==null?'':r.last_floor}},{h:'Last action',l:1,f:function(r){return (r.last_action||'').replace(/_/g,' ')}},{h:'Left from',l:1,f:function(r){return scn(r.left_from||'')}}
   ],d.sessions||[]);
-
   bars('clicks',(d.clicks||[]).slice(0,18).map(function(c){return{k:c.button,v:c.taps,label:num(c.taps)+' · '+num(c.players)+'p'}}));
   var er=$('errors');er.textContent='';
   if(!(d.errors||[]).length)er.appendChild(el('div','empty','No errors reported.'));
-  (d.errors||[]).forEach(function(e){var it=el('div','it');it.style.cssText='border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;margin-bottom:8px;font-size:13px';
-    it.appendChild(el('div',null,e.message));it.appendChild(el('div','sub',pl(e.times,'time')+' · '+pl(e.players,'player')+' · '+ago(e.last_seen)+' · '+(e.build||'')));er.appendChild(it)});
+  (d.errors||[]).forEach(function(e){var it=el('div','card');it.style.cssText='padding:8px 10px;margin-bottom:8px;font-size:13px';it.appendChild(el('div',null,e.message));it.appendChild(el('div','sub',pl(e.times,'time')+' · '+pl(e.players,'player')+' · '+ago(e.last_seen)+' · '+(e.build||'')));er.appendChild(it)});
 }
 
-var busy=false;
+var busy=false,timers=false;
 function load(){
-  if(busy)return;busy=true;$('refresh').disabled=true;
-  fetch(API.url+'/rest/v1/rpc/owner_stats',{method:'POST',headers:{'Content-Type':'application/json',apikey:API.key},body:JSON.stringify({p_game:API.game,p_key:key})})
-    .then(function(r){if(r.status===401||r.status===403)throw new Error('key');if(!r.ok)throw new Error('http '+r.status);return r.json()})
-    .then(function(d){render(d)},function(e){
-      if(e.message==='key'){try{localStorage.removeItem(SKEY)}catch(x){}$('app').hidden=true;$('gate').hidden=false;$('gateText').textContent="That link's key didn't work. Open the private link again.";return}
-      $('updated').textContent="Couldn't load the stats. Check your connection and tap Refresh.";
-    }).then(function(){busy=false;$('refresh').disabled=false});
+  if(busy||!key)return;busy=true;$('refresh').disabled=true;
+  fetchStats(key).then(render,function(e){
+    if(e.message==='key'){forget();key='';showGate('The saved password no longer works. Sign in again.');return}
+    $('updated').textContent="Couldn't load the stats. Check your connection and tap Refresh.";
+  }).then(function(){busy=false;$('refresh').disabled=false});
 }
+function startTimers(){if(timers)return;timers=true;setInterval(function(){if(!document.hidden)load()},60000);document.addEventListener('visibilitychange',function(){if(!document.hidden)load()})}
 $('refresh').addEventListener('click',load);
-$('forget').addEventListener('click',function(){try{localStorage.removeItem(SKEY)}catch(e){}location.reload()});
-load();
-setInterval(function(){if(!document.hidden)load()},60000);
-document.addEventListener('visibilitychange',function(){if(!document.hidden)load()});
+window.addEventListener('scroll',hideTip,{passive:true});
+if(!key){showGate('')}else{$('app').hidden=false;load();startTimers()}
 })();
 </script>
 </body>

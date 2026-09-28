@@ -97,6 +97,10 @@ button{font:inherit;color:inherit}
 @keyframes sink{to{transform:translateY(14px) scale(.55);opacity:0}}
 @keyframes ripple{from{transform:scale(.4);opacity:1}to{transform:scale(1.2);opacity:.35}}
 @keyframes cheer{0%{transform:translateY(0)}40%{transform:translateY(-9px)}100%{transform:translateY(0)}}
+.tile.land::after{content:"";position:absolute;inset:-3px;border-radius:inherit;border:3px solid #ffe3a8;opacity:0;pointer-events:none;animation:landRing .42s ease-out}
+@keyframes landRing{0%{opacity:.9;transform:scale(.8)}100%{opacity:0;transform:scale(1.18)}}
+.praise{position:absolute;left:50%;top:42%;z-index:6;transform:translate(-50%,-50%);pointer-events:none;font-family:var(--display);font-size:clamp(34px,11vw,52px);color:#ffe3a8;text-shadow:0 3px 0 #9d570e,0 10px 26px rgba(0,0,0,.45);white-space:nowrap;animation:praisePop .9s cubic-bezier(.2,.9,.3,1.3) both}
+@keyframes praisePop{0%{opacity:0;transform:translate(-50%,-30%) scale(.5)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}70%{opacity:1;transform:translate(-50%,-55%) scale(1)}100%{opacity:0;transform:translate(-50%,-70%) scale(.96)}}
 @keyframes shard{to{transform:translate(var(--dx),var(--dy)) rotate(var(--r)) scale(.35);opacity:0}}
 @keyframes splash{from{transform:scale(.3);opacity:1}to{transform:scale(1.6);opacity:0}}
 
@@ -228,7 +232,7 @@ button{font:inherit;color:inherit}
 .kv dd{margin:0;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
 .lbl{font-size:12.5px;color:var(--muted);font-weight:800}
 textarea{width:100%;min-height:160px;resize:vertical;background:rgba(3,10,22,.5);color:var(--text);border:1.5px solid var(--line);border-radius:12px;padding:10px;font:500 12.5px/1.45 ui-monospace,Menlo,Consolas,monospace;-webkit-user-select:text;user-select:text}
-.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;background:var(--text);color:var(--deep);font-weight:800;font-size:14px;padding:10px 14px;border-radius:12px;width:max-content;max-width:calc(100% - 32px);text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;background:var(--text);color:var(--deep);font-weight:800;font-size:14px;padding:10px 14px;border-radius:12px;width:max-content;max-width:calc(100% - 32px);text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.4);pointer-events:none;overflow-wrap:anywhere}
 
 /* World leaderboard */
 .lb-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -536,6 +540,38 @@ body.destination-open .app{opacity:0;pointer-events:none}
 /* Character camp */
 #storeOv{z-index:24}
 #buyOv{z-index:26}
+/* v0.10: streaks, Daily Glow, friends, glow moods, star doors */
+#heroCrumb .cb-flame{scale:var(--fs,1)}
+.hot1 .blob .cb-flame{scale:1.18}.hot2 .blob .cb-flame{scale:1.32}.hot3 .blob .cb-flame{scale:1.46;filter:drop-shadow(0 0 5px #ffb23e)}
+.title-streak{margin-top:9px;display:inline-grid;grid-template-columns:26px auto;align-items:center;gap:6px;min-height:44px;padding:4px 12px 4px 6px;border:1px solid rgba(255,178,62,.45);border-radius:14px;background:rgba(3,10,22,.5);color:var(--text);text-align:left;cursor:pointer;justify-self:start}
+.title-streak .ts-flame svg{width:26px;height:26px;display:block}
+.title-streak b{display:block;font-size:14px;line-height:1.1}.title-streak small{display:block;font-size:11px;color:#b8ccda}
+.title-streak.risk{border-color:#ffb23e;box-shadow:0 0 0 2px rgba(255,178,62,.25)}.title-streak.risk small{color:#ffd08a}
+.title-streak.done small{color:#8de7bd}
+.title-challenge{width:100%;min-height:44px;border:1px dashed rgba(255,178,62,.7);border-radius:12px;background:rgba(3,10,22,.55);color:#ffe3a8;font:800 13.5px var(--ui);padding:8px 12px;cursor:pointer}
+.title-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+.title-shortcut{position:relative;grid-template-columns:1fr!important;justify-items:center;text-align:center!important;padding:8px 4px!important;gap:3px}
+.title-shortcut small{max-width:100%}
+.title-shortcut .dot{position:absolute;top:7px;right:12px;width:9px;height:9px;border-radius:50%;background:#ff4d5c;box-shadow:0 0 0 2px rgba(3,10,22,.8)}
+.streakline{margin:4px 0 0;font-weight:800;color:#ffd08a}
+.daily-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:6px auto 10px;max-width:280px}
+.daily-grid i{width:20px;height:20px;border-radius:5px;background:rgba(143,168,201,.2)}
+.daily-grid i.on{background:#ffb23e}.daily-grid i.miss{background:rgba(255,77,92,.55)}
+.stk-big{position:relative;width:120px;height:120px;margin:0 auto 4px;display:grid;place-items:center}
+.stk-big .stk-flame svg{width:120px;height:120px;display:block}
+.stk-big b{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-family:var(--display);font-size:34px;color:#3a1602}
+.stk-track{list-style:none;margin:10px 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.stk-track li{border:1.5px solid var(--line);border-radius:12px;padding:8px 4px;font-size:12px;line-height:1.25;background:rgba(3,10,22,.35)}
+.stk-track li b{display:block;font-size:15px}
+.stk-track li.got{border-color:#3fcf8e;background:rgba(63,207,142,.12)}.stk-track li.next{border-color:#ffb23e}
+.lb-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:4px 0 8px;padding:3px;border-radius:12px;background:rgba(3,10,22,.4)}
+.lb-tabs button{min-height:40px;border:0;border-radius:9px;background:none;color:#b8ccda;font:800 13.5px var(--ui);cursor:pointer}
+.lb-tabs button.on{background:rgba(255,178,62,.18);color:#ffe3a8}
+.door-node{position:relative;display:grid;grid-template-columns:40px 1fr;align-items:center;gap:10px;width:calc(100% - 24px);margin:4px 12px 14px;min-height:56px;padding:8px 12px;border:1.5px dashed rgba(234,244,251,.35);border-radius:14px;background:rgba(3,10,22,.55);color:var(--text);text-align:left;cursor:pointer}
+.door-node .door-ic{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:rgba(234,244,251,.1)}.door-node .door-ic svg{width:22px;height:22px}
+.door-node b{display:block;font-size:14px}.door-node small{display:block;font-size:12px;color:#b8ccda}
+.door-node.open{border-style:solid;border-color:#ffb23e;box-shadow:0 0 0 3px rgba(255,178,62,.18)}.door-node.open .door-ic{background:rgba(255,178,62,.22);color:#ffd08a}
+.door-node.done{border-color:#3fcf8e}.door-node.done .door-ic{background:rgba(63,207,142,.18);color:#8de7bd}
 .btn:disabled{opacity:.5;filter:grayscale(.7);cursor:default;box-shadow:none}
 #storeOv::before{background:linear-gradient(180deg,rgba(3,10,22,.8),rgba(3,10,22,.1) 24%,rgba(3,10,22,.28) 43%,rgba(3,10,22,.96) 66%,#030a16)}
 .store-scene{position:relative;width:min(100%,560px);height:100%;margin:auto;padding:max(14px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:8px;overflow:hidden;animation:sceneIn .25s ease-out}
@@ -630,7 +666,7 @@ body.destination-open .app{opacity:0;pointer-events:none}
 <div class="sea" id="sea" aria-hidden="true"></div>
 <div class="app">
   <header class="hud">
-    <div class="floor"><span class="worldmark"><span class="world-name" id="worldName">Frozen Lake</span><span class="k">Floor</span></span><span class="v" id="lvl">1</span></div>
+    <div class="floor"><span class="worldmark"><span class="world-name" id="worldName">Frozen Lake</span><span class="k" id="floorK">Floor</span></span><span class="v" id="lvl">1</span></div>
     <div class="tools">
       <button class="chip coinchip" id="walletBtn" type="button" aria-label="Crumble Tokens and store"><svg id="hudCoin" viewBox="0 0 24 24" aria-hidden="true"></svg><b id="hudTokens">0</b></button>
       <button class="chip icon" id="menuBtn" type="button" aria-label="Pause and menu"></button>
@@ -640,7 +676,7 @@ body.destination-open .app{opacity:0;pointer-events:none}
   </header>
   <div class="dots" id="dots" aria-label="Hop progress"></div>
   <div class="meter" aria-hidden="true"><i id="meter"></i></div>
-  <main class="stage" id="stage">
+  <main class="stage" id="stage"><div class="praise" id="praise" hidden aria-live="polite"></div>
     <div class="board" id="board">
       <div class="blob" id="blob" aria-hidden="true"></div>
     </div>
@@ -659,18 +695,21 @@ body.destination-open .app{opacity:0;pointer-events:none}
       <div class="title-lockup">
         <div class="wordmark" id="startTitle">Crumble<span>Recall</span></div>
         <div class="title-zone" id="titleZone">Frozen Lake · Floor 1</div>
+        <button class="title-streak" id="streakBtn" type="button"><span class="ts-flame"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="url(#cbFlame)" d="M12 22c-4.4 0-7-2.8-7-6.4 0-3.1 2-5.2 3.4-7 .3 1.7 1.2 2.6 2.1 2.2.5-2.9 2.4-5.4 4.6-6.8-.6 2.6.6 4.2 1.8 5.9 1.2 1.7 2.1 3.4 2.1 5.7 0 3.6-2.6 6.4-7 6.4z"/><path fill="#ffe9bd" d="M12 20.2c-1.9 0-3.1-1.2-3.1-2.8 0-1.4.9-2.4 1.6-3.2.2.8.7 1.2 1.2 1 .3-1.3 1.1-2.4 2-3-.2 1.2.4 2 .9 2.8.5.8.9 1.5.9 2.5 0 1.6-1.2 2.7-3.5 2.7z"/></svg></span><span><b>Start a streak</b><small>Clear a floor each day</small></span></button>
       </div>
       <button class="title-icon" id="startBoard" type="button" aria-label="World leaderboard" hidden></button>
     </div>
     <div class="title-character"><div class="hero" id="heroCrumb"></div></div>
     <div class="title-bottom">
       <p class="title-prompt"><span>Watch.</span> Remember. Hop before the world gives way.</p>
+      <button class="title-challenge" id="titleChallenge" type="button" hidden></button>
       <button class="btn gold title-play" id="playBtn" type="button">Continue journey<small id="playSub">Floor 1</small></button>
       <div class="title-shortcuts">
         <button class="title-shortcut" id="mapBtn" type="button"><span class="title-shortcut-icon" aria-hidden="true">✦</span><span><strong>Journey</strong><small id="mapSub">Replay for stars</small></span></button>
+        <button class="title-shortcut" id="dailyBtn" type="button"><span class="title-shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></span><span><strong>Daily Glow</strong><small id="dailySub">New every day</small></span><i class="dot" id="dailyDot" hidden></i></button>
         <button class="title-shortcut" id="storeBtn" type="button"><span class="title-shortcut-icon" id="shopIcon" aria-hidden="true"></span><span><strong>Shop</strong><small>Friends, skins &amp; gear</small></span></button>
       </div>
-      <p class="title-build">v0.9 playtest · sound turns each path into a melody</p>
+      <p class="title-build">v0.10 playtest · sound turns each path into a melody</p>
     </div>
   </div>
 </div>
@@ -684,6 +723,7 @@ body.destination-open .app{opacity:0;pointer-events:none}
     <div class="stars" id="stars"></div>
     <div class="earn" id="earnRow"><svg id="earnCoin" viewBox="0 0 24 24" aria-hidden="true"></svg><b>+0</b><span>Crumble Tokens</span></div>
     <p id="clearLine"></p>
+    <p class="streakline" id="clearStreak" hidden></p>
     <p class="rank" id="clearRank" hidden></p>
     <button class="btn gold" id="nextBtn" type="button">Next floor</button>
     <button class="btn line" id="shareBtn" type="button" hidden>Challenge a friend</button>
@@ -733,11 +773,13 @@ body.destination-open .app{opacity:0;pointer-events:none}
 
 <div class="ov" id="boardOv" role="dialog" aria-modal="true" aria-labelledby="boardTitle" hidden>
   <div class="card">
-    <div class="lb-head"><div><span class="pill">World</span><h2 id="boardTitle">Leaderboard</h2></div><button class="chip icon" id="boardClose" type="button" aria-label="Close"></button></div>
+    <div class="lb-head"><h2 id="boardTitle">Leaderboard</h2><button class="chip icon" id="boardClose" type="button" aria-label="Close"></button></div>
+    <div class="lb-tabs" id="boardTabs" role="tablist"><button type="button" role="tab" data-b="world" class="on" aria-selected="true">World</button><button type="button" role="tab" data-b="friends" aria-selected="false">Friends</button><button type="button" role="tab" data-b="daily" aria-selected="false">Daily Glow</button></div>
     <p id="boardSub">Highest floor cleared. Ties go to more stars, then whoever got there first.</p>
-    <div class="lb-cols" id="boardCols" aria-hidden="true" hidden><span>#</span><span></span><span>Player</span><span>Floor</span><span>★</span></div>
+    <div class="lb-cols" id="boardCols" aria-hidden="true" hidden><span>#</span><span></span><span>Player</span><span id="boardColA">Floor</span><span id="boardColB">★</span></div>
     <ol class="lb-list" id="boardList" aria-live="polite"></ol>
     <ol class="lb-list lb-pin" id="boardMe" aria-label="Your rank" hidden></ol>
+    <button class="btn gold" id="boardInvite" type="button" hidden>Invite a friend</button>
     <button class="btn gold" id="boardJoin" type="button">Join with a player name</button>
     <button class="btn textlink" id="boardRename" type="button" hidden>Change my name</button>
     <p class="fine">Shared with the board: your player name, best floor, stars and country (from your phone's language setting). Nothing else.</p>
@@ -849,6 +891,30 @@ body.destination-open .app{opacity:0;pointer-events:none}
   </div>
 </div>
 
+<div class="ov" id="dailyOv" role="dialog" aria-modal="true" aria-labelledby="dailyTitle" hidden>
+  <div class="card center">
+    <p class="kicker" id="dailyKicker">Daily Glow</p>
+    <h2 id="dailyTitle">Cleared</h2>
+    <div class="daily-grid" id="dailyGrid" aria-hidden="true"></div>
+    <p id="dailyLine"></p>
+    <p class="rank" id="dailyRank" hidden></p>
+    <button class="btn gold" id="dailyShare" type="button">Share your result</button>
+    <button class="btn line" id="dailyBoard" type="button">Today's leaderboard</button>
+    <button class="btn textlink" id="dailyClose" type="button">Back to the journey</button>
+  </div>
+</div>
+
+<div class="ov" id="streakOv" role="dialog" aria-modal="true" aria-labelledby="stkTitle" hidden>
+  <div class="card center">
+    <div class="stk-big"><span class="stk-flame"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="url(#cbFlame)" d="M12 22c-4.4 0-7-2.8-7-6.4 0-3.1 2-5.2 3.4-7 .3 1.7 1.2 2.6 2.1 2.2.5-2.9 2.4-5.4 4.6-6.8-.6 2.6.6 4.2 1.8 5.9 1.2 1.7 2.1 3.4 2.1 5.7 0 3.6-2.6 6.4-7 6.4z"/><path fill="#ffe9bd" d="M12 20.2c-1.9 0-3.1-1.2-3.1-2.8 0-1.4.9-2.4 1.6-3.2.2.8.7 1.2 1.2 1 .3-1.3 1.1-2.4 2-3-.2 1.2.4 2 .9 2.8.5.8.9 1.5.9 2.5 0 1.6-1.2 2.7-3.5 2.7z"/></svg></span><b id="stkN">0</b></div>
+    <h2 id="stkTitle">Daily streak</h2>
+    <p id="stkLine">Clear one floor a day to keep Crumb's fire going. Any floor counts, even a replay or the Daily Glow.</p>
+    <ol class="stk-track" id="stkTrack"></ol>
+    <p class="fine" id="stkCoals"></p>
+    <button class="btn gold" id="stkOk" type="button">Keep going</button>
+  </div>
+</div>
+
 <div class="ov" id="rewardOv" role="dialog" aria-modal="true" aria-labelledby="rwTitle" hidden>
   <div class="card center">
     <div class="hero pop" id="rwArt"></div>
@@ -881,7 +947,7 @@ function $(id){return document.getElementById(id)}
 var board=$('board'),blob=$('blob'),stage=$('stage'),dotsEl=$('dots'),meter=$('meter'),statusEl=$('status'),
     lvlEl=$('lvl'),worldPlate=$('worldPlate'),worldName=$('worldName'),replayBtn=$('replayBtn'),statsBtn=$('statsBtn'),soundBtn=$('soundBtn'),musicBtn=$('musicBtn'),boardBtn=$('boardBtn'),menuBtn=$('menuBtn');
 var REDUCE=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-var VERSION='v0.9';
+var VERSION='v0.10';
 
 /* ---------- Crumb, the player character. Art is drawn in code so it stays sharp at any size.
    tools/render_store_assets.py reads this block to draw the store icon and screenshots. ---------- */
@@ -1075,6 +1141,8 @@ var SKINS=[
     extra:'<g fill="#fff6d8"><circle cx="30" cy="92" r="1.6"/><circle cx="94" cy="54" r="1.8"/><circle cx="86" cy="100" r="1.3"/><circle cx="26" cy="58" r="1.2"/><path d="M96 74l1.2 2.8 2.8 1.2-2.8 1.2-1.2 2.8-1.2-2.8-2.8-1.2 2.8-1.2z"/></g>'},
   {id:'golden_crumb',base:'crumb',name:'Golden Crumb',rarity:'legendary',stars:160,glow:'rgba(255,205,70,.6)',cheek:'#ffb070',
     map:{'url(#cbBody)':'url(#skGoldBody)','#9e1f33':'#8a5a00','#d8364a':'#e0a21a','#7a1426':'#6a3f00','#5a0f1e':'#4a2a00','#3d8fe0':'#ff4d5c','#9fd0fa':'#ffc2c7','#2f7fd6':'#d8364a','#d3e9f8':'#fff3d6'}},
+  {id:'campfire_crumb',base:'crumb',name:'Campfire Crumb',rarity:'epic',streak:7,glow:'rgba(255,140,60,.55)',cheek:'#ffc38a',
+    map:{'url(#cbBody)':'url(#skCampBody)','url(#cbFlame)':'url(#skCampFlame)','#9e1f33':'#7a3208','#d8364a':'#e0701f','#7a1426':'#5a2404','#5a0f1e':'#3a1602'}},
   {id:'sunset_pip',base:'pip',name:'Sunset Pip',rarity:'rare',price:250,glow:'rgba(255,150,110,.45)',
     map:{'url(#chPip)':'url(#skSunPip)','#1a6bb0':'#b8405a','#3d9be0':'#f07a5a','#0d3a66':'#6a1a30','#bfe9ff':'#ffd6b0'}},
   {id:'neon_watts',base:'watts',name:'Neon Watts',rarity:'epic',stars:70,glow:'rgba(62,240,255,.5)',
@@ -1083,6 +1151,8 @@ var SKINS=[
     map:{'url(#chLumi)':'url(#skAurLumi)','url(#chLumiGlow)':'url(#skAurGlow)','#c9b8ff':'#8af0c8','#c9baf5':'#9fe8e0','#4b3a8f':'#1d4a6a','#3a2c78':'#173a5a'}}
 ];
 var SKIN_DEFS=
+  '<radialGradient id="skCampBody" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#fff0c0"/><stop offset=".5" stop-color="#ff9a3c"/><stop offset="1" stop-color="#b8420c"/></radialGradient>'+
+  '<linearGradient id="skCampFlame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff3d1a"/><stop offset=".55" stop-color="#ffb23e"/><stop offset="1" stop-color="#fff3c0"/></linearGradient>'+
   '<radialGradient id="skFrostBody" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#a8dcff"/><stop offset="1" stop-color="#3f86c9"/></radialGradient>'+
   '<linearGradient id="skFrostFlame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#4aa8f5"/><stop offset=".55" stop-color="#9fe6ff"/><stop offset="1" stop-color="#ffffff"/></linearGradient>'+
   '<radialGradient id="skMidBody" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#8a86f0"/><stop offset=".5" stop-color="#3b3494"/><stop offset="1" stop-color="#1a1650"/></radialGradient>'+
@@ -1168,6 +1238,7 @@ function params(L){
      So the path grows more slowly, the glow plays more slowly, and a struggling player also gets one hop less (not just more time). */
   var cyc=[0,0,0,1][(L-1)%4];                        // three steady floors, then a small spike
   var hops=Math.min(3+Math.ceil(L*0.3)+cyc,14);
+  if(L>60)hops=Math.min(18,hops+Math.floor((L-51)/10));   // v0.10: past floor 60 the path grows one hop per world, up to 18
   var n=L<=3?4:(L<=12?5:6);
   var blink=Math.max(380,660-L*12);                  // ms per glow
   var life=Math.max(1.35,3.2-L*0.12)+(cyc===0?0.3:0); // seconds a tile holds
@@ -1374,7 +1445,7 @@ function syncDestination(){document.body.classList.toggle('destination-open',!$(
 function show(id){$(id).hidden=false;syncDestination()}
 function hide(id){$(id).hidden=true;syncDestination()}
 function setStatus(t,cls){statusEl.textContent=t;statusEl.className='status'+(cls?' '+cls:'')}
-function setPhase(p){G.phase=p;statsBtn.disabled=boardBtn.disabled=menuBtn.disabled=(p==='watch'||p==='ad'||p==='falling');seaHush(p==='watch');replayBtn.disabled=!(p==='hop'&&!G.replayUsed);duck(p==='ad'?0:(p==='watch'?0.45:1))}
+function setPhase(p){G.phase=p;statsBtn.disabled=boardBtn.disabled=menuBtn.disabled=(p==='watch'||p==='ad'||p==='falling');seaHush(p==='watch');replayBtn.disabled=!(p==='hop'&&!G.replayUsed&&!G.mode);duck(p==='ad'?0:(p==='watch'?0.45:1))}
 function updateReplayLabel(){replayBtn.innerHTML=G.replayUsed?'Replay the glow<small>Used on this floor</small>':'Replay the glow<small>Once per floor</small>'}
 function meterSet(f){meter.style.transform='scaleX('+f.toFixed(3)+')';meter.classList.toggle('low',f<0.3)}
 
@@ -1427,28 +1498,37 @@ function restore(idx){var t=G.tiles[idx];if(!t)return;t.classList.remove('sunk',
 
 /* ---------- Flow ---------- */
 function prepareLevel(){
-  var P=params(G.L);G.n=P.n;G.life=P.life;G.blink=P.blink;G.path=makePath(G.L,P.n,P.hops,G.variant|0);
-  G.step=0;G.rewindUsed=false;G.replayUsed=false;G.assists=0;
-  sizeBoard();buildBoard();lvlEl.textContent=G.L;renderDots();meterSet(1);updateReplayLabel();placeBlob(G.path[0]);mood('idle');eyes(crumb,0,0);applyWorld();
+  var P=G.mode?modeParams():params(G.L);G.n=P.n;G.life=P.life;G.blink=P.blink;G.path=makePath(G.mode?modeSeed():G.L,P.n,P.hops,G.mode?0:(G.variant|0));
+  G.step=0;G.rewindUsed=false;G.replayUsed=!!G.mode;G.assists=0;
+  sizeBoard();buildBoard();lvlEl.textContent=G.mode==='daily'?'#'+dailyNum():(G.mode==='door'?'★':G.L);$('floorK').textContent=G.mode==='daily'?'Daily':(G.mode==='door'?'Door':'Floor');
+  renderDots();meterSet(1);updateReplayLabel();if(G.mode)replayBtn.innerHTML='Replay the glow<small>Off on special floors</small>';placeBlob(G.path[0]);mood('idle');eyes(crumb,0,0);applyWorld();
 }
 function startLevel(){
-  if(needWorldIntro()){showWorldIntro(startLevel);return}   // a new elemental joins every 10 floors
+  if(!G.mode&&needWorldIntro()){showWorldIntro(startLevel);return}   // a new elemental joins every 10 floors
   if(G.retry)G.retry=false;                                  // Try again: same path
+  else if(G.mode){G.replay=false;G.variant=0}
   else{G.replay=G.L<=(S.best||0);G.variant=G.replay?(S.rv=(S.rv||0)+1):0}   // replays from the map get a fresh path
-  G.tok++;cancelAnimationFrame(G.raf);prepareLevel();S.attempts++;S.att[G.L]=(S.att[G.L]||0)+1;save();
+  G.tok++;cancelAnimationFrame(G.raf);prepareLevel();G.mood=moodFor();G.hotLost=0;
+  if(G.mode==='daily')dailyState().tries++;else if(!G.mode){S.attempts++;S.att[G.L]=(S.att[G.L]||0)+1}
+  save();
   G.t0=performance.now();G.taps=0;G.far=0;G.firstTap=0;G.hopStart=0;G.hopMs=[];
-  track('level_start',G.L,{att:S.att[G.L],n:G.n,hops:G.path.length-1,ease:+S.ease,w:G.world,ch:S.char||'crumb',sk:wornSkin(S.char||'crumb'),r:G.replay?1:0});
+  if(G.mode==='daily')track('daily_start',G.L,{day:S.daily.day,num:dailyNum(),tr:S.daily.tries,hops:G.path.length-1,w:G.world,m:G.mood||''});
+  else if(G.mode==='door')track('door_start',G.L,{k:MODE.door,hops:G.path.length-1,w:G.world,m:G.mood||''});
+  else track('level_start',G.L,{att:S.att[G.L],n:G.n,hops:G.path.length-1,ease:+S.ease,w:G.world,ch:S.char||'crumb',sk:wornSkin(S.char||'crumb'),r:G.replay?1:0,m:G.mood||'',hot:S.hot|0});
+  moodIntro();
   watch(1,function(){beginHop(1.6)});
 }
 function secsNow(){return +(((performance.now()-(G.t0||performance.now()))/1000).toFixed(1))}
 function watch(from,done){
-  setPhase('watch');mood('look');board.classList.remove('ghosted');gusCancel();setStatus(G.L===1&&from===1?'Watch the glow. Remember the order.':'Watch the glow','watch');
-  var tok=++G.tok,k=from,on=Math.round(G.blink*0.68),off=G.blink-on;
+  var M=G.mood||'';
+  setPhase('watch');mood('look');board.classList.remove('ghosted');gusCancel();setStatus(G.L===1&&from===1&&!G.mode?'Watch the glow. Remember the order.':(M?GLOWMOODS[M].watch:'Watch the glow'),'watch');
+  var tok=++G.tok,seq=G.path.slice(from),j=0;if(M==='backwards')seq.reverse();
   function next(){
     if(tok!==G.tok)return;
-    if(k>=G.path.length){setTimeout(function(){if(tok===G.tok){eyes(crumb,0,0);done()}},300);return}
-    var i=G.path[k],t=G.tiles[i];t.classList.add('glow');tone(noteFor(i));lookAt(i);
-    setTimeout(function(){t.classList.remove('glow');k++;setTimeout(next,off)},on);
+    if(j>=seq.length){setTimeout(function(){if(tok===G.tok){eyes(crumb,0,0);done()}},300);return}
+    var b=M==='rush'?Math.round(G.blink*(1.35-0.65*(seq.length>1?j/(seq.length-1):0))):G.blink,on=Math.round(b*0.68),off=b-on;   // Rush: 1.35x slower at the start, 0.7x at the end
+    var i=seq[j],t=G.tiles[i];t.classList.add('glow');if(M!=='hush')tone(noteFor(i));lookAt(i);
+    setTimeout(function(){t.classList.remove('glow');j++;setTimeout(next,off)},on);
   }
   setTimeout(next,450);
 }
@@ -1481,6 +1561,7 @@ board.addEventListener('click',function(e){
   if(i===G.path[G.step+1])hopOK(i);else hopWrong(i);
 });
 function hopOK(i){
+  var lt=G.tiles[i];if(lt&&!REDUCE){lt.classList.remove('land');void lt.offsetWidth;lt.classList.add('land')}
   G.hopMs.push(Math.round(performance.now()-(G.lastHopAt||G.tileStart)));G.lastHopAt=performance.now();
   var from=G.path[G.step];G.step++;G.tiles[from].classList.remove('shake');
   tone(noteFor(i),0.28);sfx.hup();buzz(8);hopTo(i);setTimeout(function(){collapse(from,false)},90);renderDots();
@@ -1491,8 +1572,10 @@ function hopWrong(i){setPhase('falling');cancelAnimationFrame(G.raf);mood('scare
 function fall(cause,idx){
   setPhase('falling');cancelAnimationFrame(G.raf);G.cause=cause;G.broke=idx;mood('scared');board.classList.remove('ghosted');gusCancel();
   collapse(idx,true);dropBlob();sfx.splash();setTimeout(sfx.fizzle,120);buzz(60);
-  if(cause==='wrong')S.wrong++;else S.slow++;adjustEase('fail');save();
-  track('level_fail',G.L,{cause:cause,got:G.step,total:G.path.length-1,secs:secsNow(),taps:G.taps,far:G.far,first:G.firstTap,ease:+S.ease,rewound:G.rewindUsed,w:G.world,r:G.replay?1:0});
+  if(cause==='wrong')S.wrong++;else S.slow++;if(!G.mode)adjustEase('fail');hotEnd();save();
+  if(G.mode==='daily')track('daily_fail',G.L,{day:S.daily.day,tr:S.daily.tries,got:G.step,total:G.path.length-1,cause:cause,m:G.mood||''});
+  else if(G.mode==='door')track('door_fail',G.L,{k:MODE.door,got:G.step,total:G.path.length-1,cause:cause,m:G.mood||''});
+  else track('level_fail',G.L,{cause:cause,got:G.step,total:G.path.length-1,secs:secsNow(),taps:G.taps,far:G.far,first:G.firstTap,ease:+S.ease,rewound:G.rewindUsed,w:G.world,r:G.replay?1:0,m:G.mood||''});
   setStatus(cause==='wrong'?'Wrong tile! Tsss...':WORLD().melt+' Tsss...','bad');
   setTimeout(showFail,720);
 }
@@ -1502,9 +1585,14 @@ function showFail(){
   $('failTitle').textContent=G.cause==='wrong'?'Not that tile':WORLD().melt.replace(/!$/,'');
   near.textContent=got+' of '+total;var sm=document.createElement('small');sm.textContent='hops';near.appendChild(sm);
   var ft=$('failTrail');ft.innerHTML='';for(var i=0;i<total;i++){var mark=document.createElement('i');mark.className=i<got?'on':(i===got?'break':'');ft.appendChild(mark)}
-  $('failLine').textContent=(got/total>=0.5?'So close. ':'')+(G.cause==='wrong'?'That tile was not next in the glow order.':WORLD().why);
-  var canRewind=!G.rewindUsed;$('rewindBtn').hidden=!canRewind;
+  $('failLine').textContent=nearLine(got,total)+(got/total>=0.5?'So close. ':'')+(G.cause==='wrong'?'That tile was not next in the glow order.':WORLD().why)+(G.hotLost>=3?' Your hot streak of '+G.hotLost+' ended.':'');
+  var canRewind=!G.rewindUsed&&!G.mode;$('rewindBtn').hidden=!canRewind;$('failMap').hidden=!!G.mode;
   if(canRewind){S.rvOffered++;save()}
+  if(G.mode==='daily'){
+    var D=dailyState(),left=DAILY_TRIES-D.tries;D.best=Math.max(D.best||0,got);D.total=total;save();
+    if(left<=0){hide('failOv');dailyDone(false);return}
+    $('retryBtn').innerHTML='Try again<small>'+left+(left===1?' try':' tries')+' left today</small>';
+  }else $('retryBtn').innerHTML='Start this path again<small>Watch from the beginning</small>';
   show('failOv');
 }
 function rewind(){
@@ -1515,18 +1603,23 @@ function rewind(){
 }
 function cleared(){
   setPhase('cleared');cancelAnimationFrame(G.raf);meterSet(1);mood('happy');
+  if(G.mode){modeCleared();return}
   var stars=G.assists===0?3:(G.assists===1?2:1),L=G.L,replay=!!G.replay,prev=+S.stars[L]||0;
   S.cleared++;S.stars[L]=Math.max(prev,stars);if(L>S.best)S.best=L;G.L=L+1;S.level=Math.max(S.level||1,G.L);
   var hm=G.hopMs.length?Math.round(G.hopMs.reduce(function(a,b){return a+b},0)/G.hopMs.length):0;
-  track('level_complete',L,{secs:secsNow(),stars:stars,assists:G.assists,taps:G.taps,far:G.far,first:G.firstTap,hop:hm,att:S.att[L]||1,ease:+S.ease,w:G.world,r:replay?1:0,prev:prev});
+  var hot=0;if(!replay){S.hot=(S.hot||0)+1;hot=hotBonus(S.hot);applyHot()}
+  var day=creditDay();beatChallenge();
+  track('level_complete',L,{secs:secsNow(),stars:stars,assists:G.assists,taps:G.taps,far:G.far,first:G.firstTap,hop:hm,att:S.att[L]||1,ease:+S.ease,w:G.world,r:replay?1:0,prev:prev,m:G.mood||'',hot:replay?0:(S.hot|0)});
   adjustEase(G.assists===0&&(S.att[L]||1)===1?'perfect':'clear');save();
   if(!replay&&L>=INVITE_FLOOR)claimInvite();
-  sfx.win();buzz([10,40,10]);setStatus('Floor cleared!');board.classList.remove('ghosted');gusCancel();meltBlob(1);
-  var earn=replay?Math.max(0,stars-prev)*2:stars+2;if(earn)addTokens(earn,replay?'replay':'floor');   // first clear: 3 to 5 tokens. Replays: 2 per new star, so floor 1 can't be farmed
+  sfx.win();buzz([10,40,10]);setStatus('Floor cleared!');if(!replay)praise(stars,S.hot|0);board.classList.remove('ghosted');gusCancel();meltBlob(1);
+  var earn=replay?Math.max(0,stars-prev)*2:stars+2;if(earn)addTokens(earn,replay?'replay':'floor');
+  if(hot){addTokens(hot,'hot');earn+=hot}   // hot streak: +1 from 3 clean clears in a row, +2 from 6, +3 from 10   // first clear: 3 to 5 tokens. Replays: 2 per new star, so floor 1 can't be farmed
   var k=0;G.tiles.forEach(function(t){if(!t.classList.contains('sunk')){t.style.setProperty('--d',(k++*35)+'ms');t.classList.add('cheer')}});
   setTimeout(function(){
     $('clearTitle').textContent=replay?(stars>prev?'New best on floor '+L+'!':'Floor '+L+' replayed'):'Floor '+L+' cleared';renderStars(stars);
     $('clearLine').textContent=(G.path.length-1)+' hops · '+(G.assists===0?'no assists':(G.assists===1?'1 assist':G.assists+' assists'))+(replay?' · '+starSum()+' stars in total':' · best floor '+S.best);
+    clearStreakLine(day,replay?0:(S.hot|0),hot);
     $('earnRow').hidden=!earn;$('nextBtn').textContent=G.L<=S.best?'Floor '+G.L+' (replay)':'Next floor';
     clearBoardLine();makeCard();
     show('clearOv');if(earn)coinShower(earn);
@@ -1546,7 +1639,7 @@ function runAd(done){
 function pauseHop(){if(G.phase==='hop'){G.pausedAt=performance.now();cancelAnimationFrame(G.raf);G.resumeHop=true;G.phase='paused'}}
 function resumeHop(){if(G.resumeHop){G.resumeHop=false;G.tileStart+=performance.now()-G.pausedAt;setPhase('hop');G.raf=requestAnimationFrame(tick)}}
 var LAND=window.matchMedia?window.matchMedia('(orientation: landscape) and (max-height: 500px) and (pointer: coarse)'):null;
-function menusClosed(){return ['statsOv','boardOv','nameOv','menuOv','fbOv','shareOv','storeOv','buyOv','worldOv','gusOv','mapOv','rewardOv'].every(function(id){return $(id).hidden})}
+function menusClosed(){return ['statsOv','boardOv','nameOv','menuOv','fbOv','shareOv','storeOv','buyOv','worldOv','gusOv','mapOv','rewardOv','dailyOv','streakOv'].every(function(id){return $(id).hidden})}
 function onLand(){if(LAND.matches)pauseHop();else if(menusClosed())resumeHop()}
 if(LAND){if(LAND.addEventListener)LAND.addEventListener('change',onLand);else if(LAND.addListener)LAND.addListener(onLand)}
 
@@ -1555,6 +1648,7 @@ $('rewindBtn').addEventListener('click',function(){S.rvTaken++;G.rewindUsed=true
 $('retryBtn').addEventListener('click',function(){hide('failOv');G.retry=true;startLevel()});
 $('nextBtn').addEventListener('click',function(){
   hide('clearOv');hide('rewardOv');RW=null;
+  if(G.mode){leaveMode('map');return}
   if(S.best>=4&&!S.fbAsked){S.fbAsked=true;save();openFeedback(true,startLevel);return}   // one gentle feedback ask, at a natural break
   startLevel();
 });
@@ -1643,9 +1737,15 @@ function boardRow(r){
   li.appendChild(el('span','rk',String(r.rank)));
   var f=el('span','fl',flag(r.country));f.setAttribute('aria-hidden','true');li.appendChild(f);
   var nm=el('span','nm',r.name);if(r.is_me)nm.appendChild(el('i',null,' (you)'));li.appendChild(nm);
-  li.appendChild(el('span','fs',String(r.best)));
-  li.appendChild(el('span','st','★ '+r.stars));
-  li.setAttribute('aria-label','Rank '+r.rank+', '+r.name+(r.is_me?' (you)':'')+', floor '+r.best+', '+r.stars+' stars');
+  if(BTAB==='daily'){
+    li.appendChild(el('span','fs',(r.cleared?r.total:r.hops)+'/'+r.total));
+    li.appendChild(el('span','st',r.cleared?'try '+r.tries:'–'));
+    li.setAttribute('aria-label','Rank '+r.rank+', '+r.name+(r.is_me?' (you)':'')+', '+(r.cleared?'cleared on try '+r.tries:r.hops+' of '+r.total+' hops'));
+  }else{
+    li.appendChild(el('span','fs',String(r.best)));
+    li.appendChild(el('span','st','★ '+r.stars));
+    li.setAttribute('aria-label','Rank '+r.rank+', '+r.name+(r.is_me?' (you)':'')+', floor '+r.best+', '+r.stars+' stars'+(BTAB==='friends'&&r.week?', '+r.week+' floors this week':''));
+  }
   return li;
 }
 function boardNote(lines,retry){
@@ -1655,24 +1755,36 @@ function boardNote(lines,retry){
 }
 function renderBoard(state,rows){
   var list=$('boardList'),pin=$('boardMe');list.textContent='';pin.textContent='';pin.hidden=true;$('boardCols').hidden=state!=='ok'||!rows||!rows.length;
-  $('boardJoin').hidden=!!S.name;$('boardRename').hidden=!S.name;
-  var sub=$('boardSub');sub.textContent='Highest floor cleared. Ties go to more stars, then whoever got there first.';
+  $('boardJoin').hidden=!!S.name;$('boardRename').hidden=!S.name;$('boardInvite').hidden=BTAB!=='friends';
+  $('boardColA').textContent=BTAB==='daily'?'Hops':'Floor';$('boardColB').textContent=BTAB==='daily'?'Try':'★';
+  var sub=$('boardSub');sub.textContent=BTAB==='friends'?'You and everyone linked to you: friends who opened your link, and whoever sent you theirs.':(BTAB==='daily'?"Today's Daily Glow. Cleared first, then fewer tries, then whoever did it first.":'Highest floor cleared. Ties go to more stars, then whoever got there first.');
   var mine=S.best?'Your best on this phone: floor '+S.best+', ★ '+starSum():'No floors cleared on this phone yet.';
   if(state==='off'){boardNote(['The world leaderboard switches on in the next test build.',mine]);return}
   if(state==='loading'){boardNote(['Loading the world leaderboard...']);return}
-  if(state==='error'){boardNote(["Couldn't reach the world leaderboard. Check your connection.",mine],true);return}
-  if(!rows||!rows.length){boardNote(['No scores yet. Clear a floor and be first.']);return}
+  if(state==='error'){boardNote(BTAB==='world'?["Couldn't reach the world leaderboard. Check your connection.",mine]:["Couldn't reach the "+(BTAB==='friends'?'friends board':'Daily Glow board')+'. Check your connection.'],true);return}
+  if(!rows||!rows.length){boardNote(BTAB==='friends'?['No friends on your board yet.','Send your link. Anyone who opens it shows up here, and you show up on theirs.']:(BTAB==='daily'?['Nobody has played today\'s Daily Glow yet.',dailyOpen()?'Be the first.':'It unlocks when you clear floor 3.']:['No scores yet. Clear a floor and be first.']));return}
+  if(BTAB==='friends'&&rows.length===1&&rows[0].is_me)boardNote(['Just you so far.','Send your link to a friend to race them here.']);
   var me=null;
   rows.forEach(function(r){r.rank=+r.rank;if(r.is_me)me=r;if(r.rank<=50)list.appendChild(boardRow(r))});
   if(me&&me.rank>5){pin.appendChild(boardRow(me));pin.hidden=false}   // pin your own row when it is below the first few
-  sub.textContent=me?('You are #'+me.rank+' in the world.'):(S.name?'Clear a floor to get on the board.':'Join to see where you rank.');
+  if(BTAB==='world')sub.textContent=me?('You are #'+me.rank+' in the world.'):(S.name?'Clear a floor to get on the board.':'Join to see where you rank.');
+  else if(me)sub.textContent=BTAB==='friends'?('You are #'+me.rank+' of '+rows.length+' among your friends.'):('You are #'+me.rank+' of '+rows.length+' today.');
 }
+var BTAB='world';
 function loadBoard(){
   if(!Board.on()){renderBoard('off');return}
-  renderBoard('loading');
-  submitBest().then(function(){return Board.top()}).then(function(rows){if(!$('boardOv').hidden)renderBoard('ok',rows)},function(){if(!$('boardOv').hidden)renderBoard('error')});
+  renderBoard('loading');var tab=BTAB;
+  var p=tab==='daily'?Board.call('get_daily_board',{p_game:BOARD.game,p_day:today(),p_player:pid(),p_friends:false})
+       :submitBest().then(function(){return tab==='friends'?Board.call('get_friends_board',{p_game:BOARD.game,p_player:pid()}):Board.top()});
+  p.then(function(rows){if(!$('boardOv').hidden&&tab===BTAB)renderBoard('ok',rows)},function(){if(!$('boardOv').hidden&&tab===BTAB)renderBoard('error')});
 }
-function openBoard(){pauseHop();S.boardViews=(S.boardViews||0)+1;save();show('boardOv');loadBoard();track('board_open',G.L,{})}
+function setBoardTab(t){
+  BTAB=t;Array.prototype.forEach.call(document.querySelectorAll('#boardTabs button'),function(b){var on=b.dataset.b===t;b.classList.toggle('on',on);b.setAttribute('aria-selected',String(on))});
+  $('boardTitle').textContent=t==='friends'?'Friends':(t==='daily'?'Daily Glow #'+dailyNum():'Leaderboard');loadBoard();
+}
+$('boardTabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.dataset.b===BTAB)return;track('board_tab',G.L,{tab:b.dataset.b});setBoardTab(b.dataset.b)});
+$('boardInvite').addEventListener('click',function(){doShare('friends')});
+function openBoard(tab){pauseHop();S.boardViews=(S.boardViews||0)+1;save();show('boardOv');setBoardTab(typeof tab==='string'?tab:BTAB);track('board_open',G.L,{tab:BTAB})}
 function closeBoard(){hide('boardOv');if(!(LAND&&LAND.matches)&&menusClosed())resumeHop()}
 boardBtn.addEventListener('click',openBoard);
 $('startBoard').addEventListener('click',openBoard);
@@ -1744,11 +1856,11 @@ function flush(leaving){
 }
 
 /* Which screen is showing, second by second. Tells us where time goes: the glow, hopping, menus, the leaderboard, later the shop. */
-var SCREENS=[['rewardOv','reward'],['mapOv','map'],['nameOv','name'],['fbOv','feedback'],['shareOv','share'],['buyOv','store_buy'],['storeOv','store'],['worldOv','intro'],['gusOv','gus_intro'],['boardOv','board'],['statsOv','stats'],['menuOv','menu'],['adOv','relight'],['failOv','fail'],['clearOv','clear'],['startOv','title']];
+var SCREENS=[['rewardOv','reward'],['streakOv','streak'],['dailyOv','daily_result'],['mapOv','map'],['nameOv','name'],['fbOv','feedback'],['shareOv','share'],['buyOv','store_buy'],['storeOv','store'],['worldOv','intro'],['gusOv','gus_intro'],['boardOv','board'],['statsOv','stats'],['menuOv','menu'],['adOv','relight'],['failOv','fail'],['clearOv','clear'],['startOv','title']];
 function screenNow(){
   if(LAND&&LAND.matches)return 'sideways';
   for(var i=0;i<SCREENS.length;i++){var e=$(SCREENS[i][0]);if(e&&!e.hidden)return SCREENS[i][1]==='store'?'store_'+STORE.tab:SCREENS[i][1]}
-  return G.phase==='watch'?'glow':'play';
+  return (G.mode?G.mode+'_':'')+(G.phase==='watch'?'glow':'play');
 }
 function screenTick(force){
   if(!force&&!document.hidden){var s=screenNow();TR.screen=s;TR.acc[s]=(TR.acc[s]||0)+1}
@@ -1762,9 +1874,10 @@ function sessionStart(kind){
   var m=/[?&]r=([A-Za-z0-9]{4,12})/.exec(location.search),src='',d=new Date(),mm=false;
   if(m&&!S.ref){S.ref=m[1];save()}
   if(m&&kind==='open'&&S.sessions===1&&!S.best&&!S.inviter&&/^[a-f0-9]{8}$/i.test(m[1])){S.inviter=m[1].toLowerCase();save()}   // only new phones count as invited friends
+  if(m&&kind==='open'&&/^[a-f0-9]{8}$/i.test(m[1]))openedFriendLink(m[1].toLowerCase());   // every shared link also makes you friends on the board
   try{src=document.referrer?new URL(document.referrer).hostname:''}catch(e){}
   try{mm=window.matchMedia('(display-mode: standalone)').matches}catch(e){}
-  track('session_start',Math.max(1,S.level|0),{kind:kind,n:S.sessions,days:S.days.length,streak:streakDays(),best:S.best,
+  track('session_start',Math.max(1,S.level|0),{kind:kind,n:S.sessions,days:S.days.length,streak:streakDays(),fs:streakNow(),hot:S.hot|0,best:S.best,
     mobile:/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent),os:osName(),app:inApp(),w:innerWidth,h:innerHeight,dpr:window.devicePixelRatio||1,
     lang:navigator.language||'',ref:(m&&kind==='open')?m[1]:'',firstRef:S.ref||'',src:kind==='open'?src:'',hour:d.getHours(),dow:d.getDay(),
     home:!!(navigator.standalone||mm),sound:!S.muted,music:!S.muted&&!S.musicOff,ease:+S.ease||1,cores:navigator.hardwareConcurrency||0,mem:navigator.deviceMemory||0});
@@ -1802,7 +1915,7 @@ function resolvedSVG(m,size){
   var dz=Array.prototype.map.call(document.querySelectorAll('body > svg defs'),function(d){return d.innerHTML}).join(''),s=fullSVG(m).replace(/^<svg class="crumb/,'<svg xmlns="http://www.w3.org/2000/svg" width="'+size+'" height="'+size+'" class="crumb'),k=s.indexOf('>')+1;
   return s.slice(0,k)+'<style>'+crumbCSS()+'.crumb *{animation:none!important}</style><defs>'+dz+'</defs>'+s.slice(k);
 }
-function shareLink(){var u=shareUrl();return u?u+(u.indexOf('?')<0?'?':'&')+'r='+pid().slice(0,8):''}
+function shareLink(){var u=shareUrl();if(!u)return '';var q='r='+pid().slice(0,8);if(S.best)q+='&c='+S.best;if(S.name)q+='&n='+encodeURIComponent(S.name);return u+(u.indexOf('?')<0?'?':'&')+q}   // r: friend and invite link, c and n: the challenge banner
 function shareMsg(){return S.best?'I made it to floor '+S.best+' in Crumble Recall and kept my flame alive for '+fmtDur(S.aliveMs)+'. Can you beat me?':'Help Crumb hop home across the melting ice!'}
 var FLAME_D='M60 41C47 40 44 27 51 18c2 6 6 7 7 2 1-8 7-13 13-16-3 8 2 12 4 18 3 11-4 19-15 19z';
 function rr(x,X,Y,w,h,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+w,Y,X+w,Y+h,r);x.arcTo(X+w,Y+h,X,Y+h,r);x.arcTo(X,Y+h,X,Y,r);x.arcTo(X,Y,X+w,Y,r);x.closePath()}
@@ -1824,7 +1937,7 @@ function drawCard(x,img){
     var sx=540-(tw+58)/2;drawFlame(x,sx+22,y+56,1.18);x.textAlign='left';var cx=sx+58;
     parts.forEach(function(p){x.fillStyle=p[1];x.fillText(p[0],cx,y+70);cx+=x.measureText(p[0]).width});x.textAlign='center';
   }
-  var st=streakDays();
+  var st=Math.max(1,streakNow());
   pill(900,[[st+'-day streak','#eaf4fb']]);
   pill(1026,[['Flame kept alive for ','#eaf4fb'],[fmtDur(S.aliveMs),'#ffb23e']]);
   x.fillStyle='#ffb23e';x.font='400 50px '+DG;x.fillText(S.name?S.name+' dares you':'Can you beat me?',540,1222);
@@ -1902,10 +2015,11 @@ menuBtn.innerHTML=PAUSE;$('menuClose').innerHTML=XMARK;$('clearHome').innerHTML=
 function openMenu(){pauseHop();show('menuOv');makeCard()}
 function closeMenu(){hide('menuOv');if(!(LAND&&LAND.matches)&&menusClosed())resumeHop()}
 function exitToTitle(from){
-  if(G.phase==='paused'||G.phase==='hop'||G.phase==='watch')track('level_quit',G.L,{got:G.step,total:G.path.length-1,secs:secsNow(),from:from});
+  if(G.phase==='paused'||G.phase==='hop'||G.phase==='watch')track('level_quit',G.L,{got:G.step,total:G.path.length-1,secs:secsNow(),from:from,mode:G.mode||''});
+  if(G.mode){leaveMode('title');return}
   G.tok++;cancelAnimationFrame(G.raf);G.resumeHop=false;
   if(G.L<=S.best)G.L=reachNext();G.replay=false;G.variant=0;G.retry=false;   // Play now always continues the journey; replays live on the map
-  ['clearOv','failOv','menuOv','shareOv','fbOv','boardOv','nameOv','statsOv','storeOv','buyOv','worldOv','gusOv','mapOv'].forEach(hide);gusCancel();
+  ['clearOv','failOv','menuOv','shareOv','fbOv','boardOv','nameOv','statsOv','storeOv','buyOv','worldOv','gusOv','mapOv','dailyOv','streakOv'].forEach(hide);gusCancel();
   prepareLevel();setPhase('idle');setStatus('Tap Play to start');
   titleSubs();show('startOv');
 }
@@ -2100,7 +2214,7 @@ var COIN='<circle cx="12" cy="12" r="10" fill="#ffb23e" stroke="#c86d0f" stroke-
 function coinSVG(cls){return '<svg class="'+(cls||'coin')+'" viewBox="0 0 24 24" aria-hidden="true">'+COIN+'</svg>'}
 function renderWallet(){var n=String(S.tokens||0);$('hudTokens').textContent=(S.tokens||0)>=10000?Math.floor(S.tokens/1000)+'k':n;$('tokenCount').textContent=n;var sb=$('storeBtn').querySelector('small');if(sb)sb.textContent=spinReady()?'Free draw waiting':n+' tokens to spend';$('spinDot').hidden=!spinReady()}
 function addTokens(n,why){S.tokens=(S.tokens||0)+n;S.earned=(S.earned||0)+n;save();renderWallet();track('token_earn',G.L,{n:n,why:why,total:S.tokens})}
-function coinShower(n,target,done){
+function coinShower(n,target,done,total){   // total: the tokens to count up to when fewer coins fly than tokens earned
   var box=target||$('earnRow');if(!box){if(done)done();return}
   var ov=box.closest('.card')||document.body,r=ov.getBoundingClientRect(),b=box.getBoundingClientRect(),num=box.querySelector('b'),start=(S.tokens||0)-n,got=0;
   if(num)num.textContent='+0';
@@ -2109,7 +2223,7 @@ function coinShower(n,target,done){
       var c=document.createElement('span');c.className='fly';c.innerHTML=coinSVG('c');ov.appendChild(c);
       var st=ov.scrollTop||0,x0=r.width/2+(Math.random()-0.5)*60,y0=r.height*0.2+st,x1=b.left-r.left+16,y1=b.top-r.top+b.height/2+st;
       var kf=[{transform:'translate('+x0+'px,'+y0+'px) scale(.4)',opacity:0},{transform:'translate('+(x0+(Math.random()-0.5)*90)+'px,'+(y0-50)+'px) scale(1.15)',opacity:1,offset:0.35},{transform:'translate('+x1+'px,'+y1+'px) scale(.7)',opacity:1}];
-      var fin=function(){c.remove();got++;if(num)num.textContent='+'+got;sfx.coin();box.classList.remove('bump');void box.offsetWidth;box.classList.add('bump');if(got===n){sfx.chaching();sparkle(box);if(done)done()}};
+      var fin=function(){c.remove();got++;if(num)num.textContent='+'+(total?Math.round(total*got/n):got);sfx.coin();box.classList.remove('bump');void box.offsetWidth;box.classList.add('bump');if(got===n){sfx.chaching();sparkle(box);if(done)done()}};
       if(c.animate&&!REDUCE)c.animate(kf,{duration:620,easing:'cubic-bezier(.3,.6,.3,1)'}).onfinish=fin;else{fin()}
     },120+i*110);
   })(i);
@@ -2192,22 +2306,23 @@ function renderOutfits(body){
 function skinState(k){
   if((S.skinsOwned||[]).indexOf(k.id)>=0){if(owns(k.base)!=='yes')return 'nobase';return (S.char||'crumb')===k.base&&wornSkin(k.base)===k.id?'wearing':'owned'}
   if(owns(k.base)!=='yes')return 'nobase';
-  return k.stars?'stars':'buy';
+  return k.streak?'streak':(k.stars?'stars':'buy');
 }
 function baseGate(k){var i=ROSTER.map(function(r){return r.id}).indexOf(k.base);return i>0?worldStart(i):0}
 function renderSkins(body){
-  var current=(S.skin||{})[S.char||'crumb'],k=focusFrom('skins',SKINS,current||SKINS[0].id),state=skinState(k),st=starSum(),action=state==='wearing'?'Return to classic':state==='owned'?'Wear this look':state==='nobase'?'Meet '+charInfo(k.base).name+' on floor '+baseGate(k):state==='stars'?(Math.min(st,k.stars)+' / '+k.stars+' stars'):'<span class="price">'+coinSVG()+k.price+' · Unlock look</span>';
+  var current=(S.skin||{})[S.char||'crumb'],k=focusFrom('skins',SKINS,current||SKINS[0].id),state=skinState(k),st=starSum(),action=state==='wearing'?'Return to classic':state==='owned'?'Wear this look':state==='nobase'?'Meet '+charInfo(k.base).name+' on floor '+baseGate(k):state==='stars'?(Math.min(st,k.stars)+' / '+k.stars+' stars'):state==='streak'?(Math.min(streakState().best||0,k.streak)+' / '+k.streak+' days in a row'):'<span class="price">'+coinSVG()+k.price+' · Unlock look</span>';
   var go=storeFeature(body,{art:charSVG(k.base,state==='wearing'?'happy':'idle',null,k.id),shadow:state==='nobase',kicker:RARITY[k.rarity]+' look',name:k.name,copy:'A new storybook look for '+charInfo(k.base).name+'. The character plays exactly the same.',action:action});
   go.addEventListener('click',function(){
     if(state==='owned'||state==='wearing'){S.skin=S.skin||{};var on=state!=='wearing';S.skin[k.base]=on?k.id:'';if(on)S.char=k.base;save();renderChar();renderStore();track('skin_wear',G.L,{id:k.id,on:on});toast(on?'Now playing as '+k.name+'.':charInfo(k.base).name+' is back to the classic look.');return}
     if(state==='nobase'){track('store_item',G.L,{id:k.id,locked:1});toast('Reach floor '+baseGate(k)+' to meet '+charInfo(k.base).name+' first.');return}
     if(state==='stars'){track('store_item',G.L,{id:k.id,stars:k.stars});toast('Earn '+k.stars+' stars on the journey map. You have '+st+'.');return}
+    if(state==='streak'){track('store_item',G.L,{id:k.id,streak:k.streak});toast('Clear a floor '+k.streak+' days in a row to earn this look. Best so far: '+(streakState().best||0)+'.');return}
     track('store_item',G.L,{id:k.id,price:k.price});openBuy('skin',k.id);
   });
   var g=storeShelf(body,'Storybook looks');
   SKINS.forEach(function(x){var xs=skinState(x),b=el2('button','roster-token'+(x.id===k.id?' on':'')+(xs==='wearing'?' playing':''));b.type='button';b.dataset.id=x.id;b.innerHTML='<span class="av'+(xs==='nobase'?' shadow':'')+'">'+charSVG(x.base,xs==='wearing'?'happy':'idle',null,x.id)+'</span><span class="nm">'+x.name+'</span>';b.setAttribute('aria-label','Preview '+x.name+', '+RARITY[x.rarity]);g.appendChild(b)});
   g.addEventListener('click',function(e){var b=e.target.closest('.roster-token');if(!b)return;STORE.focus.skins=b.dataset.id;renderStore()});
-  body.appendChild(el2('p','store-note','Star looks are earned on the journey. Token looks have fixed prices.'));
+  body.appendChild(el2('p','store-note','Star looks are earned on the journey, streak looks by playing days in a row. Token looks have fixed prices.'));
 }
 var BUY=null;
 function openBuy(kind,id){
@@ -2309,11 +2424,11 @@ function mileArt(m,sz){
   return '<svg viewBox="0 0 48 48" aria-hidden="true">'+SHOP.filter(function(x){return x.id===m.id})[0].art+'</svg>';
 }
 function nextMile(){var st=starSum();for(var i=0;i<MILES.length;i++)if(st<MILES[i].at)return MILES[i];return null}
-function titleSubs(){var W=worldOf(G.L);$('playSub').textContent=G.L<=S.best?'Floor '+G.L+' · replay':'Floor '+G.L;$('mapSub').textContent=starSum()+' ★ earned';$('titleZone').textContent=W.name+' · Floor '+G.L}
+function titleSubs(){var W=worldOf(G.L);$('playSub').textContent=G.L<=S.best?'Floor '+G.L+' · replay':'Floor '+G.L;$('mapSub').textContent=starSum()+' ★ earned';$('titleZone').textContent=W.name+' · Floor '+G.L;titleV10()}
 function playFloor(f,from){
   if(G.phase==='paused'||G.phase==='hop'||G.phase==='watch')track('level_quit',G.L,{got:G.step,total:G.path.length-1,secs:secsNow(),from:'map'});
-  G.tok++;cancelAnimationFrame(G.raf);G.resumeHop=false;G.retry=false;
-  ['mapOv','startOv','clearOv','failOv','menuOv','rewardOv'].forEach(hide);gusCancel();
+  G.tok++;cancelAnimationFrame(G.raf);G.resumeHop=false;G.retry=false;G.mode='';G.forceWorld=null;MODE.door=-1;
+  ['mapOv','startOv','clearOv','failOv','menuOv','rewardOv','dailyOv'].forEach(hide);gusCancel();
   track('map_play',f,{r:f<=S.best?1:0,from:from||''});
   G.L=f;audio();startMusic();startLevel();
 }
@@ -2349,7 +2464,11 @@ function renderMap(){
       b.setAttribute('aria-label','Floor '+fl+(done?', '+sn+' of 3 stars, replay':nx?', next floor':', locked'));
       path.appendChild(b);
     });
-    sec.appendChild(path);body.appendChild(sec);
+    sec.appendChild(path);
+    var dk=(w0-1)/10,dOpen=ws>=DOOR_STARS,dDone=!!(S.doors||{})[dk],dr=el2('button','door-node'+(dOpen?' open':'')+(dDone?' done':''));dr.type='button';dr.dataset.door=dk;
+    dr.innerHTML='<span class="door-ic" aria-hidden="true">'+(dOpen?DOORICON:LOCK)+'</span><span class="door-t"><b>Star door</b><small>'+(dDone?'Opened · play it again any time':dOpen?'Bonus floor · '+DOOR_TOKENS+' tokens the first time':ws+' of '+DOOR_STARS+' ★ in this world to open')+'</small></span>';
+    dr.setAttribute('aria-label','Star door for '+W.name+(dDone?', opened':dOpen?', open, play':', locked, '+ws+' of '+DOOR_STARS+' stars'));
+    sec.appendChild(dr);body.appendChild(sec);
   }
 }
 var MAPSTATE={from:''};
@@ -2361,6 +2480,10 @@ function openMap(from){
 }
 function closeMap(){hide('mapOv');var from=MAPSTATE.from;MAPSTATE.from='';if(from==='title'){show('startOv');return}if(from==='clear'){show('clearOv');return}if(from==='fail'){show('failOv');return}if(!(LAND&&LAND.matches)&&menusClosed())resumeHop()}
 $('mapBody').addEventListener('click',function(e){
+  var dr=e.target.closest('.door-node');
+  if(dr){var k=+dr.dataset.door,ws=0;for(var f0=k*10+1;f0<=k*10+10;f0++)ws+=(+S.stars[f0]||0);
+    if(ws<DOOR_STARS){track('door_locked',G.L,{k:k,stars:ws});toast('Earn '+DOOR_STARS+' of 30 stars in '+WORLDS[k%6].name+' to open its star door. You have '+ws+'. Replays count.');return}
+    playDoor(k);return}
   var b=e.target.closest('.node');if(!b)return;var f=+b.dataset.f;
   if(f>reachNext()){toast('Clear floor '+reachNext()+' first.');return}
   playFloor(f,'map');
@@ -2392,11 +2515,11 @@ function checkRewards(){
 function showReward(){
   RW=RWQ.shift()||null;if(!RW){return}
   var m=RW.m,name=mileName(m);
-  $('rwKicker').textContent='Star reward · '+m.at+' ★';
+  $('rwKicker').textContent=RW.kicker||('Star reward · '+m.at+' ★');
   if(RW.tokens){$('rwArt').innerHTML=coinSVG('coin');$('rwTitle').textContent='+'+RW.tokens+' Crumble Tokens';
-    $('rwNote').textContent=m.kind==='tokens'?'Free for your stars. Spend them in the store.':'You already had '+name+', so here are tokens instead.'}
+    $('rwNote').textContent=RW.note||(m.kind==='tokens'?'Free for your stars. Spend them in the store.':'You already had '+name+', so here are tokens instead.')}
   else if(m.kind==='skin'){var k=skinInfo(m.id);$('rwArt').innerHTML=charSVG(k.base,'happy',(S.equip||{}).hands,k.id);$('rwTitle').textContent=k.name;
-    $('rwNote').textContent=aRar(k.rarity)+' skin, free for your stars.'+(RW.use?'':' Reach floor '+baseGate(k)+' to play as '+charInfo(k.base).name+'.')}
+    $('rwNote').textContent=RW.note||(aRar(k.rarity)+' skin, free for your stars.'+(RW.use?'':' Reach floor '+baseGate(k)+' to play as '+charInfo(k.base).name+'.'))}
   else if(m.kind==='friend'){$('rwArt').innerHTML=charSVG(m.id,'happy');$('rwTitle').textContent=name+' joins you!';$('rwNote').textContent=aRar(charInfo(m.id).rarity)+' friend, free for your stars.'}
   else{var it=SHOP.filter(function(x){return x.id===m.id})[0],tmp=S.equip;S.equip=Object.assign({},S.equip||{});S.equip[SLOT[m.id]]=m.id;$('rwArt').innerHTML=fullSVG('happy');S.equip=tmp;
     $('rwTitle').textContent=name;$('rwNote').textContent=aRar(it.rarity)+' outfit, free for your stars.'}
@@ -2602,6 +2725,219 @@ if(/[?&]debug=1/.test(Q))window.CR={G:G,S:S,AUD:function(){return AUD},pose:pose
   startAt:function(L){G.L=L;hide('startOv');startLevel()},TR:TR,flush:flush,makeCard:makeCard,openMenu:openMenu,
   fish:function(){return fishJump(seaBands())},charSVG:charSVG,fullSVG:fullSVG,openMap:openMap,renderMap:renderMap,music:function(){return{style:MW.style,layer:MLAYER,alt:MALT,beat:BEAT}},starSum:starSum,checkRewards:checkRewards,playFloor:playFloor,params:params,MILES:MILES,sea:function(on){SEA.on=on;if(!on)SEA.el.innerHTML='';else seaBuild()},setBoard:function(u,k){BOARD.url=u;BOARD.key=k;$('startBoard').hidden=!Board.on()},openBoard:openBoard};
 
+/* ---------- v0.10: reasons to come back. Daily streak, hot streak, Daily Glow, glow moods, star doors, friends. ---------- */
+var DAILY_TRIES=3,DAILY_TOKENS=10,DOOR_TOKENS=75,DOOR_STARS=25;
+var MODE={door:-1};   // G.mode: '' on the journey, 'daily' for the Daily Glow, 'door' for a star door. Special floors never change best floor, stars or the leaderboard.
+var DOORICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1" fill="currentColor"/><path d="M12 6.5l.8 1.6 1.7.3-1.2 1.2.3 1.7-1.6-.8-1.6.8.3-1.7-1.2-1.2 1.7-.3z" fill="currentColor" stroke="none"/></svg>';
+
+/* Glow moods: from floor 31, each floor may change how the glow plays. Seeded by floor, so every player gets the same mood. */
+var GLOWMOODS={
+  rush:{name:'Rush',watch:'Rush: the glow starts slow, then speeds up',intro:'Glow mood: Rush. The glow starts slow and speeds up. Lock in the first hops.'},
+  hush:{name:'Hush',watch:'Hush: no notes this time',intro:'Glow mood: Hush. The tiles glow without their notes. Remember the shape.'},
+  backwards:{name:'Backwards',watch:'Backwards: the glow runs last to first',intro:'Glow mood: Backwards. The glow runs from the last tile to the first. Hop it forwards.'}
+};
+function dailyMood(){return ['','rush','hush','backwards'][dailyNum()%4]}
+function moodFor(){
+  if(G.mode==='daily')return dailyMood();
+  if(G.mode==='door')return ['backwards','rush','hush'][MODE.door%3];
+  if(G.L<=30)return '';
+  var r=rng(G.L*31+7)();return r<0.3?'':(r<0.55?'rush':(r<0.8?'hush':'backwards'));
+}
+function moodIntro(){var m=G.mood;if(!m)return;S.moodsSeen=S.moodsSeen||{};if(S.moodsSeen[m])return;S.moodsSeen[m]=1;save();toast(GLOWMOODS[m].intro);track('mood_intro',G.L,{m:m})}
+function modeParams(){
+  var W=G.forceWorld,b=G.mode==='daily'?{hops:10,n:6,blink:470,life:1.9}:{hops:Math.min(16,12+Math.floor(MODE.door/6)),n:6,blink:420,life:1.6};
+  if(W==='grid')b.life*=0.9;else if(W==='haunted')b.life*=1.15;else if(W==='dunes')b.life*=1.1;
+  return b;
+}
+function modeSeed(){return G.mode==='daily'?100000+dailyNum():200000+MODE.door}
+function leaveMode(to){
+  G.mode='';G.forceWorld=null;MODE.door=-1;G.tok++;cancelAnimationFrame(G.raf);G.resumeHop=false;G.retry=false;gusCancel();
+  ['clearOv','failOv','dailyOv','menuOv','worldOv','gusOv'].forEach(hide);
+  if(G.L<=S.best)G.L=reachNext();G.replay=false;G.variant=0;prepareLevel();setPhase('idle');setStatus('Tap Play to start');titleSubs();
+  show('startOv');if(to==='map')openMap('title');
+}
+function cheerTiles(){var k=0;G.tiles.forEach(function(t){if(!t.classList.contains('sunk')){t.style.setProperty('--d',(k++*35)+'ms');t.classList.add('cheer')}})}
+function modeCleared(){
+  var total=G.path.length-1,first;
+  sfx.win();buzz([10,40,10]);board.classList.remove('ghosted');gusCancel();meltBlob(1);cheerTiles();
+  var day=creditDay();
+  if(G.mode==='daily'){
+    var D=dailyState();first=!D.cleared;D.cleared=true;D.clearTry=D.clearTry||D.tries;D.best=total;D.total=total;save();
+    setStatus('Daily Glow cleared!');if(first)addTokens(DAILY_TOKENS,'daily');
+    track('daily_clear',G.L,{day:D.day,num:D.num,tr:D.clearTry,total:total,w:G.world,m:G.mood||''});
+    setTimeout(function(){dailyDone(first)},700);return;
+  }
+  var k=MODE.door;S.doors=S.doors||{};first=!S.doors[k];S.doors[k]=1;save();
+  setStatus('Star door opened!');if(first)addTokens(DOOR_TOKENS,'door');
+  track('door_clear',G.L,{k:k,first:first?1:0,total:total,m:G.mood||''});
+  setTimeout(function(){
+    $('clearTitle').textContent=WORLDS[k%6].name+' star door';renderStars(3);
+    $('clearLine').textContent=total+' hops'+(G.mood?' · '+GLOWMOODS[G.mood].name:'')+(first?' · opened for good':' · cleared again');
+    clearStreakLine(day,0,0);$('earnRow').hidden=!first;$('clearRank').hidden=true;$('clearLink').hidden=true;$('nextBtn').textContent='Back to Journey';
+    show('clearOv');if(first)coinShower(12,null,null,DOOR_TOKENS);
+    setTimeout(function(){if(!$('clearOv').hidden)checkRewards()},first?2200:600);
+  },700);
+}
+function playDoor(k){
+  G.tok++;cancelAnimationFrame(G.raf);G.resumeHop=false;G.retry=false;gusCancel();MAPSTATE.from='';
+  ['mapOv','startOv','clearOv','failOv','menuOv','rewardOv'].forEach(hide);
+  G.mode='door';MODE.door=k;G.forceWorld=WORLDS[k%6].id;audio();startMusic();track('door_open',G.L,{k:k});startLevel();
+}
+
+/* Daily Glow: one floor a day, the same for everyone (seeded by the date), 3 tries, no assists. The world and mood rotate daily. */
+function dailyNum(){var d=new Date();return Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2026,8,27))/864e5)+1}
+function dailyState(){var t=today();if(!S.daily||typeof S.daily!=='object'||S.daily.day!==t)S.daily={day:t,num:dailyNum(),tries:0,best:0,total:0,cleared:false,clearTry:0};return S.daily}
+function dailyWorld(){return WORLDS[(dailyNum()+5)%6].id}
+function dailyOpen(){return (S.best||0)>=3}
+function untilMidnight(){var d=new Date(),m=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1),s=Math.max(0,Math.round((m-d)/1000));return Math.floor(s/3600)+'h '+Math.floor(s%3600/60)+'m'}
+function renderDailyBtn(){
+  var D=dailyState(),sub=$('dailySub'),open=dailyOpen();if(!sub)return;
+  sub.textContent=!open?'Opens at floor 3':(D.cleared?'Done · share it':(D.tries>=DAILY_TRIES?'Back tomorrow':(D.tries?(DAILY_TRIES-D.tries)+' tries left':'#'+D.num+' · 3 tries')));
+  $('dailyDot').hidden=!open||D.cleared||D.tries>0;
+}
+function startDaily(){
+  var D=dailyState();
+  if(!dailyOpen()){toast('Clear floor 3 to unlock the Daily Glow.');track('daily_locked',G.L,{});return}
+  if(D.cleared||D.tries>=DAILY_TRIES){dailyDone(false);return}
+  audio();startMusic();hide('startOv');G.tok++;cancelAnimationFrame(G.raf);G.retry=false;
+  G.mode='daily';G.forceWorld=dailyWorld();track('daily_open',G.L,{num:D.num,tr:D.tries});startLevel();
+}
+var DAILYFROM='';
+function dailyDone(fresh){
+  var D=dailyState(),total=D.total||10,got=D.cleared?total:(D.best||0),W=WORLDS.filter(function(w){return w.id===dailyWorld()})[0],dm=dailyMood();
+  DAILYFROM=G.mode==='daily'?'mode':'title';
+  $('dailyKicker').textContent='Daily Glow #'+D.num+' · '+W.name+(dm?' · '+GLOWMOODS[dm].name:'');
+  $('dailyTitle').textContent=D.cleared?('Cleared on try '+D.clearTry):'Out of tries today';
+  var g=$('dailyGrid');g.textContent='';for(var i=0;i<total;i++){var q=document.createElement('i');q.className=i<got?'on':'miss';g.appendChild(q)}
+  $('dailyLine').textContent=(D.cleared?(fresh?'+'+DAILY_TOKENS+' tokens. ':''):'Best run: '+got+' of '+total+' hops. ')+'A new Daily Glow in '+untilMidnight()+'.';
+  var rk=$('dailyRank');rk.hidden=true;
+  show('dailyOv');renderDailyBtn();if(!RW)showReward();
+  submitDaily().then(function(){return Board.on()?Board.call('get_daily_board',{p_game:BOARD.game,p_day:D.day,p_player:pid(),p_friends:false}):null}).then(function(rows){
+    var me=(rows||[]).filter(function(r){return r.is_me})[0];if(me&&!$('dailyOv').hidden){rk.textContent='#'+me.rank+' of '+rows.length+' today';rk.hidden=false}
+  },function(){});
+}
+function submitDaily(){
+  var D=dailyState();if(!Board.on()||!S.name||!D.tries||!D.total)return Promise.resolve(null);
+  return Board.call('submit_daily',{p_game:BOARD.game,p_player:pid(),p_day:D.day,p_name:S.name,p_country:region(),p_hops:D.cleared?D.total:D.best,p_total:D.total,p_tries:D.cleared?D.clearTry:D.tries,p_cleared:!!D.cleared}).catch(function(){return null});
+}
+function dailyText(){
+  var D=dailyState(),t=D.total||10,got=D.cleared?t:(D.best||0),sq='';for(var i=0;i<t;i++)sq+=i<got?'🟧':'⬛';
+  var n=streakNow();return 'Crumble Recall · Daily Glow #'+D.num+'\n'+sq+'\n'+(D.cleared?'Cleared on try '+D.clearTry+' of '+DAILY_TRIES:'Got '+got+' of '+t+' hops')+(n>1?' · '+n+'-day streak':'');
+}
+function shareDaily(){
+  var url=shareLink(),txt=dailyText();track('daily_share',G.L,{num:dailyNum(),day:today()});
+  if(navigator.share){navigator.share({title:'Crumble Recall Daily Glow',text:txt+'\n',url:url||undefined}).then(function(){shared('daily','daily')},function(){});return}
+  var all=txt+(url?'\n'+url:'');
+  try{navigator.clipboard.writeText(all).then(function(){toast('Copied. Paste it to a friend.');shared('daily_copy','daily')},function(){toast(all)})}catch(e){toast(all)}
+}
+$('dailyBtn').addEventListener('click',startDaily);
+$('dailyShare').addEventListener('click',shareDaily);
+$('dailyClose').addEventListener('click',function(){if(DAILYFROM==='mode')leaveMode('title');else{hide('dailyOv');show('startOv')}});
+$('dailyBoard').addEventListener('click',function(){if(DAILYFROM==='mode')leaveMode('title');else{hide('dailyOv');show('startOv')}openBoard('daily')});
+
+/* Daily streak: days in a row with at least one cleared floor (any floor, a replay, the Daily Glow or a star door).
+   A missed day uses a warm coal if you have one: you earn one every 7 days in a row and can hold 2. Rewards are fixed, never random. */
+var STREAK_MILES=[{d:3,tokens:15},{d:7,skin:'campfire_crumb'},{d:14,tokens:100},{d:30,tokens:250}];
+function streakState(){if(!S.streak||typeof S.streak!=='object')S.streak={n:0,best:0,last:'',coals:0,used:0,got:{}};S.streak.got=S.streak.got||{};return S.streak}
+function dayDiff(a,b){var x=a.split('-'),y=b.split('-');return Math.round((Date.UTC(+y[0],y[1]-1,+y[2])-Date.UTC(+x[0],x[1]-1,+x[2]))/864e5)}
+function streakNow(){var s=streakState();if(!s.last||!s.n)return 0;return dayDiff(s.last,today())<=1+(s.coals||0)?s.n:0}
+function creditDay(){
+  var s=streakState(),t=today();if(s.last===t)return null;
+  var gap=s.last?dayDiff(s.last,t):0,used=0,reset=false,coal=false;
+  if(s.last&&gap<0){s.last=t;save();return null}   // the phone's clock went backwards: don't count it
+  if(!s.last||!s.n)s.n=1;
+  else if(gap===1)s.n++;
+  else if(gap-1<=(s.coals||0)){used=gap-1;s.coals-=used;s.used=(s.used||0)+used;s.n++}
+  else{reset=true;s.n=1}
+  s.last=t;s.best=Math.max(s.best||0,s.n);
+  if(s.n%7===0&&(s.coals||0)<2){s.coals=(s.coals||0)+1;coal=true}
+  STREAK_MILES.forEach(function(m){if(s.n===m.d&&!s.got[m.d]){s.got[m.d]=1;grantStreak(s.n,m)}});
+  if(s.n>30&&s.n%30===0)grantStreak(s.n,{d:s.n,tokens:250});
+  save();track('streak_day',G.L,{n:s.n,best:s.best,used:used,reset:reset?1:0,coals:s.coals});renderStreak();
+  return {n:s.n,best:s.best,used:used,reset:reset,coal:coal};
+}
+function grantStreak(n,m){
+  var r={m:{at:n,kind:m.skin?'skin':'tokens',id:m.skin||'',n:m.tokens||0},tokens:m.tokens||0,use:null,kicker:'Streak reward · day '+n};
+  if(m.skin){S.skinsOwned=S.skinsOwned||[];if(S.skinsOwned.indexOf(m.skin)<0)S.skinsOwned.push(m.skin);r.use='skin';r.note='A new look for Crumb, earned by playing '+n+' days in a row.'}
+  else r.note='Free for playing '+n+' days in a row.';
+  if(r.tokens)addTokens(r.tokens,'streak');
+  RWQ.push(r);track('streak_reward',G.L,{n:n,tokens:r.tokens,id:m.skin||''});
+}
+function renderStreak(){
+  var b=$('streakBtn');if(!b)return;var s=streakState(),n=streakNow(),done=s.last===today();
+  b.querySelector('b').textContent=n?(n+'-day streak'):'Start a streak';
+  b.querySelector('small').textContent=done?'Today done · back tomorrow':(n?'Clear a floor today to keep it':'Clear a floor each day');
+  b.classList.toggle('done',done);b.classList.toggle('risk',!!n&&!done);
+  $('heroCrumb').style.setProperty('--fs',(1+Math.min(n,30)/40).toFixed(3));   // Crumb's flame grows with the streak
+}
+function openStreak(from){
+  var s=streakState(),n=streakNow(),done=s.last===today(),next=null;
+  $('stkN').textContent=n;$('stkTitle').textContent=n?(n+'-day streak'):'Start a streak';
+  $('stkLine').textContent=(done?'Today counts. See you tomorrow. ':'Clear one floor today to '+(n?'keep it going. ':'start it. '))+'Any floor counts, even a replay, the Daily Glow or a star door.';
+  var tr=$('stkTrack');tr.textContent='';
+  STREAK_MILES.forEach(function(m){var got=!!s.got[m.d],li=document.createElement('li');if(!got&&!next){next=m;li.className='next'}if(got)li.className='got';
+    li.innerHTML='<b>Day '+m.d+'</b>'+(m.skin?'Campfire Crumb':'+'+m.tokens+' tokens')+(got?' ✓':'');tr.appendChild(li)});
+  $('stkCoals').textContent='Warm coals: '+(s.coals||0)+' of 2. You earn one every 7 days in a row, and one is used for you if you miss a day. Best streak: '+(s.best||0)+(s.best===1?' day.':' days.');
+  show('streakOv');track('streak_view',G.L,{n:n,from:from||''});
+}
+function clearStreakLine(day,hot,bonus){
+  var p=$('clearStreak'),t='';
+  if(day)t=day.reset?'New streak: day 1. Your best is '+day.best+' days.':(day.used?'A warm coal kept your streak alive. Day '+day.n+'!':(day.n>1?'Day '+day.n+' streak kept!':'Streak started: day 1. Come back tomorrow.'))+(day.coal?' You earned a warm coal.':'');
+  if(bonus)t+=(t?' ':'')+'Hot streak ×'+hot+': +'+bonus+(bonus===1?' token.':' tokens.');
+  else if(hot===2)t+=(t?' ':'')+'One more clean floor starts a hot streak.';
+  p.textContent=t;p.hidden=!t;
+}
+$('streakBtn').addEventListener('click',function(){openStreak('title')});
+$('stkOk').addEventListener('click',function(){hide('streakOv');if(!(LAND&&LAND.matches)&&menusClosed())resumeHop()});
+
+/* Hot streak: journey floors cleared in a row without falling. 3 in a row: +1 token a floor, 6: +2, 10: +3. A fall ends it. */
+function hotBonus(n){return n>=10?3:(n>=6?2:(n>=3?1:0))}
+function applyHot(){var t=hotBonus(S.hot|0);document.body.classList.remove('hot1','hot2','hot3');if(t)document.body.classList.add('hot'+t)}
+function hotEnd(){if(G.mode||G.replay)return;var n=S.hot|0;G.hotLost=n;if(n>=3)track('hot_end',G.L,{n:n});S.hot=0;applyHot()}
+
+/* Juice: a praise word when a floor is cleared (by stars and hot streak), and each floor remembers your furthest hop, so a fall reads as progress. */
+var PRAISE={3:['Clean!','Sharp!','Spot on!','Crisp!'],2:['Nice save!','Got it!'],1:['Made it!','Phew!']};
+function praise(stars,hot){
+  var w=hot>=10?'Unstoppable!':(hot>=6?'Blazing!':(hot>=3?'On fire!':PRAISE[stars][G.L%PRAISE[stars].length])),e=$('praise');
+  e.textContent=w;e.hidden=false;e.style.animation='none';void e.offsetWidth;e.style.animation='';clearTimeout(praise.t);praise.t=setTimeout(function(){e.hidden=true},900);
+  if(stars===3)blip(880,1760,0.12,0.05,'sine',0.62);
+}
+function nearLine(got,total){
+  if(G.mode)return '';S.near=S.near||{};var k=G.L+(G.replay?'r':''),prev=+S.near[k]||0;
+  if(got>prev){S.near[k]=got;save();return prev?'New furthest on this floor: '+got+' of '+total+'. ':''}
+  return prev>got?'Your furthest here is '+prev+' of '+total+'. ':'';
+}
+
+/* Friends: opening anyone's shared link makes you friends on the Friends board (backend/supabase/social.sql).
+   The link also carries a challenge: their best floor and name, shown on the title until you beat it. */
+function openedFriendLink(f8){
+  if(f8===pid().slice(0,8))return;
+  S.friends=S.friends||[];if(S.friends.indexOf(f8)<0){S.friends.push(f8);save();track('friend_link',G.L,{})}
+  var c=/[?&]c=(\d{1,4})(?:&|#|$)/.exec(location.search),nm=/[?&]n=([^&#]{1,80})/.exec(location.search);
+  if(c&&+c[1]>(S.best||0)){
+    var who='A friend';try{var w=cleanName(decodeURIComponent((nm?nm[1]:'').replace(/\+/g,' ')));if(w&&!nameProblem(w))who=w}catch(e){}
+    S.challenge={by:who,floor:+c[1]};save();track('challenge_open',G.L,{floor:+c[1]});
+  }
+}
+function sendFriends(){
+  if(!Board.on())return;S.friendsSent=S.friendsSent||[];
+  (S.friends||[]).filter(function(f){return S.friendsSent.indexOf(f)<0}).slice(0,5).forEach(function(f){
+    Board.call('add_friend',{p_game:BOARD.game,p_player:pid(),p_friend:f}).then(function(ok){if(S.friendsSent.indexOf(f)<0)S.friendsSent.push(f);save();track('friend_add',G.L,{ok:!!ok})},function(){});   // retried next time the game opens
+  });
+}
+function checkRivals(){
+  if(!Board.on()||!S.name||!S.best)return;
+  Board.call('get_friends_board',{p_game:BOARD.game,p_player:pid()}).then(function(rows){
+    var snap=S.rivals||{},next={},msg='';
+    (rows||[]).forEach(function(r){if(r.is_me)return;next[r.name]=+r.best||0;if(!msg&&+r.best>S.best&&(snap[r.name]||0)<=S.best)msg=r.name+' passed you: floor '+r.best+'. Take it back!'});
+    S.rivals=next;save();if(msg&&!$('startOv').hidden){toast(msg);track('friend_passed',G.L,{})}
+  },function(){});
+}
+function renderChallenge(){var b=$('titleChallenge'),c=S.challenge;if(!b)return;var on=!!(c&&(S.best||0)<=c.floor);b.hidden=!on;if(on)b.textContent=c.by+' reached floor '+c.floor+'. Can you beat it?'}
+function beatChallenge(){var c=S.challenge;if(c&&S.best>c.floor){toast('You beat '+c.by+"'s floor "+c.floor+'! Send them your link.');track('challenge_beaten',G.L,{floor:c.floor});S.challenge=null;save()}}
+$('titleChallenge').addEventListener('click',function(){track('challenge_tap',G.L,{});openBoard('friends')});
+function titleV10(){renderStreak();renderDailyBtn();renderChallenge()}
+
 /* ---------- Boot ---------- */
 renderSound();
 initV05();
@@ -2618,6 +2954,7 @@ statsBtn.hidden=!/[?&](playtest|debug)=1/.test(Q);
 if(!S.aliveSeeded){S.aliveMs=Math.max(S.aliveMs||0,Math.round((S.ms||0)*0.8));S.aliveSeeded=1}   // testers from v0.3: estimate from time played
 sessionStart('open');
 save();
+applyHot();sendFriends();setTimeout(checkRivals,2500);
 G.L=DBG&&DBG.floor?DBG.floor:Math.max(1,S.level|0);prepareLevel();setPhase('idle');
 titleSubs();
 syncDestination();
