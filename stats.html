@@ -104,6 +104,7 @@ td:first-child,th:first-child,td.l,th.l{text-align:left}
 .mform label{display:grid;gap:5px;margin:0 0 11px;font-size:13px;font-weight:600;color:var(--text2)}
 .mform input,.mform select,.mform textarea{width:100%;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--page);color:var(--text);font:15px var(--ui);padding:8px 10px}
 .mform textarea{min-height:110px;resize:vertical}.mform .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mform .check{display:flex;grid-template-columns:none;align-items:flex-start;gap:9px}.mform .check input{width:20px;min-height:20px;height:20px;flex:none;margin:1px 0 0}.mform .check span{display:grid;gap:2px}.mform .check small{font-weight:400;color:var(--muted)}
 .mini{min-height:34px;padding:0 10px;font-size:12.5px}
 .login{max-width:380px;margin:12vh auto 0;padding:0 16px}
 .login .card{padding:22px}
@@ -203,7 +204,7 @@ td:first-child,th:first-child,td.l,th.l{text-align:left}
     <div class="card"><h2>Who brought new players</h2><div class="bars" id="referrals"></div><h2 style="margin-top:16px">How they found it</h2><div class="bars" id="sources"></div><h2 style="margin-top:16px">Phones</h2><div class="bars" id="devices"></div><h2 style="margin-top:16px">Sharing</h2><div class="bars" id="shares"></div></div>
   </section>
   <p class="sec-title">Backup</p>
-  <section class="card"><h2>Download a backup</h2><p class="cap">Supabase's free plan keeps no backups. This saves every table for this game (scores, play events, feedback, friends, Daily Glow, mail) to one JSON file. It holds player ids, which work like passwords: keep the file private. Needs backend/supabase/backup.sql</p>
+  <section class="card"><h2>Download a backup</h2><p class="cap">Supabase's free plan keeps no backups. This saves every table for this game (scores, play events, feedback, friends, Daily Glow, mail, notification subscriptions) to one JSON file. It holds player ids and private push endpoints: keep the file private. Needs backend/supabase/backup.sql</p>
     <button class="btn primary" id="bkBtn" type="button">Download backup</button> <span class="cap" id="bkMsg" role="status"></span></section>
   <p class="sec-title">Mailbox</p>
   <section class="grid two">
@@ -216,6 +217,7 @@ td:first-child,th:first-child,td.l,th.l{text-align:left}
         <div class="row"><label>Gift<select id="mKind"><option value="">None</option><option value="tokens">Tokens</option><option value="skin">Skin</option><option value="outfit">Gear</option></select></label>
           <label id="mNL" hidden>Tokens<input id="mN" type="number" min="1" max="1000" value="25"></label><label id="mIdL" hidden>Item<select id="mId"></select></label></div>
         <label>Expires after (days, optional)<input id="mDays" type="number" min="1" max="365" placeholder="Never"></label>
+        <label class="check"><input id="mPush" type="checkbox"><span>Also send a phone alert<small>Only players who turned on Update alerts receive it. <span id="pushCount">Checking subscribers...</span></small></span></label>
         <button class="btn primary" id="mSend" type="submit">Send mail</button>
         <p class="note" id="mMsg" role="status"></p>
       </form></div>
@@ -470,7 +472,7 @@ function render(d){
 /* ---------- mailbox composer (backend/supabase/mail.sql) ---------- */
 /* Backup: every table for this game into one JSON file. Play events come in pages of 5000. */
 $('bkBtn').addEventListener('click',function(){
-  var btn=$('bkBtn'),msg=$('bkMsg'),out={game:API.game,exported_at:new Date().toISOString(),tables:{}},T=['scores','feedback','daily_scores','friend_links','friend_requests','invites','mail','mail_claims'];
+  var btn=$('bkBtn'),msg=$('bkMsg'),out={game:API.game,exported_at:new Date().toISOString(),tables:{}},T=['scores','feedback','daily_scores','friend_links','friend_requests','invites','mail','mail_claims','push_subscriptions'];
   btn.disabled=true;msg.textContent='Saving...';
   function pageEvents(after){return rpc('owner_export',{p_game:API.game,p_key:key,p_table:'events',p_after:after}).then(function(r){
     out.tables.events=(out.tables.events||[]).concat(r.rows);msg.textContent='Play events: '+out.tables.events.length;return r.next?pageEvents(r.next):null})}
@@ -483,12 +485,15 @@ $('bkBtn').addEventListener('click',function(){
 });
 function rpc(fn,body){return fetch(API.url+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'Content-Type':'application/json',apikey:API.key},body:JSON.stringify(body)})
   .then(function(r){return r.json().catch(function(){return null}).then(function(j){if(!r.ok){var e=new Error((j&&j.message)||('http '+r.status));e.status=r.status;throw e}return j})})}
+function edge(fn,body){return fetch(API.url+'/functions/v1/'+fn,{method:'POST',headers:{'Content-Type':'application/json',apikey:API.key},body:JSON.stringify(body)})
+  .then(function(r){return r.json().catch(function(){return null}).then(function(j){if(!r.ok){var e=new Error((j&&j.error)||('http '+r.status));e.status=r.status;throw e}return j})})}
 var GIFTS={skin:[['frost_crumb','Frost Crumb'],['midnight_crumb','Midnight Crumb'],['golden_crumb','Golden Crumb'],['campfire_crumb','Campfire Crumb'],['sunset_pip','Sunset Pip'],['neon_watts','Neon Watts'],['aurora_lumi','Aurora Lumi']],
   outfit:[['scarf_candy','Candy scarf'],['mittens','Mittens'],['beanie','Bobble beanie'],['earmuffs','Earmuffs'],['eyepatch','Frostglass eyepatch'],['boots','Snow boots'],['ice_crown','Ice crown']]};
 function syncMailForm(){var k=$('mKind').value;$('mNL').hidden=k!=='tokens';$('mIdL').hidden=!(k==='skin'||k==='outfit');$('mNameL').hidden=$('mTo').value!=='one';
   if(GIFTS[k]){var sel=$('mId');sel.textContent='';GIFTS[k].forEach(function(g){var o=el('option',null,g[1]);o.value=g[0];sel.appendChild(o)})}}
 $('mKind').addEventListener('change',syncMailForm);$('mTo').addEventListener('change',syncMailForm);
 function loadSent(){
+  rpc('owner_push_count',{p_game:API.game,p_key:key}).then(function(n){$('pushCount').textContent=(+n||0)+' subscribed device'+(+n===1?'':'s')+'.'},function(e){$('pushCount').textContent=e.status===404?'Notifications are not set up yet.':'Subscriber count unavailable.'});
   rpc('owner_list_mail',{p_game:API.game,p_key:key}).then(function(rows){
     table('mailSent',[{h:'Sent',l:1,f:function(r){return ago(r.sent_at)}},{h:'Title',l:1,f:function(r){return r.title}},{h:'To',l:1,f:function(r){return r.to_name||'Everyone'}},
       {h:'Gift',l:1,f:function(r){return r.reward_kind==='tokens'?r.reward_n+' tokens':(r.reward_id||'')}},{h:'Collected',f:function(r){return r.reward_kind?r.claims:''}},
@@ -496,14 +501,21 @@ function loadSent(){
   },function(e){table('mailSent',[],[],e.status===404?'Mail is off. Run backend/supabase/mail.sql in Supabase to turn it on.':"Couldn't load sent mail.")});
 }
 $('mailForm').addEventListener('submit',function(e){
-  e.preventDefault();var k=$('mKind').value,one=$('mTo').value==='one',msg=$('mMsg'),btn=$('mSend');
+  e.preventDefault();var k=$('mKind').value,one=$('mTo').value==='one',msg=$('mMsg'),btn=$('mSend'),wantPush=$('mPush').checked;
   var body={p_game:API.game,p_key:key,p_title:$('mTitle').value.trim(),p_body:$('mBody').value.trim(),p_reward_kind:k||null,p_reward_id:(k==='skin'||k==='outfit')?$('mId').value:null,
     p_reward_n:k==='tokens'?Math.max(1,Math.min(1000,parseInt($('mN').value,10)||0)):null,p_to_handle:one?$('mName').value.trim():null,p_days:$('mDays').value?parseInt($('mDays').value,10):null};
   if(!body.p_title||!body.p_body){msg.textContent='Add a title and a message.';return}
   if(one&&!body.p_to_handle){msg.textContent='Type the player\'s board name.';return}
-  if(!one&&!confirm('Send "'+body.p_title+'" to every player?'))return;
+  if(!one&&!confirm('Send "'+body.p_title+'" to every player'+(wantPush?' and alert subscribed devices':'')+'?'))return;
   btn.disabled=true;msg.textContent='Sending...';
-  rpc('owner_send_mail',body).then(function(){msg.textContent='Sent. Players see it next time they open the Mailbox.';$('mTitle').value='';$('mBody').value='';loadSent()},
+  rpc('owner_send_mail',body).then(function(){
+    $('mTitle').value='';$('mBody').value='';loadSent();
+    if(!wantPush){msg.textContent='Sent. Players see it next time they open the Mailbox.';return null}
+    msg.textContent='Mail sent. Sending phone alert...';
+    return edge('send-update-notification',{p_game:API.game,p_key:key,p_title:body.p_title,p_body:body.p_body,p_to_handle:body.p_to_handle,p_url:'./index.html'}).then(function(r){
+      msg.textContent='Mail sent. Phone alert sent to '+r.sent+' of '+r.subscribed+' subscribed device'+(r.subscribed===1?'':'s')+(r.gone?' · '+r.gone+' expired removed':'')+(r.failed?' · '+r.failed+' failed':'')+'.';
+    },function(err){msg.textContent='Mail sent, but the phone alert failed: '+err.message+'.'});
+  },
     function(err){msg.textContent=/unknown player/.test(err.message)?'No player has that board name.':(/not unique/.test(err.message)?'More than one player has that name.':(err.status===404?'Mail is off. Run backend/supabase/mail.sql first.':"Couldn't send: "+err.message))})
     .then(function(){btn.disabled=false});
 });

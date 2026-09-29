@@ -1,6 +1,7 @@
 {
   "name": "Crumble Recall",
   "short_name": "Crumble",
+  "id": "./",
   "description": "Watch the ice glow, then hop Crumb home from memory before the tiles melt.",
   "start_url": "./index.html",
   "scope": "./",
