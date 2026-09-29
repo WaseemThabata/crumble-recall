@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' https://oegckfehfkmvxjwbxjcw.supabase.co wss://oegckfehfkmvxjwbxjcw.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'" data-repo-only>
 <meta name="theme-color" content="#061426" data-repo-only>
 <meta name="format-detection" content="telephone=no" data-repo-only>
 <meta name="mobile-web-app-capable" content="yes" data-repo-only>
@@ -3235,7 +3236,7 @@ $('titleChallenge').addEventListener('click',function(){track('challenge_tap',G.
 /* Mailbox: update notes shipped with each build, plus mail Seem sends from the stats page (backend/supabase/mail.sql).
    Unread, Read and Archived tabs. Archived mail is deleted 30 days after archiving. Mail with a reward can't be archived until it's collected.
    Read and archive state stays on this phone; server rewards are claimed through claim_mail, so each can only be collected once. */
-var LOCAL_MAIL=[
+var LOCAL_MAIL=[   // newest first. Each note lists only that update's new features. Players get the newest one; older ones only if they already had them
   {id:'L-v0.11',sent:'2026-09-28',title:"What's new: 240 floors to the Summit",reward:{kind:'tokens',n:50},
    body:"You asked for more, so the Journey now runs to floor 300.\n\n• 24 new chapters from floor 61. Each one mixes twists: invisible tiles, sparks, and new red decoy glows you must never hop on.\n• Wide 7 by 7 boards from floor 181.\n• Floor 300 is the Summit.\n• New star rewards up to 750 stars, including four new Crumb looks.\n• Floors past 30 are harder now. The first 30 are unchanged.\n\nHere are 50 tokens for the climb."},
   {id:'L-v0.10',sent:'2026-09-27',title:"What's new: streaks, Daily Glow and friends",reward:{kind:'tokens',n:25},
@@ -3244,7 +3245,7 @@ var LOCAL_MAIL=[
 var MAIL={tab:'unread',open:null,DAY:864e5};
 function mailState(id){S.mail=S.mail&&typeof S.mail==='object'?S.mail:{};return S.mail[id]||(S.mail[id]={})}
 function allMail(){
-  var list=LOCAL_MAIL.map(function(m){return{id:m.id,title:m.title,body:m.body,sent:new Date(m.sent+'T12:00:00').getTime(),reward:m.reward||null,local:true}});
+  var list=LOCAL_MAIL.filter(function(m,i){return i===0||(S.mail&&S.mail[m.id])}).map(function(m){return{id:m.id,title:m.title,body:m.body,sent:new Date(m.sent+'T12:00:00').getTime(),reward:m.reward||null,local:true}});
   (S.mailCache||[]).forEach(function(m){list.push({id:'S-'+m.id,sid:m.id,title:m.title,body:m.body,sent:new Date(m.sent_at).getTime(),exp:m.expires_at?new Date(m.expires_at).getTime():0,
     reward:m.reward_kind?{kind:m.reward_kind,id:m.reward_id,n:m.reward_n}:null,claimed:!!m.claimed})});
   var now=Date.now();

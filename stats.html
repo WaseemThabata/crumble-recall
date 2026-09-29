@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src https://oegckfehfkmvxjwbxjcw.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'">
 <meta name="theme-color" content="#081630">
 <title>Crumble Recall stats</title>
 <style>
@@ -126,7 +127,7 @@ td:first-child,th:first-child,td.l,th.l{text-align:left}
       <input type="text" id="user" name="username" autocomplete="username" value="crumble-owner" autocapitalize="off" spellcheck="false">
       <label for="pass">Password</label>
       <input type="password" id="pass" name="password" autocomplete="current-password" required>
-      <label class="remember"><input type="checkbox" id="remember" checked> Stay signed in on this device</label>
+      <label class="remember"><input type="checkbox" id="remember"> Stay signed in on this device (your password manager can fill it in instead)</label>
       <button class="btn primary" id="signIn" type="submit">Sign in</button>
       <p class="err" id="loginErr" role="alert"></p>
     </form>
@@ -201,6 +202,9 @@ td:first-child,th:first-child,td.l,th.l{text-align:left}
     <div class="card"><h2>Feedback</h2><div class="fb" id="feedback"></div></div>
     <div class="card"><h2>Who brought new players</h2><div class="bars" id="referrals"></div><h2 style="margin-top:16px">How they found it</h2><div class="bars" id="sources"></div><h2 style="margin-top:16px">Phones</h2><div class="bars" id="devices"></div><h2 style="margin-top:16px">Sharing</h2><div class="bars" id="shares"></div></div>
   </section>
+  <p class="sec-title">Backup</p>
+  <section class="card"><h2>Download a backup</h2><p class="cap">Supabase's free plan keeps no backups. This saves every table for this game (scores, play events, feedback, friends, Daily Glow, mail) to one JSON file. It holds player ids, which work like passwords: keep the file private. Needs backend/supabase/backup.sql</p>
+    <button class="btn primary" id="bkBtn" type="button">Download backup</button> <span class="cap" id="bkMsg" role="status"></span></section>
   <p class="sec-title">Mailbox</p>
   <section class="grid two">
     <div class="card"><h2>Send mail</h2><p class="cap">Lands in the in-game Mailbox. Gifts are fixed amounts, never random. Needs backend/supabase/mail.sql</p>
@@ -464,6 +468,19 @@ function render(d){
 }
 
 /* ---------- mailbox composer (backend/supabase/mail.sql) ---------- */
+/* Backup: every table for this game into one JSON file. Play events come in pages of 5000. */
+$('bkBtn').addEventListener('click',function(){
+  var btn=$('bkBtn'),msg=$('bkMsg'),out={game:API.game,exported_at:new Date().toISOString(),tables:{}},T=['scores','feedback','daily_scores','friend_links','friend_requests','invites','mail','mail_claims'];
+  btn.disabled=true;msg.textContent='Saving...';
+  function pageEvents(after){return rpc('owner_export',{p_game:API.game,p_key:key,p_table:'events',p_after:after}).then(function(r){
+    out.tables.events=(out.tables.events||[]).concat(r.rows);msg.textContent='Play events: '+out.tables.events.length;return r.next?pageEvents(r.next):null})}
+  T.reduce(function(p,t){return p.then(function(){return rpc('owner_export',{p_game:API.game,p_key:key,p_table:t,p_after:0}).then(function(r){out.tables[t]=r.rows})})},Promise.resolve())
+  .then(function(){return pageEvents(0)}).then(function(){
+    var a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify(out)],{type:'application/json'}));
+    a.href=u;a.download=API.game+'-backup-'+out.exported_at.slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);
+    msg.textContent='Saved: '+Object.keys(out.tables).map(function(t){return t+' '+out.tables[t].length}).join(', ');btn.disabled=false;
+  },function(err){btn.disabled=false;msg.textContent=err.status===404?'Backup is off. Run backend/supabase/backup.sql first.':"Couldn't save the backup. Try again."});
+});
 function rpc(fn,body){return fetch(API.url+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'Content-Type':'application/json',apikey:API.key},body:JSON.stringify(body)})
   .then(function(r){return r.json().catch(function(){return null}).then(function(j){if(!r.ok){var e=new Error((j&&j.message)||('http '+r.status));e.status=r.status;throw e}return j})})}
 var GIFTS={skin:[['frost_crumb','Frost Crumb'],['midnight_crumb','Midnight Crumb'],['golden_crumb','Golden Crumb'],['campfire_crumb','Campfire Crumb'],['sunset_pip','Sunset Pip'],['neon_watts','Neon Watts'],['aurora_lumi','Aurora Lumi']],
